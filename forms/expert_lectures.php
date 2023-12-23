@@ -63,7 +63,7 @@
  
             echo '<div style="padding:10px; background-color: aliceblue; border-radius:0.5rem;">';
             echo '<style>
-                    th, td {                                               
+                    th, td {                                              
                         border: 1px solid white;
                     }
                 </style>
@@ -109,7 +109,7 @@
         var id = event.target.getAttribute("data-id");
 
         // window.alert("status button clicked with ID: " + id);
-        fetch('api.php', {
+        fetch('../api/api.php', {
             method: 'POST',
             body: JSON.stringify({ id: id, action: 'delete', table: 'expert_lectures', column: 'title'})
         })   

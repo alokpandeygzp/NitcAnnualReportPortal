@@ -98,7 +98,7 @@
         var id = event.target.getAttribute("data-id");
 
         // window.alert("status button clicked with ID: " + id);
-        fetch('api.php', {
+        fetch('../api/api.php', {
             method: 'POST',
             body: JSON.stringify({ id: id, action: 'delete', table: 'community_services', column: 'title'})
         })   
@@ -107,9 +107,9 @@
             window.alert(data.message);
         })
         .catch(error => {            
-            window.alert('Error:', error);
-            // console.error('Error:', error);
-            // window.alert('check console');
+            // window.alert('Error:', error);
+            console.error('Error:', error);
+            window.alert('check console');
         });
         location.reload();
     }

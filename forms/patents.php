@@ -103,7 +103,7 @@
         var id = event.target.getAttribute("data-id");
 
         // window.alert("status button clicked with ID: " + id);
-        fetch('api.php', {
+        fetch('../api/api.php', {
             method: 'POST',
             body: JSON.stringify({ id: id, action: 'delete', table: 'patents', column: 'title'})
         })   

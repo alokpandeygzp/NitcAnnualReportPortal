@@ -11,8 +11,9 @@
 
 <body style="padding: 10px; background-color: rgb(223, 216, 216);">    
     <div>
-        <div style="padding: 15px 15px; margin-bottom: 20px; display: flex; justify-content: space-between; background-color: aliceblue; border-radius: 0.5rem;">
-            <p style="font-size: 40px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; margin: auto; text-align:center; padding: 0px;">Welcome to institute annual report portal</p>
+        <div style="padding: 15px 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; background-color: aliceblue; border-radius: 0.5rem;">
+            <p style="font-size: 40px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; margin: 0px">Welcome to institute annual report portal</p>
+            <a href="./pdf.php"><button class="action-buttons" style="min-width: 150px">Generate report</button></a>
             <!-- <form action="" method="post" style="margin-bottom: 0px;">
                 <input type="submit" name="logout" class="action-buttons" value="LOG OUT">
             </form> -->
