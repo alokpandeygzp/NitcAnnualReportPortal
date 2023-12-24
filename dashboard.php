@@ -21,7 +21,7 @@ if (empty($_SESSION['access_token'])) {
     <div>
         <div style="padding: 15px 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; background-color: aliceblue; border-radius: 0.5rem;">
             <p style="font-size: 40px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; margin: 0px">Welcome to institute annual report portal</p>
-            <a href="./pdf.php"><button class="action-buttons" style="min-width: 150px">Generate report</button></a>
+            <a href="./doc/pdf.php"><button class="action-buttons" style="min-width: 150px">Generate report</button></a>
         </div>
         <?php
             
