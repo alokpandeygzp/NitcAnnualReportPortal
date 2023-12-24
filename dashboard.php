@@ -14,7 +14,7 @@ if (empty($_SESSION['access_token'])) {
 
 <head>
     <title>Dashboard</title>
-    <link href="./res/basic_styles.css" type="text/css" rel="stylesheet">
+    <link href="./styles/basic_styles.css" type="text/css" rel="stylesheet">
 </head>
 
 <body style="padding: 10px; background-color: rgb(223, 216, 216);">

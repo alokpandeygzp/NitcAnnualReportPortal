@@ -45,7 +45,14 @@ if (isset($_GET["code"])) {
 $login_button = '';
 
 if (!isset($_SESSION['access_token']) || empty($_SESSION['access_token'])) {
-    $login_button = '<a href="'.$google_client->createAuthUrl().'"><img src="asset/sign-in-with-google.png" /></a>';
+    $login_button = '<a href="' . $google_client->createAuthUrl() . '">
+                        <div class="login_btn_container">
+                            <button class="login_btn">
+                                <img class="nitc_logo" src="./asset/nitc_logo_icon.svg" loading="lazy" alt="google logo">
+                                <span>Login with NITC account</span>
+                            </button>
+                        </div>
+                    </a>';
 }
 ?>
 
@@ -53,17 +60,21 @@ if (!isset($_SESSION['access_token']) || empty($_SESSION['access_token'])) {
 
 <head>
     <title>Login</title>
-    <!-- Add your CSS styles here if needed -->
+    <link href="./styles/index.css" type="text/css" rel="stylesheet">
+
 </head>
 
-<body style="padding: 10px; background-color: rgb(223, 216, 216);">
+<body>
     <div class="container">
-        <br />
-        <h2 align="center">Login using NITC Account</h2>
-        <br />
-        <div class="panel panel-default">
+        <div class="login_header">
+            <img class="nitc_complete_logo" src="https://nitc.ac.in/xc-assets/logo/logo-black-01.svg" alt="NITC">
+            <h2 class="heading">
+                Annual Report Submission Portal for NITC
+            </h2>
+        </div>
+        <div class="">
             <?php
-            echo '<div align="center">'.$login_button . '</div>';
+            echo '<div align="center">' . $login_button . '</div>';
             ?>
         </div>
     </div>
