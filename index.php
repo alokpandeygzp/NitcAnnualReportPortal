@@ -16,7 +16,7 @@ $google_client->addScope('profile');
 if (isset($_GET["code"])) {
     $token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
 
-    if (!isset($token["error"])) {
+    if (isset($token['access_token']) && !isset($token["error"])) {
         $google_client->setAccessToken($token['access_token']);
         $_SESSION['access_token'] = $token['access_token'];
 
@@ -41,7 +41,7 @@ if (isset($_GET["code"])) {
 
 $login_button = '';
 
-if (!$_SESSION['access_token']) {
+if (!isset($_SESSION['access_token']) || empty($_SESSION['access_token'])) {
     $login_button = '<a href="'.$google_client->createAuthUrl().'"><img src="asset/sign-in-with-google.png" /></a>';
 }
 ?>
