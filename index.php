@@ -60,7 +60,7 @@ if (!isset($_SESSION['access_token']) || empty($_SESSION['access_token'])) {
 
 <head>
     <title>Login</title>
-    <link href="./styles/index.css" type="text/css" rel="stylesheet">
+    <link href="./styles/styles.css" type="text/css" rel="stylesheet">
 
 </head>
 

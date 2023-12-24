@@ -14,36 +14,98 @@ if (empty($_SESSION['access_token'])) {
 
 <head>
     <title>Dashboard</title>
-    <link href="./styles/basic_styles.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="">
+    <link href="./styles/styles.css" type="text/css" rel="stylesheet">
 </head>
 
-<body style="padding: 10px; background-color: rgb(223, 216, 216);">
-    <div>
-        <div style="padding: 15px 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; background-color: aliceblue; border-radius: 0.5rem;">
-            <p style="font-size: 40px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; margin: 0px">Welcome to institute annual report portal</p>
-            <a href="./doc/pdf.php"><button class="action-buttons" style="min-width: 150px">Generate report</button></a>
+<body>
+    <div class="container">
+        <div class="login_header">
+            <img class="nitc_complete_logo" src="https://nitc.ac.in/xc-assets/logo/logo-black-01.svg" alt="NITC">
+            <h2 class="heading">
+                Annual Report Submission Portal for NITC
+            </h2>
         </div>
+
+
+
+        <!-- <a href="./doc/pdf.php"><button class="">Generate Report</button></a> -->
         <?php
-            
-                echo '<div class="panel-heading">Welcome NITC User</div><div class="panel-body">';
-                echo '<img src="'.$_SESSION['profile_picture'].'" class="img-responsive img-circle img-thumbnail" />';
-                echo '<h3><b>Name : </b>'.$_SESSION["first_name"].' '.$_SESSION['last_name']. '</h3>';
-                echo '<h3><b>Email :</b> '.$_SESSION['email_address'].'</h3>';
-                echo '<h3><a href="logout.php">Logout</a></h3></div>';
-                ?>
-        <div style="padding: 15px; display: flex; justify-content: space-between; background-color: aliceblue; border-radius: 0.5rem;">
-            <div style="padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <a href="./forms/community_services.php"><button class="action-buttons">COMMUNITY SERVICES</button></a>
-                            <a href="./forms/other_services.php"><button class="action-buttons">OTHER SERVICES</button></a>
-                            <a href="./forms/conferences.php"><button class="action-buttons">CONFERENCES CONDUCTED</button></a>
-                            <a href="./forms/expert_lectures.php"><button class="action-buttons">EXPERT LECTURES</button></a>
-                            <a href="./forms/faculty_qualification.php"><button class="action-buttons">FACULTY HIGHER QUALIFICATION</button></a>
-                            <a href="./forms/consultancy.php"><button class="action-buttons">CONSULTANCY AND TESTING</button></a>
-                            <a href="./forms/patents.php"><button class="action-buttons">PATENTS ACQUIRED AND FILED</button></a>
-                            <a href="./forms/student_achievements.php"><button class="action-buttons">STUDENT ACHIEVEMENTS</button></a>
-                <!-- Add more buttons as needed -->
+        echo '<div class="user_strip">
+                <div class="user">
+                    <img src="' . $_SESSION['profile_picture'] . '" class="user_image" />
+                    <h3>' . $_SESSION["first_name"] . ' ' . $_SESSION['last_name'] . '</h3>
+                </div>
+                <div class="logout_btn_holder">
+                    <a href="logout.php" class="">
+                        <button class="logout_btn">Logout</button>
+                    </a>
+                </div  > 
+            </div>';
+
+        // echo '<div class="panel-heading">Welcome NITC User</div><div class="panel-body">';
+        // echo '<img src="' . $_SESSION['profile_picture'] . '" class="img-responsive img-circle img-thumbnail" />';
+        // echo '<h3><b>Name : </b>' . $_SESSION["first_name"] . ' ' . $_SESSION['last_name'] . '</h3>';
+        // echo '<h3><b>Email :</b> ' . $_SESSION['email_address'] . '</h3>';
+        // echo '<h3><a href="logout.php">Logout</a></h3></div>';
+        ?>
+
+        <div class="content_container">
+            <div class="content_sub_container">
+                <div class="content_identifier">
+                    Add Data
+                </div>
+
+                <div class="form_links">
+                    <a href="./forms/community_services.php">
+                        <p class="form_link">&#8811; COMMUNITY SERVICES</p>
+                    </a>
+
+                    <a href="./forms/other_services.php">
+                        <p class="form_link">&#8811; OTHER SERVICES</p>
+
+                    </a>
+
+                    <a href="./forms/conferences.php">
+                        <p class="form_link">&#8811; CONFERENCES CONDUCTED</p>
+                    </a>
+
+                    <a href="./forms/expert_lectures.php">
+                        <p class="form_link">&#8811; EXPERT LECTURES</p>
+                    </a>
+
+                    <a href="./forms/faculty_qualification.php">
+                        <p class="form_link">&#8811; FACULTY HIGHER QUALIFICATION</p>
+                    </a>
+
+                    <a href="./forms/consultancy.php">
+                        <p class="form_link">&#8811; CONSULTANCY AND TESTING</p>
+                    </a>
+
+                    <a href="./forms/patents.php">
+                        <p class="form_link">&#8811; PATENTS ACQUIRED AND FILED</p>
+                    </a>
+
+                    <a href="./forms/student_achievements.php">
+                        <p class="form_link">&#8811; STUDENT ACHIEVEMENTS</p>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="content_sub_container">
+                <div class="content_identifier">
+                    Generate Report
+                </div>
+                <div>
+
+                </div>
             </div>
         </div>
+
     </div>
 </body>
 
