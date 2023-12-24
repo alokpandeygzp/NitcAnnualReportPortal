@@ -9,7 +9,7 @@ $google_client = new Google_Client();
 // Define your ClientID, Client Secret Key, and Redirect Uri
 $google_client->setClientId('730499365579-8gdkd0urnmj2abtsusqn4sidmlsl3ttn.apps.googleusercontent.com');
 $google_client->setClientSecret('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');
-$google_client->setRedirectUri('http://localhost/imsdemo/');
+$google_client->setRedirectUri('http://localhost/nitcannualreportportal/');
 $google_client->addScope('email');
 $google_client->addScope('profile');
 
