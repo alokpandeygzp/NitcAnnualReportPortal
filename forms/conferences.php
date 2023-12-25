@@ -58,7 +58,11 @@
 
         <?php        
             $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-            $sql = "SELECT * FROM conferences";
+            $entity = $_GET["user"];  
+            if($entity=='admin' || $entity=='')
+                $sql = "SELECT * FROM conferences";
+            else
+                $sql = "SELECT * FROM conferences where entity='$entity'";
             $rs = mysqli_query($con, $sql);        
 
             echo '<div style="padding:10px; background-color: aliceblue; border-radius:0.5rem;">';
