@@ -61,7 +61,11 @@
 
         <?php        
             $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-            $sql = "SELECT * FROM expert_lectures";
+            $entity = $_GET["user"];  
+            if($entity=='admin' || $entity=='')
+                $sql = "SELECT * FROM expert_lectures";
+            else
+                $sql = "SELECT * FROM expert_lectures where entity='$entity'";
             $rs = mysqli_query($con, $sql);        
  
             echo '<div style="padding:10px; background-color: aliceblue; border-radius:0.5rem;">';
