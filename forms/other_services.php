@@ -3,10 +3,11 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $staffName = $_POST["name"];
         $progTitle = $_POST["title"];              
+        $entity = $_GET["user"];
 
         $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-        $query1 = "INSERT INTO other_services (staff, title) VALUES ('$staffName', '$progTitle')";
+        $query1 = "INSERT INTO other_services (staff, title, entity) VALUES ('$staffName', '$progTitle', '$entity')";
         if (mysqli_query($con, $query1)) {
             echo '<script>alert("Entry added.");</script>';            
         } else {
@@ -52,7 +53,11 @@
 
         <?php        
             $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-            $sql = "SELECT * FROM other_services";
+            $entity = $_GET["user"];  
+            if($entity=='admin' || $entity=='')
+                $sql = "SELECT * FROM other_services";
+            else
+                $sql = "SELECT * FROM other_services where entity='$entity'";
             $rs = mysqli_query($con, $sql);        
 
             echo '<div style="padding:10px; background-color: aliceblue; border-radius:0.5rem;">';
@@ -66,6 +71,7 @@
                     <th>S. no.</th> 
                     <th>Name of staff</th>                     
                     <th>Services</th>
+                    <th>Entity</th>
                     <th>Action</th>
                 </tr>';
 
@@ -73,11 +79,13 @@
             while ($row = mysqli_fetch_assoc($rs)) {
                 $staff = $row['staff'];            
                 $title = $row['title'];
+                $dep = $row['entity'];
                 
                 echo '<tr>
                     <td>' . $count . '</td>
                     <td>' . $staff . '</td>
                     <td>' . $title . '</td>
+                    <td>' . $dep . '</td>
                     
                     <td><button style="margin-left: 10px;" class="delete-btn" data-id='.$title.'>Delete</button></td>';
                 

@@ -19,7 +19,7 @@
             mysqli_select_db($conn, $databaseName);
 
             // Load and execute the SQL file
-            $sqlFile = "./imsdemo.sql"; // Provide the path to your exported SQL file
+            $sqlFile = "./database/imsdemo.sql"; // Provide the path to your exported SQL file
 
             if (file_exists($sqlFile)) {
                 $sql = file_get_contents($sqlFile);

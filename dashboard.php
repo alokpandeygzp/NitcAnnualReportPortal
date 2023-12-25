@@ -2,9 +2,22 @@
 session_start();
 
 // Check if the user is not logged in, redirect to login page
+
 if (empty($_SESSION['access_token'])) {
-    header('Location: login.php');
-    exit();
+    $fname="Welcome! ";
+    $lname=$_GET["user"];
+    $pic="./asset/nitc_logo_icon.svg";
+
+
+    //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
+
+    // header('Location: index.php');
+    // exit();
+}
+else {
+    $fname=$_SESSION["first_name"];
+    $lname=$_SESSION['last_name'];
+    $pic=$_SESSION['profile_picture'];
 }
 
 // Add your dashboard content here
@@ -35,8 +48,8 @@ if (empty($_SESSION['access_token'])) {
         <?php
         echo '<div class="user_strip">
                 <div class="user">
-                    <img src="' . $_SESSION['profile_picture'] . '" class="user_image" />
-                    <h3>' . $_SESSION["first_name"] . ' ' . $_SESSION['last_name'] . '</h3>
+                    <img src="' . $pic . '" class="user_image" />
+                    <h3>' . $fname . ' ' . $lname . '</h3>
                 </div>
                 <div class="logout_btn_holder">
                     <a href="logout.php" class="">
@@ -59,36 +72,36 @@ if (empty($_SESSION['access_token'])) {
                 </div>
 
                 <div class="form_links">
-                    <a href="./forms/community_services.php">
+                    <a href="./forms/community_services.php?user=<?php echo $lname; ?>">
                         <p class="form_link">&#8811; COMMUNITY SERVICES</p>
                     </a>
 
-                    <a href="./forms/other_services.php">
+                    <a href="./forms/other_services.php?user=<?php echo $lname; ?>">
                         <p class="form_link">&#8811; OTHER SERVICES</p>
 
                     </a>
 
-                    <a href="./forms/conferences.php">
+                    <a href="./forms/conferences.php?user=<?php echo $lname; ?>">
                         <p class="form_link">&#8811; CONFERENCES CONDUCTED</p>
                     </a>
 
-                    <a href="./forms/expert_lectures.php">
+                    <a href="./forms/expert_lectures.php?user=<?php echo $lname; ?>">
                         <p class="form_link">&#8811; EXPERT LECTURES</p>
                     </a>
 
-                    <a href="./forms/faculty_qualification.php">
+                    <a href="./forms/faculty_qualification.php?user=<?php echo $lname; ?>">
                         <p class="form_link">&#8811; FACULTY HIGHER QUALIFICATION</p>
                     </a>
 
-                    <a href="./forms/consultancy.php">
+                    <a href="./forms/consultancy.php?user=<?php echo $lname; ?>">
                         <p class="form_link">&#8811; CONSULTANCY AND TESTING</p>
                     </a>
 
-                    <a href="./forms/patents.php">
+                    <a href="./forms/patents.php?user=<?php echo $lname; ?>">
                         <p class="form_link">&#8811; PATENTS ACQUIRED AND FILED</p>
                     </a>
 
-                    <a href="./forms/student_achievements.php">
+                    <a href="./forms/student_achievements.php?user=<?php echo $lname; ?>">
                         <p class="form_link">&#8811; STUDENT ACHIEVEMENTS</p>
                     </a>
 

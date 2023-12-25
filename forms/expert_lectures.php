@@ -3,12 +3,14 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $staffName = $_POST["name"];
         $progTitle = $_POST["title"];
-        $progDuration = $_POST["duration"];
+        $progStart = $_POST["start"];     
+        $progEnd = $_POST["end"];         
         $progOrganization = $_POST["org"];        
+        $entity = $_GET["user"];
 
         $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-        $query1 = "INSERT INTO expert_lectures (staff, title, duration, organization) VALUES ('$staffName', '$progTitle', '$progDuration', '$progOrganization')";
+        $query1 = "INSERT INTO expert_lectures (staff, title, start, end, organization, entity) VALUES ('$staffName', '$progTitle', '$progStart', '$progEnd', '$progOrganization', '$entity')";
         if (mysqli_query($con, $query1)) {
             echo '<script>alert("Entry added.");</script>';            
         } else {
@@ -50,7 +52,8 @@
             <form id="myForm" action="" method="post" onsubmit="return validateForm();">
                 <input type="text" name="name" placeholder="Name of staff" class="input-fields"><br><br>
                 <input type="text" name="title" placeholder="Title of programme" class="input-fields"><br><br>
-                <input type="text" name="duration" placeholder="Duration and period" class="input-fields"><br><br>
+                <input type="date" name="start" placeholder="Start" class="input-fields"><br><br>
+                <input type="date" name="end" placeholder="End" class="input-fields"><br><br>                                          
                 <input type="text" name="org" placeholder="Organization" class="input-fields"><br><br>                
                 <input type="submit" class="action-buttons" value="SUBMIT">
             </form>
@@ -72,8 +75,10 @@
                     <th>S. no.</th> 
                     <th>Name of staff</th> 
                     <th>Title of programme</th> 
-                    <th>Duration and period</th> 
-                    <th>Organization</th>
+                    <th>Start</th>                     
+                    <th>End</th>                       
+                    <th>Organization</th>       
+                    <th>Entity</th>
                     <th>Action</th>
                 </tr>';
 
@@ -81,15 +86,19 @@
             while ($row = mysqli_fetch_assoc($rs)) {
                 $staff = $row['staff'];            
                 $title = $row['title'];
-                $duration = $row['duration'];
+                $start = $row['start'];
+                $end = $row['end'];
                 $organization = $row['organization'];
+                $dep = $row['entity'];
                 
                 echo '<tr>
                     <td>' . $count . '</td>
                     <td>' . $staff . '</td>
                     <td>' . $title . '</td>
-                    <td>' . $duration . '</td>
+                    <td>' . $start . '</td>
+                    <td>' . $end . '</td>
                     <td>' . $organization . '</td>
+                    <td>' . $dep . '</td>
     
                     <td><button style="margin-left: 10px;" class="delete-btn" data-id='.$title.'>Delete</button></td>';
                 

@@ -3,11 +3,12 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $patentStaff = $_POST["staff"];
         $patentTitle = $_POST["title"];
-        $patentYear = $_POST["year"];     
+        $patentYear = $_POST["year"];  
+        $entity = $_GET["user"];   
 
         $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-        $query1 = "INSERT INTO patents (staff, title, year) VALUES ('$patentStaff', '$patentTitle', '$patentYear')";
+        $query1 = "INSERT INTO patents (staff, title, year, entity) VALUES ('$patentStaff', '$patentTitle', '$patentYear', '$entity')";
         if (mysqli_query($con, $query1)) {
             echo '<script>alert("Entry added.");</script>';            
         } else {
@@ -55,7 +56,11 @@
 
         <?php        
             $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-            $sql = "SELECT * FROM patents";
+            $entity = $_GET["user"];  
+            if($entity=='admin' || $entity=='')
+                $sql = "SELECT * FROM patents";
+            else
+                $sql = "SELECT * FROM patents where entity='$entity'";
             $rs = mysqli_query($con, $sql);        
 
             echo '<div style="padding:10px; background-color: aliceblue; border-radius:0.5rem;">';
@@ -70,6 +75,7 @@
                     <th>Name of staff</th> 
                     <th>Title</th> 
                     <th>Year</th> 
+                    <th>Entity</th> 
                     <th>Action</th>
                 </tr>';
 
@@ -78,12 +84,14 @@
                 $staff = $row['staff'];            
                 $title = $row['title'];
                 $year = $row['year'];
+                $dep = $row['entity'];
                 
                 echo '<tr>
                     <td>' . $count . '</td>
                     <td>' . $staff . '</td>
                     <td>' . $title . '</td>
                     <td>' . $year . '</td>
+                    <td>' . $dep . '</td>
     
                     <td><button style="margin-left: 10px;" class="delete-btn" data-id='.$title.'>Delete</button></td>';
                 

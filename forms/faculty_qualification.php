@@ -3,11 +3,12 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $staffName = $_POST["name"];
         $staffQualification = $_POST["qualification"];
-        $staffInstitute = $_POST["institute"];     
+        $staffInstitute = $_POST["institute"];   
+        $entity = $_GET["user"];  
 
         $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-        $query1 = "INSERT INTO faculty_qualification (name, qualification, institute) VALUES ('$staffName', '$staffQualification', '$staffInstitute')";
+        $query1 = "INSERT INTO faculty_qualification (name, qualification, institute, entity) VALUES ('$staffName', '$staffQualification', '$staffInstitute', '$entity')";
         if (mysqli_query($con, $query1)) {
             echo '<script>alert("Entry added.");</script>';            
         } else {
@@ -55,7 +56,11 @@
 
         <?php        
             $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-            $sql = "SELECT * FROM faculty_qualification";
+            $entity = $_GET["user"];  
+            if($entity=='admin' || $entity=='')
+                $sql = "SELECT * FROM faculty_qualification";
+            else
+                $sql = "SELECT * FROM faculty_qualification where entity='$entity'";
             $rs = mysqli_query($con, $sql);        
 
             echo '<div style="padding:10px; background-color: aliceblue; border-radius:0.5rem;">';
@@ -70,6 +75,7 @@
                     <th>Name of faculty</th> 
                     <th>Qualification</th> 
                     <th>Institute</th> 
+                    <th>Entity</th> 
                     <th>Action</th>
                 </tr>';
 
@@ -78,12 +84,14 @@
                 $name = $row['name'];            
                 $qual = $row['qualification'];
                 $institute = $row['institute'];
+                $dep = $row['entity'];
                 
                 echo '<tr>
                     <td>' . $count . '</td>
                     <td>' . $name . '</td>
                     <td>' . $qual . '</td>
                     <td>' . $institute . '</td>
+                    <td>' . $dep . '</td>
     
                     <td><button style="margin-left: 10px;" class="delete-btn" data-id='.$name.'>Delete</button></td>';
                 

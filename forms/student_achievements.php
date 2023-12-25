@@ -3,10 +3,11 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $studentName = $_POST["name"];
         $studentAchievement = $_POST["achievement"];              
+        $entity = $_GET["user"];
 
         $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-        $query1 = "INSERT INTO student_achievements (name, achievement) VALUES ('$studentName', '$studentAchievement')";
+        $query1 = "INSERT INTO student_achievements (name, achievement, entity) VALUES ('$studentName', '$studentAchievement', '$entity')";
         if (mysqli_query($con, $query1)) {
             echo '<script>alert("Entry added.");</script>';            
         } else {
@@ -52,7 +53,11 @@
 
         <?php        
             $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-            $sql = "SELECT * FROM student_achievements";
+            $entity = $_GET["user"];  
+            if($entity=='admin' || $entity=='')
+                $sql = "SELECT * FROM student_achievements";
+            else
+                $sql = "SELECT * FROM student_achievements where entity='$entity'";
             $rs = mysqli_query($con, $sql);        
 
             echo '<div style="padding:10px; background-color: aliceblue; border-radius:0.5rem;">';
@@ -66,6 +71,7 @@
                     <th>S. no.</th> 
                     <th>Name of student</th> 
                     <th>Achievement</th> 
+                    <th>Entity</th> 
                     <th>Action</th>
                 </tr>';
 
@@ -73,11 +79,13 @@
             while ($row = mysqli_fetch_assoc($rs)) {
                 $name = $row['name'];            
                 $achievement = $row['achievement'];
+                $dep = $row['entity'];
                 
                 echo '<tr>
                     <td>' . $count . '</td>
                     <td>' . $name . '</td>
                     <td>' . $achievement . '</td>
+                    <td>' . $dep . '</td>
     
                     <td><button style="margin-left: 10px;" class="delete-btn" data-id='.$achievement.'>Delete</button></td>';
                 

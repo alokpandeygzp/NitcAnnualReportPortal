@@ -12,7 +12,7 @@ $google_client->setClientSecret('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');
 $google_client->setRedirectUri('http://localhost/nitcannualreportportal/');
 $google_client->addScope('email');
 $google_client->addScope('profile');
-
+ 
 if (isset($_GET["code"])) {
     $token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
 
@@ -54,6 +54,9 @@ if (!isset($_SESSION['access_token']) || empty($_SESSION['access_token'])) {
                         </div>
                     </a>';
 }
+else {
+    header('Location: dashboard.php');
+}
 ?>
 
 <html>
@@ -77,6 +80,12 @@ if (!isset($_SESSION['access_token']) || empty($_SESSION['access_token'])) {
             echo '<div align="center">' . $login_button . '</div>';
             ?>
         </div>
+        <form action="dashboard.php" method="get">
+            <div style="display: flex; justify-content: center; margin-top: 30px;">
+                <input type="text" name="user" placeholder="login ID">
+                <button type="submit" style="margin-left: 20px">LOGIN</button>
+            </div>
+        </form>
     </div>
 </body>
 

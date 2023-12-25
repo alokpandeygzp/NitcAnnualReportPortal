@@ -4,11 +4,12 @@
         $conNature = $_POST["nature"];
         $conOrg = $_POST["org"];
         $conRevenue = $_POST["revenue"];
-        $conStatus = $_POST["status"];        
+        $conStatus = $_POST["status"];  
+        $entity = $_GET["user"];      
 
         $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-        $query1 = "INSERT INTO consultancy (nature, organization, revenue, status) VALUES ('$conNature', '$conOrg', '$conRevenue', '$conStatus')";
+        $query1 = "INSERT INTO consultancy (nature, organization, revenue, status, entity) VALUES ('$conNature', '$conOrg', '$conRevenue', '$conStatus', , '$entity')";
         if (mysqli_query($con, $query1)) {
             echo '<script>alert("Entry added.");</script>';            
         } else {
@@ -58,7 +59,11 @@
 
         <?php        
             $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-            $sql = "SELECT * FROM consultancy";
+            $entity = $_GET["user"];  
+            if($entity=='admin' || $entity=='')
+                $sql = "SELECT * FROM consultancy";
+            else
+                $sql = "SELECT * FROM consultancy where entity='$entity'";
             $rs = mysqli_query($con, $sql);        
 
             echo '<div style="padding:10px; background-color: aliceblue; border-radius:0.5rem;">';
@@ -74,6 +79,7 @@
                     <th>Organization</th> 
                     <th>Revenue</th> 
                     <th>Status</th>
+                    <th>Entity</th>
                     <th>Action</th>
                 </tr>';
 
@@ -83,6 +89,7 @@
                 $org = $row['organization'];
                 $revenue = $row['revenue'];
                 $status = $row['status'];
+                $dep = $row['entity'];
                 
                 echo '<tr>
                     <td>' . $count . '</td>
@@ -90,6 +97,7 @@
                     <td>' . $org . '</td>
                     <td>' . $revenue . '</td>
                     <td>' . $status . '</td>
+                    <td>' . $dep . '</td>
     
                     <td><button style="margin-left: 10px;" class="delete-btn" data-id='.$org.'>Delete</button></td>';
                 
