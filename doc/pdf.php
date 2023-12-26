@@ -73,14 +73,16 @@ if ($result->num_rows > 0) {
                 <tr>
                     <th><h3>Title</h3></th>
                     <th><h3>Co-ordinators</h3></th>
-                    <th><h3>Duration and Period</h3></th>
+                    <th><h3>Start date</h3></th>
+                    <th><h3>End date</h3></th>
                 </tr>';
     
     while($row = $result->fetch_assoc()) {
         $html .= '<tr>
                     <td>'.$row['title'].'</td>
                     <td>'.$row['name'].'</td>
-                    <td>'.$row['duration'].'</td>
+                    <td>'.$row['start'].'</td>
+                    <td>'.$row['end'].'</td>
                     </tr>';
     }
 
@@ -98,7 +100,8 @@ if ($result->num_rows > 0) {
                 <tr>
                     <th><h3>Name of Staff</h3></th>
                     <th><h3>Title of Programme</h3></th>
-                    <th><h3>Duration and Period</h3></th>
+                    <th><h3>Start date</h3></th>
+                    <th><h3>End date</h3></th>
                     <th><h3>Organization</h3></th>
                 </tr>';
     
@@ -106,7 +109,8 @@ if ($result->num_rows > 0) {
         $html .= '<tr>
                     <td>'.$row['staff'].'</td>
                     <td>'.$row['title'].'</td>
-                    <td>'.$row['duration'].'</td>
+                    <td>'.$row['start'].'</td>
+                    <td>'.$row['end'].'</td>
                     <td>'.$row['organization'].'</td>
                     </tr>';
     }
