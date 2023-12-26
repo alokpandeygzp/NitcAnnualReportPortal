@@ -118,7 +118,7 @@ if (empty($_SESSION['access_token'])) {
                     <td class="box services">' . $title . '</td>
                     <td class="box entity">' . $dep . '</td>
                     
-                    <td class="box button_box btn"><button class="delete_btn" data-id=' . $title . '>Delete</button></td>
+                    <td class="box button_box btn"><button class="delete_btn" data-id="' . $title . '">Delete</button></td>
                     </tr>';
 
                     $count++;
@@ -141,7 +141,7 @@ if (empty($_SESSION['access_token'])) {
     function handleDeleteClick(event) {
         var id = event.target.getAttribute("data-id");
 
-        // window.alert("status button clicked with ID: " + id);
+        window.alert("status button clicked with ID: " + id);
         fetch('../api/api.php', {
             method: 'POST',
             body: JSON.stringify({ id: id, action: 'delete', table: 'other_services', column: 'title' })
@@ -159,7 +159,7 @@ if (empty($_SESSION['access_token'])) {
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        var statusButtons = document.querySelectorAll(".delete-btn");
+        var statusButtons = document.querySelectorAll(".delete_btn");
 
         statusButtons.forEach(function (button) {
             button.addEventListener("click", handleDeleteClick);

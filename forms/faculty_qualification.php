@@ -24,7 +24,7 @@
 
 <head>
     <title>Faculty qualification</title>
-    <link href="../res/basic_styles.css" type="text/css" rel="stylesheet">
+    <!-- <link href="../res/basic_styles.css" type="text/css" rel="stylesheet"> -->
     <script>
         function validateForm() {
             var staffName = document.forms["myForm"]["name"].value;
@@ -93,7 +93,7 @@
                     <td>' . $institute . '</td>
                     <td>' . $dep . '</td>
     
-                    <td><button style="margin-left: 10px;" class="delete-btn" data-id='.$name.'>Delete</button></td>';
+                    <td><button style="margin-left: 10px;" class="delete-btn" data-id="'.$name.'">Delete</button></td>';
                 
                 $count++;
             }
