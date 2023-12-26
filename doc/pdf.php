@@ -13,10 +13,14 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 }
 
+$dep_id=$_GET['user'];
+// $html.=$dep_id;
+
 // Fetch data from MySQL
-$sql1 = "SELECT * FROM community_services";
+$sql1 = "SELECT * FROM community_services where entity='$dep_id'";
 $result = $conn->query($sql1);
 $html ='<b>Annual Report</b><hr></hr>';
+
 // Output data as a table in PDF
 if ($result->num_rows > 0) {
     $html .= '<b>Community Services</b>
@@ -39,7 +43,7 @@ if ($result->num_rows > 0) {
 
 
 // Fetch data from MySQL
-$sql1 = "SELECT * FROM other_services";
+$sql1 = "SELECT * FROM other_services where entity='$dep_id'";
 $result = $conn->query($sql1);
 
 // Output data as a table in PDF
@@ -63,7 +67,7 @@ if ($result->num_rows > 0)
 } 
 
 // Fetch data from MySQL
-$sql1 = "SELECT * FROM conferences";
+$sql1 = "SELECT * FROM conferences where entity='$dep_id'";
 $result = $conn->query($sql1);
 
 // Output data as a table in PDF
@@ -90,7 +94,7 @@ if ($result->num_rows > 0) {
 } 
 
 // Fetch data from MySQL
-$sql1 = "SELECT * FROM expert_lectures";
+$sql1 = "SELECT * FROM expert_lectures where entity='$dep_id'";
 $result = $conn->query($sql1);
 
 // Output data as a table in PDF
@@ -121,7 +125,7 @@ if ($result->num_rows > 0) {
 
 
 // Fetch data from MySQL
-$sql1 = "SELECT * FROM faculty_qualification";
+$sql1 = "SELECT * FROM faculty_qualification where entity='$dep_id'";
 $result = $conn->query($sql1);
 
 // Output data as a table in PDF
@@ -148,7 +152,7 @@ if ($result->num_rows > 0) {
 
 
 // Fetch data from MySQL
-$sql1 = "SELECT * FROM consultancy";
+$sql1 = "SELECT * FROM consultancy where entity='$dep_id'";
 $result = $conn->query($sql1);
 
 // Output data as a table in PDF
@@ -177,7 +181,7 @@ if ($result->num_rows > 0) {
 
 
 // Fetch data from MySQL
-$sql1 = "SELECT * FROM patents";
+$sql1 = "SELECT * FROM patents where entity='$dep_id'";
 $result = $conn->query($sql1);
 
 // Output data as a table in PDF
@@ -203,7 +207,7 @@ if ($result->num_rows > 0) {
 } 
 
 // Fetch data from MySQL
-$sql1 = "SELECT * FROM student_achievements";
+$sql1 = "SELECT * FROM student_achievements where entity='$dep_id'";
 $result = $conn->query($sql1);
 
 // Output data as a table in PDF

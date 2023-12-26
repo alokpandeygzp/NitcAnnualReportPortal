@@ -8,6 +8,9 @@ if (empty($_SESSION['access_token'])) {
     $lname=$_GET["user"];
     $pic="./asset/nitc_logo_icon.svg";
 
+    $pdf_link="./doc/pdf.php?user=".$lname;
+    if($lname=='')
+        $pdf_link="./doc/pdf_all.php";
 
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
@@ -178,7 +181,7 @@ else {
                         </div>
 
                     </div>
-                    <a href="./doc/pdf.php"><button class="generate_btn">Generate Report</button></a>
+                    <a href=<?php echo $pdf_link?>><button class="generate_btn">Generate Report</button></a>
 
                 </div>
             </div>
