@@ -1,1 +1,4 @@
 # .gitignore
+doc/
+!doc/pdf.php
+!doc/pdf_all.php
