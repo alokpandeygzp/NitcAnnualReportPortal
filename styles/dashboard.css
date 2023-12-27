@@ -146,6 +146,7 @@ a {
     border-radius: 0.4rem;
     color: aliceblue;
     padding: 12px 0px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .form_links {
@@ -156,6 +157,7 @@ a {
     border-radius: 0.5em;
     padding: 12px 8px;
     height: 380px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .form_link {
@@ -189,6 +191,7 @@ a {
     border-radius: 0.5em;
     padding: 12px 16px;
     height: 380px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .section_container {

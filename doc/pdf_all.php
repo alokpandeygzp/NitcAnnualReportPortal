@@ -6,72 +6,83 @@ $password = "";
 $dbname = "imsdemo";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+// Create Word document using PHPWord library (install it via composer)
+require 'vendor/autoload.php';
 
+\PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
+
+$phpWord = new \PhpOffice\PhpWord\PhpWord();
+$section = $phpWord->addSection();
+$center = $phpWord->addParagraphStyle('p2Style', array('align'=>'center','marginTop' => 1));
 // Check connection
 if ($conn->connect_error) 
 {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$html ='<b>Annual Report</b><hr></hr>';
+if(isset($_POST['studentAchievements']))
 
+$section->addText('Annual Report',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+$section->addTextBreak(1);
 $sql = "SELECT * FROM entity";
 $res = $conn->query($sql);
 
-if ($res->num_rows > 0) {
-    while($row_main = $res->fetch_assoc()) {
+if ($res->num_rows > 0) 
+{
+    while($row_main = $res->fetch_assoc()) 
+    {
         $dep_id = $row_main['id'];
         $dep_name = $row_main['name'];
 
-        $html .='<b>'.$dep_name.'</b><hr></hr>';
+        $section->addText($dep_name,array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+        $section->addTextBreak(1);
 
         // Fetch data from MySQL
         $sql1 = "SELECT * FROM community_services where entity='$dep_id'";
         $result = $conn->query($sql1);
 
         // Output data as a table in PDF
-        if ($result->num_rows > 0) {
-            $html .= '<b>Community Services</b>
-                    <table border="1" cellpadding="8">
-                        <tr>
-                            <th>Name of Staff</th>
-                            <th>Community Services</th>
-                        </tr>';
-            
-            while($row = $result->fetch_assoc()) {
-                $html .= '<tr>
-                            <td>'.$row['staff'].'</td>
-                            <td>'.$row['title'].'</td>
-                            </tr>';
+        if ($result->num_rows > 0 and isset($_POST['communityServices'])) 
+        {
+            $section->addText('Community Services',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+            $section->addTextBreak(1);
+            $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
+
+            // Add table headers with some basic styling
+            $table->addRow();
+            $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
+            $table->addCell(6000)->addText('Community Services', array('bold' => true, 'size' => 14));
+
+            while ($row = $result->fetch_assoc()) {
+                $table->addRow();
+                $table->addCell(3000)->addText($row['staff'], array('size' => 11));
+                $table->addCell(6000)->addText($row['title'], array('size' => 10));
             }
-
-            $html .= '</table> <hr></hr>';
-
+            $section->addTextBreak(1);
+            // $section->addPageBreak();
         } 
-
 
         // Fetch data from MySQL
         $sql1 = "SELECT * FROM other_services where entity='$dep_id'";
         $result = $conn->query($sql1);
 
         // Output data as a table in PDF
-        if ($result->num_rows > 0) 
+        if ($result->num_rows > 0 and isset($_POST['otherServices'])) 
         {
-            $html .= '<b>Other Academic and Administrative Services</b>
-                    <table border="1" cellpadding="8">
-                        <tr>
-                            <th>Name of Staff</th>
-                            <th>Other Services</th>
-                        </tr>';
-            
-            while($row = $result->fetch_assoc()) {
-                $html .= '<tr>
-                            <td>'.$row['staff'].'</td>
-                            <td>'.$row['title'].'</td>
-                            </tr>';
-            }
+            $section->addText('Other Academic and Administrative Services',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+            $section->addTextBreak(1);
+            $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
+            // Add table headers with some basic styling
+            $table->addRow();
+            $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
+            $table->addCell(6000)->addText('Other Sefvices', array('bold' => true, 'size' => 14));
 
-            $html .= '</table><hr></hr>';
+            while ($row = $result->fetch_assoc()) {
+                $table->addRow();
+                $table->addCell(3000)->addText($row['staff'], array('size' => 11));
+                $table->addCell(6000)->addText($row['title'], array('size' => 10));
+            }
+            $section->addTextBreak(1);
         } 
 
         // Fetch data from MySQL
@@ -79,26 +90,27 @@ if ($res->num_rows > 0) {
         $result = $conn->query($sql1);
 
         // Output data as a table in PDF
-        if ($result->num_rows > 0) {
-            $html .= '<b>Conferences/Summer/Winter School/Short term Courses/ Workshops conduct</b>
-                    <table border="1" cellpadding="8">
-                        <tr>
-                            <th><h3>Title</h3></th>
-                            <th><h3>Co-ordinators</h3></th>
-                            <th><h3>Start date</h3></th>
-                            <th><h3>End date</h3></th>
-                        </tr>';
+        if ($result->num_rows > 0 and isset($_POST['conferencesConducted'])) 
+        {
+            $section->addText('Conferences/Summer/Winter School/Short term Courses/ Workshops conduct',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+            $section->addTextBreak(1);
+            $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
+            // Add table headers with some basic styling
+            $table->addRow();
+            $table->addCell(3000)->addText('Title', array('bold' => true, 'size' => 14));
+            $table->addCell(6000)->addText('Co-ordinators', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('Start Date', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('End Date', array('bold' => true, 'size' => 14));
             
-            while($row = $result->fetch_assoc()) {
-                $html .= '<tr>
-                            <td>'.$row['title'].'</td>
-                            <td>'.$row['name'].'</td>
-                            <td>'.$row['start'].'</td>
-                            <td>'.$row['end'].'</td>
-                            </tr>';
+            while ($row = $result->fetch_assoc()) {
+                $table->addRow();
+                $table->addCell(3000)->addText($row['title'], array('size' => 11));
+                $table->addCell(6000)->addText($row['name'], array('size' => 10));
+                $table->addCell(6000)->addText($row['start'], array('size' => 10));
+                $table->addCell(6000)->addText($row['end'], array('size' => 10));
+            
             }
-
-            $html .= '</table><hr></hr>';
+            $section->addTextBreak(1);    
         } 
 
         // Fetch data from MySQL
@@ -106,111 +118,109 @@ if ($res->num_rows > 0) {
         $result = $conn->query($sql1);
 
         // Output data as a table in PDF
-        if ($result->num_rows > 0) {
-            $html .= '<b>Expert lecturers delivered in Conferences/Seminar/workshops</b>
-                    <table border="1" cellpadding="8">
-                        <tr>
-                            <th><h3>Name of Staff</h3></th>
-                            <th><h3>Title of Programme</h3></th>
-                            <th><h3>Start date</h3></th>
-                            <th><h3>End date</h3></th>
-                            <th><h3>Organization</h3></th>
-                        </tr>';
+        if ($result->num_rows > 0 and isset($_POST['expertLectures'])) 
+        {
+            $section->addText('Expert lecturers delivered in Conferences/Seminar/workshops',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+            $section->addTextBreak(1);
+            $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
+            // Add table headers with some basic styling
+            $table->addRow();
+            $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('Title of Programme', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('Start Date', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('End Date', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('Organization', array('bold' => true, 'size' => 14));
             
-            while($row = $result->fetch_assoc()) {
-                $html .= '<tr>
-                            <td>'.$row['staff'].'</td>
-                            <td>'.$row['title'].'</td>
-                            <td>'.$row['start'].'</td>
-                            <td>'.$row['end'].'</td>
-                            <td>'.$row['organization'].'</td>
-                            </tr>';
+            while ($row = $result->fetch_assoc()) {
+                $table->addRow();
+                $table->addCell(3000)->addText($row['staff'], array('size' => 11));
+                $table->addCell(3000)->addText($row['title'], array('size' => 11));
+                $table->addCell(6000)->addText($row['start'], array('size' => 10));
+                $table->addCell(6000)->addText($row['end'], array('size' => 10));
+                $table->addCell(3000)->addText($row['organization'], array('size' => 11));    
             }
-
-            $html .= '</table><hr></hr>';
-
+            $section->addTextBreak(1);        
         } 
-
 
         // Fetch data from MySQL
         $sql1 = "SELECT * FROM faculty_qualification where entity='$dep_id'";
         $result = $conn->query($sql1);
 
         // Output data as a table in PDF
-        if ($result->num_rows > 0) {
-            $html .= '<b>Details of Faculty, who acquired Higher Qualification</b>
-                <table border="1" cellpadding="8">
-                        <tr>
-                            <th><h3>Name of Faculty</h3></th>
-                            <th><h3>Qualification Acquired</h3></th>
-                            <th><h3>Institute</h3></th>
-                        </tr>';
+        if ($result->num_rows > 0 and isset($_POST['facultyHigherQualification'])) 
+        {
+            $section->addText('Details of Faculty, who acquired Higher Qualification',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+            $section->addTextBreak(1);
+            $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
+            // Add table headers with some basic styling
+            $table->addRow();
+            $table->addCell(3000)->addText('Name of Faculty', array('bold' => true, 'size' => 14));
+            $table->addCell(6000)->addText('Qualification Acquired', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('Institute', array('bold' => true, 'size' => 14));
             
-            while($row = $result->fetch_assoc()) {
-                $html .= '<tr>
-                            <td>'.$row['name'].'</td>
-                            <td>'.$row['qualification'].'</td>
-                            <td>'.$row['institute'].'</td>
-                            </tr>';
+            while ($row = $result->fetch_assoc()) 
+            {
+                $table->addRow();
+                $table->addCell(6000)->addText($row['name'], array('size' => 10));
+                $table->addCell(6000)->addText($row['qualification'], array('size' => 10));
+                $table->addCell(6000)->addText($row['institute'], array('size' => 10));
             }
-
-            $html .= '</table><hr></hr>';
-
+            $section->addTextBreak(1);   
         } 
-
 
         // Fetch data from MySQL
         $sql1 = "SELECT * FROM consultancy where entity='$dep_id'";
         $result = $conn->query($sql1);
 
         // Output data as a table in PDF
-        if ($result->num_rows > 0) {
-            $html .= '<b>Consultancy and testing</b>
-                    <table border="1" cellpadding="8">
-                        <tr>
-                            <th><h3>Nature of service</h3></th>
-                            <th><h3>Organization</h3></th>
-                            <th><h3>Revenue Earned</h3></th>
-                            <th><h3>Status</h3></th>
-                        </tr>';
+        if ($result->num_rows > 0 and isset($_POST['consultancyAndTesting'])) 
+        {
+            $section->addText('Consultancy and testing',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+            $section->addTextBreak(1);
+            $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
+            // Add table headers with some basic styling
+            $table->addRow();
+            $table->addCell(3000)->addText('Nature of service', array('bold' => true, 'size' => 14));
+            $table->addCell(6000)->addText('Organization', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('Revenue Earned', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('Status', array('bold' => true, 'size' => 14));
             
-            while($row = $result->fetch_assoc()) {
-                $html .= '<tr>
-                            <td>'.$row['nature'].'</td>
-                            <td>'.$row['organization'].'</td>
-                            <td>'.$row['revenue'].'</td>
-                            <td>'.$row['status'].'</td>
-                            </tr>';
+            while ($row = $result->fetch_assoc()) 
+            {
+                $table->addRow();
+                $table->addCell(6000)->addText($row['nature'], array('size' => 10));
+                $table->addCell(6000)->addText($row['organization'], array('size' => 10));
+                $table->addCell(6000)->addText($row['revenue'], array('size' => 10));
+                $table->addCell(6000)->addText($row['status'], array('size' => 10));
             }
-
-            $html .= '</table><hr></hr>';
-
+            $section->addTextBreak(1);   
+            
         } 
-
 
         // Fetch data from MySQL
         $sql1 = "SELECT * FROM patents where entity='$dep_id'";
         $result = $conn->query($sql1);
 
         // Output data as a table in PDF
-        if ($result->num_rows > 0) {
-            $html .= '<b>Patents acquired and filed</b>
-                    <table border="1" cellpadding="8">
-                        <tr>
-                            <th><h3>Name of Staff</h3></th>
-                            <th><h3>Title</h3></th>
-                            <th><h3>Year</h3></th>
-                        </tr>';
+        if ($result->num_rows > 0 and isset($_POST['patentAquiredAndFiled'])) 
+        {
+            $section->addText('Patents acquired and filed',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+            $section->addTextBreak(1);
+            $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
+            // Add table headers with some basic styling
+            $table->addRow();
+            $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
+            $table->addCell(6000)->addText('Title', array('bold' => true, 'size' => 14));
+            $table->addCell(3000)->addText('Year', array('bold' => true, 'size' => 14));
             
-            while($row = $result->fetch_assoc()) {
-                $html .= '<tr>
-                            <td>'.$row['staff'].'</td>
-                            <td>'.$row['title'].'</td>
-                            <td>'.$row['year'].'</td>
-                            </tr>';
+            while ($row = $result->fetch_assoc()) 
+            {
+                $table->addRow();
+                $table->addCell(6000)->addText($row['staff'], array('size' => 10));
+                $table->addCell(6000)->addText($row['title'], array('size' => 10));
+                $table->addCell(6000)->addText($row['year'], array('size' => 10));
             }
-
-            $html .= '</table><hr></hr>';
+            $section->addTextBreak(1);   
 
         } 
 
@@ -219,25 +229,25 @@ if ($res->num_rows > 0) {
         $result = $conn->query($sql1);
 
         // Output data as a table in PDF
-        if ($result->num_rows > 0) {
-            $html .= '<b>Student achievements</b>
-                    <table border="1" cellpadding="8">
-                        <tr>
-                            <th><h3>Name</h3></th>
-                            <th><h3>Achievement</h3></th>
-                        </tr>';
+        if ($result->num_rows > 0 and isset($_POST['studentAchievements'])) 
+        {
+            $section->addText('Details of Faculty, who acquired Higher Qualification',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+            $section->addTextBreak(1);
+            $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
+            // Add table headers with some basic styling
+            $table->addRow();
+            $table->addCell(3000)->addText('Name', array('bold' => true, 'size' => 14));
+            $table->addCell(6000)->addText('Achievement', array('bold' => true, 'size' => 14));
             
-            while($row = $result->fetch_assoc()) {
-                $html .= '<tr>
-                            <td>'.$row['name'].'</td>
-                            <td>'.$row['achievement'].'</td>
-                            </tr>';
+            while ($row = $result->fetch_assoc()) 
+            {
+                $table->addRow();
+                $table->addCell(6000)->addText($row['name'], array('size' => 10));
+                $table->addCell(6000)->addText($row['achievement'], array('size' => 10));
             }
-
-            $html .= '</table><hr></hr>';
-
-
-        } 
+            $section->addTextBreak(1);   
+        }
+        $section->addPageBreak();
     }    
 } 
 
@@ -245,21 +255,10 @@ if ($res->num_rows > 0) {
 // Close MySQL connection
 $conn->close();
 
-// Create Word document using PHPWord library (install it via composer)
-require 'vendor/autoload.php';
-
-\PhpOffice\PhpWord\Settings::setOutputEscapingEnabled(true);
-
-$phpWord = new \PhpOffice\PhpWord\PhpWord();
-$section = $phpWord->addSection();
-\PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
-
 // Save the Word document
 $filename = 'AnnualReport.docx';
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 $objWriter->save($filename);
-
-echo 'Word document generated successfully: ' . $filename;
 
 
 header('Content-Description: File Transfer');

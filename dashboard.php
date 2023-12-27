@@ -21,6 +21,8 @@ else {
     $fname=$_SESSION["first_name"];
     $lname=$_SESSION['last_name'];
     $pic=$_SESSION['profile_picture'];
+    
+    $pdf_link="./doc/pdf_all.php";
 }
 
 // Add your dashboard content here
@@ -113,80 +115,79 @@ else {
             </div>
 
 
-
-            <div class="content_sub_container">
-                <div class="content_identifier">
-                    Generate Report
-                </div>
-                <div class="report_generator">
-                    <div class="section_container">
-                        <p>Choose Period:</p>
-                        <div class="time_period_selector">
-                            <div class="start_date">
-                                <label for="startDate">Start: </label>
-                                <input type="date" id="startDate" name="startDate" class="input_field" />
-                            </div>
-                            <div class="end_date">
-                                <label for="endDate">End: </label>
-                                <input type="date" id="endDate" name="endDate" class="input_field" />
+                <div class="content_sub_container">
+                    <div class="content_identifier">
+                        Generate Report
+                    </div>
+                    <form action=<?php echo $pdf_link?> method="post">    
+                    <div class="report_generator">
+                        <div class="section_container">
+                            <p>Choose Period:</p>
+                            <div class="time_period_selector">
+                                <div class="start_date">
+                                    <label for="startDate">Start: </label>
+                                    <input type="date" id="startDate" name="startDate" class="input_field" />
+                                </div>
+                                <div class="end_date">
+                                    <label for="endDate">End: </label>
+                                    <input type="date" id="endDate" name="endDate" class="input_field" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="section_container">
-                        <p>Choose Sections:</p>
-                        <div class="section_selector">
-                            <div>
-                                <input type="checkbox" id="all" name="all" value="all" onchange="selectAllOptions()" />
-                                <label for="all">All</label>
+                        <div class="section_container">
+                            <p>Choose Sections:</p>
+                            <div class="section_selector">
+                                <div>
+                                    <input type="checkbox" id="all" name="all" value="all" onchange="selectAllOptions()" />
+                                    <label for="all">All</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="communityServices" name="communityServices"
+                                        value="communityServices" />
+                                    <label for="communityServices">Community Services</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="otherServices" name="otherServices" value="otherServices" />
+                                    <label for="otherServices">Other Services</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="conferencesConducted" name="conferencesConducted"
+                                        value="conferencesConducted" />
+                                    <label for="conferencesConducted">Conferences Conducted</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="expertLectures" name="expertLectures"
+                                        value="expertLectures" />
+                                    <label for="expertLectures">Expert Lectures</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="facultyHigherQualification" name="facultyHigherQualification"
+                                        value="facultyHigherQualification" />
+                                    <label for="facultyHigherQualification">Faculty Higher Qualification</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="consultancyAndTesting" name="consultancyAndTesting"
+                                        value="consultancyAndTesting" />
+                                    <label for="consultancyAndTesting">Consultancy And Testing</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="patentAquiredAndFiled" name="patentAquiredAndFiled"
+                                        value="patentAquiredAndFiled" />
+                                    <label for="patentAquiredAndFiled">Patent Aquired And Filed</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="studentAchievements" name="studentAchievements"
+                                        value="studentAchievements" />
+                                    <label for="studentAchievements">Student Achievements</label>
+                                </div>
                             </div>
-                            <div>
-                                <input type="checkbox" id="communityServices" name="communityServices"
-                                    value="communityServices" />
-                                <label for="communityServices">Community Services</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="otherServices" name="otherServices" value="otherServices" />
-                                <label for="otherServices">Other Services</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="conferencesConducted" name="conferencesConducted"
-                                    value="conferencesConducted" />
-                                <label for="conferencesConducted">Conferences Conducted</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="expertLectures" name="expertLectures"
-                                    value="expertLectures" />
-                                <label for="expertLectures">Expert Lectures</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="facultyHigherQualification" name="facultyHigherQualification"
-                                    value="facultyHigherQualification" />
-                                <label for="facultyHigherQualification">Faculty Higher Qualification</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="consultancyAndTesting" name="consultancyAndTesting"
-                                    value="consultancyAndTesting" />
-                                <label for="consultancyAndTesting">Consultancy And Testing</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="patentAquiredAndFiled" name="patentAquiredAndFiled"
-                                    value="patentAquiredAndFiled" />
-                                <label for="patentAquiredAndFiled">Patent Aquired And Filed</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="studentAchievements" name="studentAchievements"
-                                    value="studentAchievements" />
-                                <label for="studentAchievements">Student Achievements</label>
-                            </div>
+
                         </div>
-
+                        <input type="submit" value="Generate Report" class="generate_btn">
                     </div>
-                    <a href=<?php echo $pdf_link?>><button class="generate_btn">Generate Report</button></a>
-
+                    </form>
                 </div>
-            </div>
         </div>
-
     </div>
     <script>
         function selectAllOptions() {

@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
-    $pic = "./asset/nitc_logo_icon.svg";
+    $pic = "../asset/nitc_logo_icon.svg";
 
 
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
@@ -73,30 +73,32 @@ if (empty($_SESSION['access_token'])) {
             </div>';
 
         ?>
-        <div class="content_container">
-            <div class="left_container">
-                <h2>Other Services</h2>
-                <div class="form_container">
-                <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
-                    <input type="text" name="name" placeholder="Name of staff" class="input-fields"><br><br>
-                    <input type="text" name="title" placeholder="Other services" class="input-fields"><br><br>
-                    <input type="submit" class="submit-button" value="Add Entry">
-                </form>
-            </div>
-            </div>
-            
-            <div class="table_container">
-                <?php
-                $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-                $entity = $_GET["user"];
-                if ($entity == 'admin' || $entity == '')
-                    $sql = "SELECT * FROM other_services";
-                else
-                    $sql = "SELECT * FROM other_services where entity='$entity'";
-                $rs = mysqli_query($con, $sql);
+        <div class="subcontainer">
+            <h2>Other Services</h2>
+            <div class="content_container">
+                <div class="left_container">
 
-                echo '<div class="table_field">';
-                echo '
+                    <div class="form_container">
+                        <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
+                            <input type="text" name="name" placeholder="Name of staff" class="input-fields"><br><br>
+                            <input type="text" name="title" placeholder="Other services" class="input-fields"><br><br>
+                            <input type="submit" class="submit-button" value="Add Entry">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="table_container">
+                    <?php
+                    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+                    $entity = $_GET["user"];
+                    if ($entity == 'admin' || $entity == '')
+                        $sql = "SELECT * FROM other_services";
+                    else
+                        $sql = "SELECT * FROM other_services where entity='$entity'";
+                    $rs = mysqli_query($con, $sql);
+
+                    echo '<div class="table_field">';
+                    echo '
                 <table  border="1"> 
                 <tr> 
                     <th class="box">S. no.</th> 
@@ -106,13 +108,13 @@ if (empty($_SESSION['access_token'])) {
                     <th class="box">Action</th>
                 </tr>';
 
-                $count = 1;
-                while ($row = mysqli_fetch_assoc($rs)) {
-                    $staff = $row['staff'];
-                    $title = $row['title'];
-                    $dep = $row['entity'];
+                    $count = 1;
+                    while ($row = mysqli_fetch_assoc($rs)) {
+                        $staff = $row['staff'];
+                        $title = $row['title'];
+                        $dep = $row['entity'];
 
-                    echo '<tr>
+                        echo '<tr>
                     <td class="box sn">' . $count . '</td>
                     <td class="box name">' . $staff . '</td>
                     <td class="box services">' . $title . '</td>
@@ -121,14 +123,14 @@ if (empty($_SESSION['access_token'])) {
                     <td class="box button_box btn"><button class="delete_btn" data-id="' . $title . '">Delete</button></td>
                     </tr>';
 
-                    $count++;
-                }
-                echo '</table>
+                        $count++;
+                    }
+                    echo '</table>
                 </div>';
-                ?>
+                    ?>
+                </div>
+
             </div>
-
-
 
         </div>
 
@@ -141,7 +143,7 @@ if (empty($_SESSION['access_token'])) {
     function handleDeleteClick(event) {
         var id = event.target.getAttribute("data-id");
 
-        window.alert("status button clicked with ID: " + id);
+        // window.alert("status button clicked with ID: " + id);
         fetch('../api/api.php', {
             method: 'POST',
             body: JSON.stringify({ id: id, action: 'delete', table: 'other_services', column: 'title' })

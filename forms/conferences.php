@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
-    $pic = "./asset/nitc_logo_icon.svg";
+    $pic = "../asset/nitc_logo_icon.svg";
 
 
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
@@ -77,32 +77,34 @@ if (empty($_SESSION['access_token'])) {
             </div>';
 
         ?>
-        <div class="content_container">
-            <div class="left_container">
-                <h2>Conferences</h2>
-                <div class="form_container">
-                    <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
-                        <input type="text" name="title" placeholder="Title" class="input-fields"><br><br>
-                        <input type="text" name="name" placeholder="Co-ordinators" class="input-fields"><br><br>
-                        <input type="date" name="start" placeholder="Start" class="input-fields"><br><br>
-                        <input type="date" name="end" placeholder="End" class="input-fields"><br><br>
-                        <input type="submit" class="submit-button" value="Add Entry">
-                    </form>
+        <div class="subcontainer">
+            <h2>Conferences</h2>
+            <div class="content_container">
+                <div class="left_container">
+
+                    <div class="form_container">
+                        <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
+                            <input type="text" name="title" placeholder="Title" class="input-fields"><br><br>
+                            <input type="text" name="name" placeholder="Co-ordinators" class="input-fields"><br><br>
+                            <input type="date" name="start" placeholder="Start" class="input-fields"><br><br>
+                            <input type="date" name="end" placeholder="End" class="input-fields"><br><br>
+                            <input type="submit" class="submit-button" value="Add Entry">
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div class="table_container">
-                <?php
-                $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-                $entity = $_GET["user"];
-                if ($entity == 'admin' || $entity == '')
-                    $sql = "SELECT * FROM conferences";
-                else
-                    $sql = "SELECT * FROM conferences where entity='$entity'";
-                $rs = mysqli_query($con, $sql);
+                <div class="table_container">
+                    <?php
+                    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+                    $entity = $_GET["user"];
+                    if ($entity == 'admin' || $entity == '')
+                        $sql = "SELECT * FROM conferences";
+                    else
+                        $sql = "SELECT * FROM conferences where entity='$entity'";
+                    $rs = mysqli_query($con, $sql);
 
-                echo '<div class="table_field">';
-                echo '
+                    echo '<div class="table_field">';
+                    echo '
                 <table border="1"> 
                 <tr> 
                     <th class="box">S. no.</th>  
@@ -114,33 +116,33 @@ if (empty($_SESSION['access_token'])) {
                     <th class="box">Action</th>
                 </tr>';
 
-                $count = 1;
-                while ($row = mysqli_fetch_assoc($rs)) {
-                    $title = $row['title'];
-                    $staff = $row['name'];
-                    $start = $row['start'];
-                    $end = $row['end'];
-                    $dep = $row['entity'];
+                    $count = 1;
+                    while ($row = mysqli_fetch_assoc($rs)) {
+                        $title = $row['title'];
+                        $staff = $row['name'];
+                        $start = $row['start'];
+                        $end = $row['end'];
+                        $dep = $row['entity'];
 
-                    echo '<tr>
-                    <td class="box sn">' . $count . '</td>                    
-                    <td class="box title">' . $title . '</td>
-                    <td class="box coords">' . $staff . '</td>
-                    <td class="box s_date">' . $start . '</td>
-                    <td class="box e_date">' . $end . '</td>
-                    <td class="box entity">' . $dep . '</td>
+                        echo '<tr>
+                        <td class="box sn">' . $count . '</td>                    
+                        <td class="box title">' . $title . '</td>
+                        <td class="box coords">' . $staff . '</td>
+                        <td class="box s_date">' . $start . '</td>
+                        <td class="box e_date">' . $end . '</td>
+                        <td class="box entity">' . $dep . '</td>
                     
-                    <td class="box button_box btn"><button class="delete_btn" data-id="' . $title . '">Delete</button></td></tr>';
+                        <td class="box button_box btn"><button class="delete_btn" data-id="' . $title . '">Delete</button></td></tr>';
 
-                    $count++;
-                }
-                echo '</table>
-            </div>';
-                ?>
+                        $count++;
+                    }
+                    echo '</table>
+                        </div>';
+                    ?>
+                </div>
             </div>
+
         </div>
-
-
 
     </div>
 
