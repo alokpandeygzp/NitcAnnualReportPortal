@@ -36,8 +36,26 @@ if (isset($_GET["code"])) {
             exit();
         }
 
-        // Redirect to the dashboard on successful login
-        header('Location: dashboard.php');
+        // Show loading screen with login avatar, "WELCOME" message, and loading spinner
+        echo '<div style="text-align: center; margin-top: 50px;">
+                <br><br>
+                <img src="asset/login_avatar.png" alt="Login Avatar" style="width: 125px; height: 100px; border-radius: 50%;">
+                <p style="font-size: 24px;">WELCOME</p>
+                <br><br>
+                <div id="loading-spinner" style="display: inline-block;">
+                    <img src="asset/loading.gif" alt="Loading..." />
+                </div>
+                <p style="font-size: 24px;">We are signing you in...</p>
+            </div>';
+
+        // JavaScript for redirect after a delay
+        echo '<script>
+                setTimeout(function() {
+                    document.getElementById("loading-spinner").style.display = "none";
+                    window.location.href = "dashboard.php";
+                }, 2000); // 2000 milliseconds (2 seconds) delay
+            </script>';
+
         exit();
     }
 }

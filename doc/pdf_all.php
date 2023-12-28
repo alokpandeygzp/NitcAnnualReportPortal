@@ -20,14 +20,12 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 }
 
-if(isset($_POST['studentAchievements']))
-
 $section->addText('Annual Report',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
 $section->addTextBreak(1);
 $sql = "SELECT * FROM entity";
 $res = $conn->query($sql);
 
-if ($res->num_rows > 0) 
+if ($res->num_rows > 0 ) 
 {
     while($row_main = $res->fetch_assoc()) 
     {
@@ -51,12 +49,12 @@ if ($res->num_rows > 0)
             // Add table headers with some basic styling
             $table->addRow();
             $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
-            $table->addCell(6000)->addText('Community Services', array('bold' => true, 'size' => 14));
+            $table->addCell(6300)->addText('Community Services', array('bold' => true, 'size' => 14));
 
             while ($row = $result->fetch_assoc()) {
                 $table->addRow();
                 $table->addCell(3000)->addText($row['staff'], array('size' => 11));
-                $table->addCell(6000)->addText($row['title'], array('size' => 10));
+                $table->addCell(6300)->addText($row['title'], array('size' => 10));
             }
             $section->addTextBreak(1);
             // $section->addPageBreak();
@@ -75,12 +73,12 @@ if ($res->num_rows > 0)
             // Add table headers with some basic styling
             $table->addRow();
             $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
-            $table->addCell(6000)->addText('Other Sefvices', array('bold' => true, 'size' => 14));
+            $table->addCell(6300)->addText('Other Sefvices', array('bold' => true, 'size' => 14));
 
             while ($row = $result->fetch_assoc()) {
                 $table->addRow();
                 $table->addCell(3000)->addText($row['staff'], array('size' => 11));
-                $table->addCell(6000)->addText($row['title'], array('size' => 10));
+                $table->addCell(6300)->addText($row['title'], array('size' => 10));
             }
             $section->addTextBreak(1);
         } 
