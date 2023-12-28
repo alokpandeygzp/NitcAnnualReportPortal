@@ -41,20 +41,46 @@ if (empty($_SESSION['access_token'])) {
 <head>
     <title>Consultancy</title>
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        function validateForm() {
-            var conNature = document.forms["myForm"]["nature"].value;
-            var conOrg = document.forms["myForm"]["org"].value;
-            var conRevenue = document.forms["myForm"]["revenue"].value;
-            var conStatus = document.forms["myForm"]["status"].value;
+        $(document).ready(function() {
+            $("#myForm").submit(function(event) {
+                event.preventDefault();
 
-            if (conNature.trim() == "" || conOrg.trim() == "" || conRevenue.trim() == "" || conStatus.trim() == "") {
-                alert("Please fill in all fields.");
-                return false;
+                // Validate the form
+                if (!validateForm()) {
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "",
+                    data: $(this).serialize(),
+                    success: function() {
+                        alert("Entry added.");
+                        // Reload the page after a successful form submission
+                        location.reload();
+                    },
+                    error: function() {
+                        alert("Entry addition failed.");
+                    }
+                });
+            });
+
+            function validateForm() {
+                var conNature = document.forms["myForm"]["nature"].value;
+                var conOrg = document.forms["myForm"]["org"].value;
+                var conRevenue = document.forms["myForm"]["revenue"].value;
+                var conStatus = document.forms["myForm"]["status"].value;
+
+                if (conNature.trim() == "" || conOrg.trim() == "" || conRevenue.trim() == "" || conStatus.trim() == "") {
+                    alert("Please fill in all fields.");
+                    return false;
+                }
+
+                return true;
             }
-
-            return true;
-        }
+        });
     </script>
 
 </head>
@@ -149,34 +175,42 @@ if (empty($_SESSION['access_token'])) {
 
 </html>
 
-
 <script>
-    function handleDeleteClick(event) {
-        var id = event.target.getAttribute("data-id");
+function handleDeleteClick(event) {
+    var id = event.target.getAttribute("data-id");
 
-        // window.alert("status button clicked with ID: " + id);
-        fetch('../api/api.php', {
+    // window.alert("status button clicked with ID: " + id);
+    fetch('../api/api.php', {
             method: 'POST',
-            body: JSON.stringify({ id: id, action: 'delete', table: 'consultancy', column: 'organization' })
-        })
-            .then(response => response.json())
-            .then(data => {
-                window.alert(data.message);
+            body: JSON.stringify({
+                id: id,
+                action: 'delete',
+                table: 'consultancy',
+                column: 'organization'
             })
-            .catch(error => {
-                window.alert('Error:', error);
-                // console.error('Error:', error);
-                // window.alert('check console');
-            });
-        location.reload();
-    }
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.alert(data.message);
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var statusButtons = document.querySelectorAll(".delete_btn");
-
-        statusButtons.forEach(function (button) {
-            button.addEventListener("click", handleDeleteClick);
+            // Reload the page after successful deletion
+            location.reload();
+        })
+        .catch(error => {
+            window.alert('Error:', error);
+            // console.error('Error:', error);
+            // window.alert('check console');
         });
+    // location.reload();
+}
 
+document.addEventListener('DOMContentLoaded', function() {
+    var statusButtons = document.querySelectorAll(".delete_btn");
+
+    statusButtons.forEach(function(button) {
+        button.addEventListener("click", handleDeleteClick);
     });
+
+});
 </script>
+

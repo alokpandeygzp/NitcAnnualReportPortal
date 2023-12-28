@@ -40,11 +40,36 @@ if (empty($_SESSION['access_token'])) {
 <head>
     <title>Patents</title>
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $("#myForm").submit(function(event) {
+                event.preventDefault();
+
+                // Validate the form
+                if (!validateForm()) {
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "",
+                    data: $(this).serialize(),
+                    success: function() {
+                        alert("Entry added.");
+                        // Reload the page after a successful form submission
+                        location.reload();
+                    },
+                    error: function() {
+                        alert("Entry addition failed.");
+                    }
+                });
+            });
+
         function validateForm() {
-            var patentStaff = document.forms["myForm"]["name"].value;
+            var patentStaff = document.forms["myForm"]["staff"].value;
             var patentTitle = document.forms["myForm"]["title"].value;
-            var patentYear = document.forms["myForm"]["duration"].value;
+            var patentYear = document.forms["myForm"]["year"].value;
 
             if (patentStaff.trim() == "" || patentTitle.trim() == "" || patentYear.trim() == "") {
                 alert("Please fill in all fields.");
@@ -53,6 +78,7 @@ if (empty($_SESSION['access_token'])) {
 
             return true;
         }
+    });
     </script>
 
 </head>
@@ -145,34 +171,41 @@ if (empty($_SESSION['access_token'])) {
 
 </html>
 
-
 <script>
-    function handleDeleteClick(event) {
-        var id = event.target.getAttribute("data-id");
+function handleDeleteClick(event) {
+    var id = event.target.getAttribute("data-id");
 
-        // window.alert("status button clicked with ID: " + id);
-        fetch('../api/api.php', {
+    // window.alert("status button clicked with ID: " + id);
+    fetch('../api/api.php', {
             method: 'POST',
-            body: JSON.stringify({ id: id, action: 'delete', table: 'patents', column: 'title' })
-        })
-            .then(response => response.json())
-            .then(data => {
-                window.alert(data.message);
+            body: JSON.stringify({
+                id: id,
+                action: 'delete',
+                table: 'patents',
+                column: 'title'
             })
-            .catch(error => {
-                window.alert('Error:', error);
-                // console.error('Error:', error);
-                // window.alert('check console');
-            });
-        location.reload();
-    }
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.alert(data.message);
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var statusButtons = document.querySelectorAll(".delete_btn");
-
-        statusButtons.forEach(function (button) {
-            button.addEventListener("click", handleDeleteClick);
+            // Reload the page after successful deletion
+            location.reload();
+        })
+        .catch(error => {
+            window.alert('Error:', error);
+            // console.error('Error:', error);
+            // window.alert('check console');
         });
+    // location.reload();
+}
 
+document.addEventListener('DOMContentLoaded', function() {
+    var statusButtons = document.querySelectorAll(".delete_btn");
+
+    statusButtons.forEach(function(button) {
+        button.addEventListener("click", handleDeleteClick);
     });
+
+});
 </script>
