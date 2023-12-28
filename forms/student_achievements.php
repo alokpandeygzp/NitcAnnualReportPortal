@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $studentName = $_POST["name"];
     $studentAchievement = $_POST["achievement"];
@@ -8,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
     $query1 = "INSERT INTO student_achievements (name, achievement, entity) VALUES ('$studentName', '$studentAchievement', '$entity')";
+
     if (mysqli_query($con, $query1)) {
         echo '<script>alert("Entry added.");</script>';
     } else {
@@ -16,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     mysqli_close($con);
 }
+
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
@@ -31,6 +34,7 @@ if (empty($_SESSION['access_token'])) {
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -39,10 +43,35 @@ if (empty($_SESSION['access_token'])) {
 <head>
     <title>Student achievements</title>
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
+    $(document).ready(function() {
+        $("#myForm").submit(function(event) {
+            event.preventDefault();
+
+            // Validate the form
+            if (!validateForm()) {
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: $(this).serialize(),
+                success: function() {
+                    alert("Entry added.");
+                    // Reload the page after a successful form submission
+                    location.reload();
+                },
+                error: function() {
+                    alert("Entry addition failed.");
+                }
+            });
+        });
+
         function validateForm() {
             var studentName = document.forms["myForm"]["name"].value;
-            var studentAchievement = document.forms["myForm"]["title"].value;
+            var studentAchievement = document.forms["myForm"]["achievement"].value;
 
             if (studentName.trim() == "" || studentAchievement.trim() == "") {
                 alert("Please fill in all fields.");
@@ -51,8 +80,8 @@ if (empty($_SESSION['access_token'])) {
 
             return true;
         }
+    });
     </script>
-
 </head>
 
 <body>
@@ -79,9 +108,10 @@ if (empty($_SESSION['access_token'])) {
 
                     <div class="form_container">
                         <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
-                            <input type="text" name="name" placeholder="Name of student" class="input-fields"><br><br>
-                            <input type="text" name="achievement" placeholder="Achievement"
-                                class="input-fields"><br><br>
+                            <input type="text" name="name" placeholder="Name of student" class="input-fields"
+                                autocomplete="off"><br><br>
+                            <input type="text" name="achievement" placeholder="Achievement" class="input-fields"
+                                autocomplete="off"><br><br>
                             <input type="submit" class="submit-button" value="Add Entry">
                         </form>
                     </div>
@@ -141,32 +171,40 @@ if (empty($_SESSION['access_token'])) {
 
 
 <script>
-    function handleDeleteClick(event) {
-        var id = event.target.getAttribute("data-id");
+function handleDeleteClick(event) {
+    var id = event.target.getAttribute("data-id");
 
-        // window.alert("status button clicked with ID: " + id);
-        fetch('../api/api.php', {
+    // window.alert("status button clicked with ID: " + id);
+    fetch('../api/api.php', {
             method: 'POST',
-            body: JSON.stringify({ id: id, action: 'delete', table: 'student_achievements', column: 'achievement' })
-        })
-            .then(response => response.json())
-            .then(data => {
-                window.alert(data.message);
+            body: JSON.stringify({
+                id: id,
+                action: 'delete',
+                table: 'student_achievements',
+                column: 'achievement'
             })
-            .catch(error => {
-                window.alert('Error:', error);
-                // console.error('Error:', error);
-                // window.alert('check console');
-            });
-        location.reload();
-    }
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.alert(data.message);
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var statusButtons = document.querySelectorAll(".delete_btn");
-
-        statusButtons.forEach(function (button) {
-            button.addEventListener("click", handleDeleteClick);
+            // Reload the page after successful deletion
+            location.reload();
+        })
+        .catch(error => {
+            window.alert('Error:', error);
+            // console.error('Error:', error);
+            // window.alert('check console');
         });
+    // location.reload();
+}
 
+document.addEventListener('DOMContentLoaded', function() {
+    var statusButtons = document.querySelectorAll(".delete_btn");
+
+    statusButtons.forEach(function(button) {
+        button.addEventListener("click", handleDeleteClick);
     });
+
+});
 </script>
