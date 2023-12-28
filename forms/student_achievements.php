@@ -89,16 +89,18 @@ if (empty($_SESSION['access_token'])) {
     <div class="container">
         <?php
         echo '<div class="user_strip">
+                <a href="../dashboard.php?user=' . $lname . '" class="user_to_dash">
                     <div class="user">
                         <img src="' . $pic . '" class="user_image" />
                         <h3>' . $fname . ' ' . $lname . '</h3>
                     </div>
-                    <div class="logout_btn_holder">
-                        <a href="../logout.php" class="">
-                            <button class="logout_btn">Logout</button>
-                        </a>
-                    </div  > 
-                </div>';
+                </a>
+                <div class="logout_btn_holder">
+                    <a href="../logout.php" class="">
+                        <button class="logout_btn">Logout</button>
+                    </a>
+                </div  > 
+            </div>';
 
         ?>
         <div class="subcontainer">

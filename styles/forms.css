@@ -21,6 +21,11 @@
 h2 {
     margin-left: 4rem;
 }
+.user_to_dash {
+    text-decoration: none;
+    color: aliceblue;
+}
+
 
 
 /* header */
@@ -44,6 +49,7 @@ h2 {
     width: 36px;
     height: 36px;
     border-radius: 100%;
+    background-color:aliceblue;
 }
 
 .logout_btn_holder {

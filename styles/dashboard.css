@@ -13,7 +13,6 @@ a {
     text-decoration: none;
 }
 
-
 /* login header */ 
 .login_header {
     text-align: center;
@@ -95,6 +94,7 @@ a {
     width: 36px;
     height: 36px;
     border-radius: 100%;
+    background-color:aliceblue;
 }
 
 .logout_btn_holder {
