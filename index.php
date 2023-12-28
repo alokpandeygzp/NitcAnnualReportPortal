@@ -55,8 +55,8 @@ if (isset($_GET["code"])) {
                     window.location.href = "dashboard.php";
                 }, 2000); // 2000 milliseconds (2 seconds) delay
             </script>';
-
         exit();
+
     }
 }
 
@@ -93,15 +93,15 @@ else {
                 Annual Report Submission Portal for NITC
             </h2>
         </div>
-        <div class="">
+        <div class="sub_container">
             <?php
             echo '<div align="center">' . $login_button . '</div>';
             ?>
         </div>
         <form action="dashboard.php" method="get">
-            <div style="display: flex; justify-content: center; margin-top: 30px;">
-                <input type="text" name="user" placeholder="login ID">
-                <button type="submit" style="margin-left: 20px">LOGIN</button>
+            <div class="login_id_input_container">
+                <input type="text" name="user" placeholder="login ID" class="input-fields">
+                <button type="submit" class="login_btn_1">LOGIN</button>
             </div>
         </form>
     </div>
