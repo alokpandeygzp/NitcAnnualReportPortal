@@ -1,16 +1,15 @@
 <?php
 session_start();
 
+$admin1 = 'arham_m210695ca@nitc.ac.in';
+
 // Check if the user is not logged in, redirect to login page
 
 if (empty($_SESSION['access_token'])) {
     $fname="Welcome! ";
     $lname=$_GET["user"];
     $pic="./asset/nitc_logo_icon.svg";
-
-    $pdf_link="./doc/pdf.php?user=".$lname;
-    if($lname=='')
-        $pdf_link="./doc/pdf_all.php";
+    $mail=$_GET["user"];
 
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
@@ -21,9 +20,18 @@ else {
     $fname=$_SESSION["first_name"];
     $lname=$_SESSION['last_name'];
     $pic=$_SESSION['profile_picture'];
-    
-    $pdf_link="./doc/pdf_all.php";
+    $mail=$_SESSION['email_address'];
 }
+
+$con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+$sql = "SELECT role FROM entity where id='$mail'";
+$rs = mysqli_query($con, $sql);
+$row = mysqli_fetch_assoc($rs);
+$userRole = $row['role'];
+
+$pdf_link="./doc/pdf.php?user=".$mail;
+if($userRole!='department' && $userRole!='centre')
+    $pdf_link="./doc/pdf_all.php";
 
 // Add your dashboard content here
 ?>
@@ -47,19 +55,22 @@ else {
             </h2>
         </div>
 
-
-
-
         <?php
         echo '<div class="user_strip">
                 <div class="user">
                     <img src="' . $pic . '" class="user_image" />
                     <h3>' . $fname . ' ' . $lname . '</h3>
                 </div>
-                <div class="logout_btn_holder">
+                <div class="logout_btn_holder">';
+                    if ($userRole == 'admin') {
+                        echo '<a href="users.php?user='.$lname.'" class="">
+                                    <button class="logout_btn" style="margin-right: 20px;">Manage users</button>
+                                </a>';
+                    }
+                    echo '
                     <a href="logout.php" class="">
                         <button class="logout_btn">Logout</button>
-                    </a>
+                    </a>                    
                 </div  > 
             </div>';
 
@@ -119,7 +130,7 @@ else {
                     <div class="content_identifier">
                         Generate Report
                     </div>
-                    <form action=<?php echo $pdf_link?> method="post">    
+                    <form action=<?php echo $pdf_link; ?> method="post">                    
                     <div class="report_generator">
                         <div class="section_container">
                             <p>Choose Period:</p>
@@ -203,6 +214,7 @@ else {
             });
         }
     </script>
+
 </body>
 
 </html>

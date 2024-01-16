@@ -36,10 +36,6 @@ if ($res->num_rows > 0)
         // Fetch data from MySQL
         $sql1 = "SELECT * FROM community_services where entity='$dep_id'";
         $result = $conn->query($sql1);
-
-         // Fetch data from MySQL
-         $sql1 = "SELECT * FROM community_services where entity='$dep_id'";
-         $result = $conn->query($sql1);
  
          // Output data as a table in PDF
          if ($result->num_rows > 0 and isset($_POST['communityServices'])) 
@@ -231,7 +227,7 @@ if ($res->num_rows > 0)
          // Output data as a table in PDF
          if ($result->num_rows > 0 and isset($_POST['studentAchievements'])) 
          {
-             $section->addText('Details of Faculty, who acquired Higher Qualification',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+             $section->addText('Student achievements',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
              $section->addTextBreak(1);
              $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
              // Add table headers with some basic styling

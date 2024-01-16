@@ -31,9 +31,12 @@ if ($res->num_rows > 0 )
     {
         $dep_id = $row_main['id'];
         $dep_name = $row_main['name'];
+        $role = $row_main['role'];
 
-        $section->addText($dep_name,array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
-        $section->addTextBreak(1);
+        if(!($role=='department' || $role=='centre'))
+            continue;
+
+        $flag=0;
 
         // Fetch data from MySQL
         $sql1 = "SELECT * FROM community_services where entity='$dep_id'";
@@ -42,6 +45,10 @@ if ($res->num_rows > 0 )
         // Output data as a table in PDF
         if ($result->num_rows > 0 and isset($_POST['communityServices'])) 
         {
+            $section->addText($dep_name, array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+            $section->addTextBreak(1);
+            $flag=1;
+
             $section->addText('Community Services',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
             $section->addTextBreak(1);
             $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
@@ -67,6 +74,13 @@ if ($res->num_rows > 0 )
         // Output data as a table in PDF
         if ($result->num_rows > 0 and isset($_POST['otherServices'])) 
         {
+
+            if($flag==0) {
+                $section->addText($dep_name, array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+                $section->addTextBreak(1);
+                $flag=1;
+            }
+
             $section->addText('Other Academic and Administrative Services',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
             $section->addTextBreak(1);
             $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
@@ -90,6 +104,13 @@ if ($res->num_rows > 0 )
         // Output data as a table in PDF
         if ($result->num_rows > 0 and isset($_POST['conferencesConducted'])) 
         {
+
+            if($flag==0) {
+                $section->addText($dep_name, array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+                $section->addTextBreak(1);
+                $flag=1;
+            }
+
             $section->addText('Conferences/Summer/Winter School/Short term Courses/ Workshops conduct',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
             $section->addTextBreak(1);
             $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
@@ -118,6 +139,13 @@ if ($res->num_rows > 0 )
         // Output data as a table in PDF
         if ($result->num_rows > 0 and isset($_POST['expertLectures'])) 
         {
+
+            if($flag==0) {
+                $section->addText($dep_name, array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+                $section->addTextBreak(1);
+                $flag=1;
+            }
+
             $section->addText('Expert lecturers delivered in Conferences/Seminar/workshops',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
             $section->addTextBreak(1);
             $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
@@ -147,6 +175,13 @@ if ($res->num_rows > 0 )
         // Output data as a table in PDF
         if ($result->num_rows > 0 and isset($_POST['facultyHigherQualification'])) 
         {
+
+            if($flag==0) {
+                $section->addText($dep_name, array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+                $section->addTextBreak(1);
+                $flag=1;
+            }
+
             $section->addText('Details of Faculty, who acquired Higher Qualification',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
             $section->addTextBreak(1);
             $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
@@ -173,6 +208,13 @@ if ($res->num_rows > 0 )
         // Output data as a table in PDF
         if ($result->num_rows > 0 and isset($_POST['consultancyAndTesting'])) 
         {
+
+            if($flag==0) {
+                $section->addText($dep_name, array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+                $section->addTextBreak(1);
+                $flag=1;
+            }
+
             $section->addText('Consultancy and testing',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
             $section->addTextBreak(1);
             $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
@@ -202,6 +244,13 @@ if ($res->num_rows > 0 )
         // Output data as a table in PDF
         if ($result->num_rows > 0 and isset($_POST['patentAquiredAndFiled'])) 
         {
+
+            if($flag==0) {
+                $section->addText($dep_name, array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+                $section->addTextBreak(1);
+                $flag=1;
+            }
+
             $section->addText('Patents acquired and filed',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
             $section->addTextBreak(1);
             $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
@@ -229,6 +278,13 @@ if ($res->num_rows > 0 )
         // Output data as a table in PDF
         if ($result->num_rows > 0 and isset($_POST['studentAchievements'])) 
         {
+
+            if($flag==0) {
+                $section->addText($dep_name, array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
+                $section->addTextBreak(1);
+                $flag=1;
+            }
+
             $section->addText('Details of Faculty, who acquired Higher Qualification',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
             $section->addTextBreak(1);
             $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
