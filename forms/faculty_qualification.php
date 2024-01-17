@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $staffName = $_POST["name"];
     $staffQualification = $_POST["qualification"];
@@ -8,22 +9,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    $query1 = "INSERT INTO faculty_qualification (name, qualification, institute, entity) VALUES ('$staffName', '$staffQualification', '$staffInstitute', '$entity')";
-    if (mysqli_query($con, $query1)) {
+    // Use prepared statement to prevent SQL injection
+    $query1 = "INSERT INTO faculty_qualification (name, qualification, institute, entity) VALUES (?, ?, ?, ?)";
+    $stmt = mysqli_prepare($con, $query1);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, 'ssss', $staffName, $staffQualification, $staffInstitute, $entity);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
         echo '<script>alert("Entry added.");</script>';
     } else {
         echo '<script>alert("Entry addition failed.");</script>';
     }
 
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
     mysqli_close($con);
 }
+
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
 
-
-    //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
+    // below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
     // header('Location: index.php');
     // exit();
@@ -33,6 +43,7 @@ if (empty($_SESSION['access_token'])) {
     $pic = $_SESSION['profile_picture'];
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -106,15 +117,49 @@ if (empty($_SESSION['access_token'])) {
             <div class="content_container">
                 <div class="left_container">
 
-                    <div class="form_container">
-                        <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
-                            <input type="text" name="name" placeholder="Faculty name" class="input-fields"><br><br>
-                            <input type="text" name="qualification" placeholder="Qualification"
-                                class="input-fields"><br><br>
-                            <input type="text" name="institute" placeholder="Institute" class="input-fields"><br><br>
-                            <input type="submit" class="submit-button" value="Add Entry">
-                        </form>
-                    </div>
+                <div class="form_container">
+                <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
+                    <!-- Select field for faculty names -->
+                    <select name="faculty_name" class="input-fields">
+                        <option disabled selected>Name of Faculty</option>
+                        <?php
+                            // Establish a connection to the database
+                            $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+                            // Check the connection
+                            if (!$con) {
+                                die('Could not connect: ' . mysqli_error($con));
+                            }
+
+                            // Set $entity based on your logic
+                            $entity = isset($_GET["user"]) ? $_GET["user"] : '';
+
+                            // Select the faculty names from the database based on the entity
+                            $sql = "SELECT Name FROM facultydepartmentname WHERE Email='$entity'";
+                            $result = mysqli_query($con, $sql);
+
+                            // Check if the query was successful
+                            if ($result) {
+                                // Fetch and display faculty names as options
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . $row['Name'] . '">' . $row['Name'] . '</option>';
+                                }
+                            } else {
+                                echo 'Query failed: ' . mysqli_error($con);
+                            }
+
+                            // Close the database connection
+                            mysqli_close($con);
+                        ?>
+                    </select><br><br>
+
+                    <input type="text" name="qualification" placeholder="Qualification" class="input-fields"><br><br>
+                    <input type="text" name="institute" placeholder="Institute" class="input-fields"><br><br>
+                    <input type="submit" class="submit-button" value="Add Entry">
+                </form>
+
+                </div>
+
                 </div>
 
                 <div class="table_container">

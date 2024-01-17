@@ -7,22 +7,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    $query1 = "INSERT INTO other_services (staff, title, entity) VALUES ('$staffName', '$progTitle', '$entity')";
-    if (mysqli_query($con, $query1)) {
+    $query1 = "INSERT INTO other_services (staff, title, entity) VALUES (?, ?, ?)";
+    
+    // Use prepared statement to prevent SQL injection
+    $stmt = mysqli_prepare($con, $query1);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, 'sss', $staffName, $progTitle, $entity);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
         echo '<script>alert("Entry added.");</script>';
     } else {
         echo '<script>alert("Entry addition failed.");</script>';
     }
 
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
     mysqli_close($con);
 }
+
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
 
-
-    //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
+    // below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
     // header('Location: index.php');
     // exit();
@@ -32,6 +42,7 @@ if (empty($_SESSION['access_token'])) {
     $pic = $_SESSION['profile_picture'];
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -109,7 +120,7 @@ if (empty($_SESSION['access_token'])) {
                     <div class="form_container">
                         <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
                             <input type="text" name="name" placeholder="Name of staff" class="input-fields"><br><br>
-                            <input type="text" name="title" placeholder="Other services" class="input-fields"><br><br>
+                            <textarea name="title" placeholder="Other services"  class="input-fields textarea" rows=4></textarea><br><br>
                             <input type="submit" class="submit-button" value="Add Entry">
                         </form>
                     </div>

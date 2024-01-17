@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $patentStaff = $_POST["staff"];
     $patentTitle = $_POST["title"];
@@ -8,23 +9,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    $query1 = "INSERT INTO patents (staff, title, year, entity) VALUES ('$patentStaff', '$patentTitle', '$patentYear', '$entity')";
-    if (mysqli_query($con, $query1)) {
+    // Use prepared statement to prevent SQL injection
+    $query1 = "INSERT INTO patents (staff, title, year, entity) VALUES (?, ?, ?, ?)";
+    $stmt = mysqli_prepare($con, $query1);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, 'ssss', $patentStaff, $patentTitle, $patentYear, $entity);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
         echo '<script>alert("Entry added.");</script>';
     } else {
         echo '<script>alert("Entry addition failed.");</script>';
     }
 
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
     mysqli_close($con);
 }
+
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
 
-
-    //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
-
+    // Uncomment the following two lines for production
     // header('Location: index.php');
     // exit();
 } else {
@@ -33,6 +42,7 @@ if (empty($_SESSION['access_token'])) {
     $pic = $_SESSION['profile_picture'];
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>

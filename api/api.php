@@ -14,16 +14,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $action = $data['action'];
         switch ($action) {            
             case 'delete':
-                $sql = "DELETE FROM $table WHERE $column='$id'";
-                $rs = mysqli_query($con, $sql);
-                $message = "Entry deleted successfully.";
+                // Use prepared statement to prevent SQL injection
+                $sql = "DELETE FROM $table WHERE $column=?";
+                $stmt = mysqli_prepare($con, $sql);
+
+                // Bind parameter
+                mysqli_stmt_bind_param($stmt, 's', $id);
+
+                // Execute the statement
+                $success = mysqli_stmt_execute($stmt);
+
+                // Close the statement
+                mysqli_stmt_close($stmt);
+
+                if ($success) {
+                    $message = "Entry deleted successfully.";
+                } else {
+                    $message = "Entry deletion failed.";
+                }
                 break;            
             default:
                 $message = "Unknown action";
                 break;
         }
 
-        // $message = $data['action'];
         // Respond with a message
         $response = ['message' => $message];
         header('Content-Type: application/json');
