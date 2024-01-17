@@ -1,14 +1,39 @@
 <?php
 session_start();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $staffName = $_POST["name"];
+    $progTitle = $_POST["title"];
+    $entity = $_GET["user"];
+
+    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+    // Use prepared statement to prevent SQL injection
+    $query1 = "INSERT INTO community_services (staff, title, entity) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($con, $query1);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, 'sss', $staffName, $progTitle, $entity);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo '<script>alert("Entry added.");</script>';
+    } else {
+        echo '<script>alert("Entry addition failed.");</script>';
+    }
+
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($con);
+}
+
 
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
     $mail = $_GET["user"];
-
-
+    
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
     // header('Location: index.php');
@@ -18,24 +43,6 @@ if (empty($_SESSION['access_token'])) {
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
     $mail=$_SESSION['email_address'];
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $staffName = $_POST["name"];
-    $progTitle = $_POST["title"];
-    $entity = $mail;
-
-    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-
-    $query1 = "INSERT INTO community_services (staff, title, entity) VALUES ('$staffName', '$progTitle', '$entity')";
-    if (mysqli_query($con, $query1)) {
-        echo '<script>alert("Entry added.");</script>';
-    } else {
-        echo '<script>alert("Entry addition failed.");</script>';
-    }
-
-    mysqli_close($con);
-
 }
   
 ?>
@@ -119,8 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form_container">
                         <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
                             <input type="text" name="name" placeholder="Name of staff" class="input-fields"><br><br>
-                            <input type="text" name="title" placeholder="Community services"
-                                class="input-fields"><br><br>
+                            <textarea name="title" placeholder="Community services" class="input-fields textarea" rows=4></textarea><br><br>
                             <input type="submit" class="submit-button" value="Add Entry">
                         </form>
                     </div>
@@ -217,4 +223,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
+
 </script>

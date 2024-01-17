@@ -1,15 +1,40 @@
 <?php
 session_start();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $conNature = $_POST["nature"];
+    $conOrg = $_POST["org"];
+    $conRevenue = $_POST["revenue"];
+    $conStatus = $_POST["status"];
+    $entity = $_GET["user"];
+
+    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+    // Use prepared statement to prevent SQL injection
+    $query1 = "INSERT INTO consultancy (nature, organization, revenue, status, entity) VALUES (?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($con, $query1);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, 'sssss', $conNature, $conOrg, $conRevenue, $conStatus, $entity);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo '<script>alert("Entry added.");</script>';
+    } else {
+        echo '<script>alert("Entry addition failed.");</script>';
+    }
+
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($con);
+}
 
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
-    $mail = $_GET["user"];
 
-
-    //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
+    // Below two lines are commented out for testing purpose. Uncomment them to properly run the system with login.
 
     // header('Location: index.php');
     // exit();
@@ -17,27 +42,9 @@ if (empty($_SESSION['access_token'])) {
     $fname = $_SESSION["first_name"];
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
-    $mail=$_SESSION['email_address'];
-}
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conNature = $_POST["nature"];
-    $conOrg = $_POST["org"];
-    $conRevenue = $_POST["revenue"];
-    $conStatus = $_POST["status"];
-    $entity = $mail;
-
-    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-
-    $query1 = "INSERT INTO consultancy (nature, organization, revenue, status, entity) VALUES ('$conNature', '$conOrg', '$conRevenue', '$conStatus', '$entity')";
-    if (mysqli_query($con, $query1)) {
-        echo '<script>alert("Entry added.");</script>';
-    } else {
-        echo '<script>alert("Entry addition failed.");</script>';
-    }
-
-    mysqli_close($con);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -118,8 +125,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="text" name="nature" placeholder="Nature of service"
                                 class="input-fields"><br><br>
                             <input type="text" name="org" placeholder="Organization" class="input-fields"><br><br>
-                            <input type="text" name="revenue" placeholder="Revenue earned" class="input-fields"><br><br>
-                            <input type="text" name="status" placeholder="Status" class="input-fields"><br><br>
+                            <input  type="text" type="number" onkeypress="return isNumberKey(event)" name="revenue" placeholder="Revenue earned" class="input-fields"><br><br>
+                            
+                            <select name="status" class="input-fields">
+                                <option disabled selected>Status</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select><br><br>
                             <input type="submit" class="submit-button" value="Add Entry">
                         </form>
                     </div>
@@ -182,6 +194,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 
 <script>
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+
 function handleDeleteClick(event) {
     var id = event.target.getAttribute("data-id");
 

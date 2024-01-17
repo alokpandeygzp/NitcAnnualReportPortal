@@ -1,44 +1,49 @@
 <?php
 session_start();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $staffName = $_POST["name"];
+    $progTitle = $_POST["title"];
+    $progStart = $_POST["start"];
+    $progEnd = $_POST["end"];
+    $entity = $_GET["user"];
+
+    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+    // Use prepared statement to prevent SQL injection
+    $query1 = "INSERT INTO conferences (title, name, start, end, entity) VALUES (?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($con, $query1);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, 'sssss', $progTitle, $staffName, $progStart, $progEnd, $entity);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo '<script>alert("Entry added.");</script>';
+    } else {
+        echo '<script>alert("Entry addition failed.");</script>';
+    }
+
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($con);
+}
 
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
-    $mail = $_GET["user"];
 
-
-    //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
-
+    // below two lines are commented out for testing purpose. uncomment it to properly run system with login.
     // header('Location: index.php');
     // exit();
 } else {
     $fname = $_SESSION["first_name"];
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
-    $mail=$_SESSION['email_address'];
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $staffName = $_POST["name"];
-    $progTitle = $_POST["title"];
-    $progStart = $_POST["start"];
-    $progEnd = $_POST["end"];
-    $entity = $mail;
-
-    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-
-    $query1 = "INSERT INTO conferences (title, name, start, end, entity) VALUES ('$progTitle', '$staffName', '$progStart', '$progEnd', '$entity')";
-    if (mysqli_query($con, $query1)) {
-        echo '<script>alert("Entry added.");</script>';
-    } else {
-        echo '<script>alert("Entry addition failed.");</script>';
-    }
-
-    mysqli_close($con);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>

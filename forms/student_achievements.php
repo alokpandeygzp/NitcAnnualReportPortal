@@ -1,43 +1,47 @@
 <?php
 session_start();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $studentName = $_POST["name"];
+    $studentAchievement = $_POST["achievement"];
+    $entity = $_GET["user"];
+
+    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+    // Use prepared statement to prevent SQL injection
+    $query1 = "INSERT INTO student_achievements (name, achievement, entity) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($con, $query1);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, 'sss', $studentName, $studentAchievement, $entity);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo '<script>alert("Entry added.");</script>';
+    } else {
+        echo '<script>alert("Entry addition failed.");</script>';
+    }
+
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($con);
+}
 
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
-    $mail = $_GET["user"];
 
-
-    //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
-
+    // Uncomment the following two lines for production
     // header('Location: index.php');
     // exit();
 } else {
     $fname = $_SESSION["first_name"];
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
-    $mail=$_SESSION['email_address'];
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $studentName = $_POST["name"];
-    $studentAchievement = $_POST["achievement"];
-    $entity = $mail;
-
-    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-
-    $query1 = "INSERT INTO student_achievements (name, achievement, entity) VALUES ('$studentName', '$studentAchievement', '$entity')";
-
-    if (mysqli_query($con, $query1)) {
-        echo '<script>alert("Entry added.");</script>';
-    } else {
-        echo '<script>alert("Entry addition failed.");</script>';
-    }
-
-    mysqli_close($con);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
