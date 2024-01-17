@@ -19,19 +19,20 @@ if (empty($_SESSION['access_token'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $staffName = $_POST["name"];
+    $staffName = $_POST["faculty_name"];
     $staffQualification = $_POST["qualification"];
     $staffInstitute = $_POST["institute"];
+    $date = $_POST["date"];
     $entity = $mail;
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
     // Use prepared statement to prevent SQL injection
-    $query1 = "INSERT INTO faculty_qualification (name, qualification, institute, entity) VALUES (?, ?, ?, ?)";
+    $query1 = "INSERT INTO faculty_qualification (name, qualification, institute, entity, date) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($con, $query1);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, 'ssss', $staffName, $staffQualification, $staffInstitute, $entity);
+    mysqli_stmt_bind_param($stmt, 'sssss', $staffName, $staffQualification, $staffInstitute, $entity, $date);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -80,11 +81,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 });
             });
             function validateForm() {
-                var staffName = document.forms["myForm"]["name"].value;
+                var staffName = document.forms["myForm"]["faculty_name"].value;
                 var staffQualification = document.forms["myForm"]["qualification"].value;
                 var staffInstitute = document.forms["myForm"]["institute"].value;
+                var date = document.forms["myForm"]["date"].value;
 
-                if (staffName.trim() == "" || staffQualification.trim() == "" || staffInstitute.trim() == "") {
+
+                if (staffName.trim() == "" || staffQualification.trim() == "" || staffInstitute.trim() == "" || date.trim()=="") {
                     alert("Please fill in all fields.");
                     return false;
                 }
@@ -158,6 +161,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <input type="text" name="qualification" placeholder="Qualification" class="input-fields"><br><br>
                     <input type="text" name="institute" placeholder="Institute" class="input-fields"><br><br>
+                    <div>
+                        <label for="date">
+                            Date: 
+                        </label>
+                        <input type="date" name="date" id="date" class="input-fields">
+                    </div><br><br>
                     <input type="submit" class="submit-button" value="Add Entry">
                 </form>
 
