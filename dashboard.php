@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-$admin1 = 'arham_m210695ca@nitc.ac.in';
-
 // Check if the user is not logged in, redirect to login page
 
 if (empty($_SESSION['access_token'])) {

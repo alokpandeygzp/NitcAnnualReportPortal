@@ -4,6 +4,29 @@ session_start();
 
 include_once "libraries/vendor/autoload.php";
 
+$con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user=$_POST["user"];    
+
+    $sql = "SELECT * FROM entity where id='$user'";
+    $rs = mysqli_query($con, $sql);
+    $row = mysqli_fetch_assoc($rs);
+
+    // Check if the email ends with "@nitc.ac.in and if user is authorised and exist in database."
+    if (!$row) {
+        // If not, log the user out and display an alert
+        session_destroy();
+        echo '<script>alert("Access restricted. You don\'t have the permission to view this page.");';
+        echo 'window.location.href = "index.php";</script>';
+        exit();
+    }
+    else {
+        header("Location: dashboard.php?user=".$user);
+    }
+}
+
+
 $google_client = new Google_Client();
 
 // Define your ClientID, Client Secret Key, and Redirect Uri
@@ -27,14 +50,21 @@ if (isset($_GET["code"])) {
         $_SESSION['email_address'] = $data['email'];
         $_SESSION['profile_picture'] = $data['picture'];
 
-        // Check if the email ends with "@nitc.ac.in"
-        if (strpos($_SESSION['email_address'], "@nitc.ac.in") === false) {
+        $mail = $_SESSION['email_address'];
+                
+        $sql = "SELECT * FROM entity where id='$mail'";
+        $rs = mysqli_query($con, $sql);
+        $row = mysqli_fetch_assoc($rs);
+
+        // Check if the email ends with "@nitc.ac.in and if user is authorised and exist in database."
+        if (!$row || strpos($_SESSION['email_address'], "@nitc.ac.in") === false) {
             // If not, log the user out and display an alert
             session_destroy();
-            echo '<script>alert("Access restricted. Only NITC email addresses are allowed.");';
+            echo '<script>alert("Access restricted. You don\'t have the permission to view this page.");';
             echo 'window.location.href = "index.php";</script>';
             exit();
         }
+        
 
         // Show loading screen with login avatar, "WELCOME" message, and loading spinner
         echo '<div style="text-align: center; margin-top: 50px;">
@@ -98,7 +128,7 @@ else {
             echo '<div align="center">' . $login_button . '</div>';
             ?>
         </div>
-        <form action="dashboard.php" method="get">
+        <form method="post">
             <div class="login_id_input_container">
                 <input type="text" name="user" placeholder="login ID" class="input-fields">
                 <button type="submit" class="login_btn_1">LOGIN</button>
