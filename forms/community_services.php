@@ -27,13 +27,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($con);
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'delete') {
+    $id = $_POST['id'];
+
+    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+    // Use prepared statement to prevent SQL injection
+    $queryDelete = "DELETE FROM community_services WHERE title = ?";
+    $stmt = mysqli_prepare($con, $queryDelete);
+
+    // Bind parameter
+    mysqli_stmt_bind_param($stmt, 's', $id);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        $response = array('success' => true, 'message' => 'Entry deleted successfully.');
+        echo json_encode($response);
+    } else {
+        $response = array('success' => false, 'message' => 'Entry deletion failed.');
+        echo json_encode($response);
+    }
+
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($con);
+}
 
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
-    $mail = $_GET["user"];
     
+
+
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
     // header('Location: index.php');
@@ -42,7 +68,6 @@ if (empty($_SESSION['access_token'])) {
     $fname = $_SESSION["first_name"];
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
-    $mail=$_SESSION['email_address'];
 }
   
 ?>

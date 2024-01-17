@@ -178,6 +178,12 @@ h2 {
     /* overflow: auto; */
     padding: 12px 8px;
 }
+
+.textarea {
+    resize: vertical;
+    width: fixed;
+}
+
 table {
     width: 100%;
     border-collapse: collapse; 
