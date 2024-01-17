@@ -155,6 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <th class="box">S. no.</th> 
                     <th class="box">Name of student</th> 
                     <th class="box">Achievement</th> 
+                    <th class="box">Date</th> 
                     <th class="box">Entity</th> 
                     <th class="box">Action</th>
                 </tr>';
@@ -163,12 +164,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     while ($row = mysqli_fetch_assoc($rs)) {
                         $name = $row['name'];
                         $achievement = $row['achievement'];
+                        $date = $row['date'];
                         $dep = $row['entity'];
 
                         echo '<tr>
                     <td class="box sn">' . $count . '</td>
                     <td class="box name">' . $name . '</td>
                     <td class="box $achievement">' . $achievement . '</td>
+                    <td class="box $date">' . $date . '</td>
                     <td class="box entity">' . $dep . '</td>
     
                     <td class="box button_box btn"><button class="delete_btn" data-id="' . $achievement . '">Delete</button></td></tr>';

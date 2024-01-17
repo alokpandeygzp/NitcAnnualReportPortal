@@ -97,7 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
-
     <div class="container">
         <!-- header -->
         <?php
@@ -153,7 +152,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <tr> 
                     <th class="box">S. no.</th> 
                     <th class="box">Name of staff</th>                     
-                    <th class="box">Services</th>
+                    <th class="box">Services</th>                    
+                    <th class="box">Date</th>
                     <th class="box">Entity</th>
                     <th class="box">Action</th>
                 </tr>';
@@ -162,12 +162,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     while ($row = mysqli_fetch_assoc($rs)) {
                         $staff = $row['staff'];
                         $title = $row['title'];
+                        $date = $row['date'];
                         $dep = $row['entity'];
 
                         echo '<tr>
                             <td class="box sn">' . $count . '</td>
                             <td class="box name">' . $staff . '</td>
                             <td class="box services">' . $title . '</td>
+                            <td class="box services">' . $date . '</td>
                             <td class="box entity">' . $dep . '</td>
                             <td class="box button_box btn"><button class="delete_btn" data-id="' . $title . '">Delete</button></td>
                         </tr>';

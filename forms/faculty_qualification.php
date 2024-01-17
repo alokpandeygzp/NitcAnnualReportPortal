@@ -192,6 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <th class="box">Name of faculty</th> 
                     <th class="box">Qualification</th> 
                     <th class="box">Institute</th> 
+                    <th class="box">Date</th> 
                     <th class="box">Entity</th> 
                     <th class="box">Action</th>
                 </tr>';
@@ -201,6 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $name = $row['name'];
                         $qual = $row['qualification'];
                         $institute = $row['institute'];
+                        $date = $row['date'];
                         $dep = $row['entity'];
 
                         echo '<tr>
@@ -208,6 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td class="box name">' . $name . '</td>
                     <td class="box qual">' . $qual . '</td>
                     <td class="box institute">' . $institute . '</td>
+                    <td class="box date">' . $date . '</td>
                     <td class="box entity">' . $dep . '</td>
     
                     <td class="box button_box btn"><button class="delete_btn" data-id="' . $name . '">Delete</button></td></tr>';

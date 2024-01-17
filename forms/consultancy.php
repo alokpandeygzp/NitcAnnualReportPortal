@@ -169,6 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <th class="box">Organization</th> 
                     <th class="box">Revenue</th> 
                     <th class="box">Status</th>
+                    <th class="box">Date</th>
                     <th class="box">Entity</th>
                     <th class="box">Action</th>
                 </tr>';
@@ -179,6 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $org = $row['organization'];
                         $revenue = $row['revenue'];
                         $status = $row['status'];
+                        $date = $row['date'];
                         $dep = $row['entity'];
 
                         echo '<tr>
@@ -187,6 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td class="box org">' . $org . '</td>
                     <td class="box rev">' . $revenue . '</td>
                     <td class="box status">' . $status . '</td>
+                    <td class="box status">' . $date . '</td>
                     <td class="box entity">' . $dep . '</td>
     
                     <td  class="box button_box btn"><button class="delete_btn" data-id="' . $org . '">Delete</button></td>';
