@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2024 at 08:49 PM
+-- Generation Time: Jan 17, 2024 at 04:35 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -30,23 +30,43 @@ SET time_zone = "+00:00";
 CREATE TABLE `community_services` (
   `staff` varchar(80) NOT NULL,
   `title` varchar(2000) NOT NULL,
-  `entity` varchar(120) NOT NULL
+  `entity` varchar(120) NOT NULL,
+  `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `community_services`
 --
 
-INSERT INTO `community_services` (`staff`, `title`, `entity`) VALUES
-('Jane Doe', 'Led an Environmental Cleanup Campaign in collaboration with local volunteers. The initiative focused on cleaning up public spaces, raising awareness about environmental conservation, and encouraging community participation in sustainable practices.', 'CED'),
-('Alice Smith', 'Initiated and coordinated a Tutoring Program for underprivileged students in collaboration with local schools. The program aimed to provide educational support and mentorship to students facing socio-economic challenges.', 'CSED'),
-('Bob Johnson', 'Organized a Health and Wellness Workshop, bringing together healthcare professionals and community members. The workshop included informative sessions on healthy living, fitness activities, and free health check-ups for participants.', 'ECED'),
-('Charlie Brown', 'Led a Community Garden Project, establishing a communal green space for residents. The project aimed to promote sustainable living, community bonding, and provide fresh produce to local families in need.', 'EEED'),
-('David Wilson', 'Coordinated a STEM Education Program for kids, introducing young minds to science, technology, engineering, and mathematics. The program included interactive workshops, experiments, and educational activities to foster interest in STEM fields.', 'MED'),
-('Frank Miller', 'Provided Educational Support for orphans through mentoring and educational resources. The initiative aimed to empower orphaned children with educational opportunities, skill development, and emotional support.', 'CED'),
-('Grace Davis', 'Coordinated an Environmental Awareness Drive, conducting awareness campaigns, tree plantation events, and workshops on sustainable living. The drive aimed to instill a sense of responsibility towards the environment among community members.', 'CSED'),
-('Henry Clark', 'Organized a Youth Leadership Training program to empower young individuals with leadership skills and personal development. The program included workshops, seminars, and mentoring sessions for youth empowerment.', 'ECED'),
-('vvvv', 'ddd', 'CSED');
+INSERT INTO `community_services` (`staff`, `title`, `entity`, `date`) VALUES
+('John Doe', 'Architectural Workshop: Designing Spaces for All', 'arch@nitc', '2024-01-17'),
+('Jane Smith', 'Community Heritage Preservation: Our Past for the Future', 'arch@nitc', '2024-02-01'),
+('Alice Johnson', 'Art Exhibition: Celebrating Local Talent', 'arts@nitc', '2024-03-10'),
+('Bob Williams', 'Community Theater Project: Bringing Stories to Life', 'arts@nitc', '2024-04-05'),
+('Charlie Brown', 'Environmental Cleanup: Greening Our Neighborhood', 'bio@nitc', '2024-05-20'),
+('David Lee', 'Health Awareness Campaign: Promoting Wellness Together', 'bio@nitc', '2024-06-15'),
+('Eva Martinez', 'Career Guidance Seminar: Empowering Futures', 'ccd@nitc.ac.in', '2024-07-30'),
+('Frank Davis', 'Digital Literacy Workshop: Connecting Communities Online', 'ccd@nitc.ac.in', '2024-08-25'),
+('Grace Taylor', 'Chemistry Outreach Program: Inspiring Curiosity in Science', 'chem@nitc', '2024-09-09'),
+('Harry Anderson', 'STEM Education Initiative: Building Tomorrow\'s Innovators', 'chem@nitc', '2024-10-14'),
+('Ivy Rodriguez', 'Civil Engineering Outreach: Building Bridges to the Future', 'civil@nitc', '2025-01-08'),
+('Jake White', 'Community Engagement in Arts: Fostering Creativity Together', 'civil@nitc', '2025-02-02'),
+('Karen Young', 'Computer Science Education Drive: Nurturing Future Tech Leaders', 'cse@nitc', '2025-03-18'),
+('Leo Miller', 'Community Sports Event: Promoting Active Lifestyles', 'cse@nitc', '2025-04-13'),
+('Mia Davis', 'Electrical Engineering Outreach: Powering Community Connections', 'elect@nitc', '2025-05-28'),
+('Noah Wilson', 'Community Education in Electronics: Empowering Minds', 'elect@nitc', '2025-06-23'),
+('Olivia Moore', 'ECE Community Initiative: Connecting Through Technology', 'ece@nitc', '2025-07-08'),
+('Peter Adams', 'Arts Appreciation Workshop: Unleashing Creative Expressions', 'ece@nitc', '2025-08-03'),
+('Quincy Thomas', 'Education for All: Bridging Gaps in Learning', 'edu@nitc', '2025-09-18'),
+('Rachel Clark', 'Empowering through Education: A Path to Brighter Futures', 'edu@nitc', '2025-10-13'),
+('Samuel Turner', 'Electrical Engineering Outreach: Illuminating Minds Together', 'elect@nitc', '2025-11-28'),
+('Sophia Harris', 'Environment Conservation Drive: Sustaining Our Ecosystem', 'elect@nitc', '2025-12-23'),
+('Tom King', 'Materials Science Exhibition: Exploring Innovations', 'material@nitc', '2026-01-07'),
+('Ursula Walker', 'Mathematics Outreach: Unraveling the Wonders of Numbers', 'math@nitc', '2026-02-01'),
+('Vince Scott', 'Mechanical Engineering Workshop: Unveiling Engineering Marvels', 'mech@nitc', '2026-03-17'),
+('Wendy Hall', 'Management Studies Seminar: Shaping Future Leaders', 'mgmt@nitc', '2026-04-12'),
+('Xander Turner', 'Physical Education Day: Fostering Healthy Lifestyles', 'phedu@nitc', '2026-05-27'),
+('Yvonne Baker', 'Physics Education Program: Exploring the World of Forces', 'physics@nitc', '2026-06-22');
 
 -- --------------------------------------------------------
 
@@ -67,15 +87,34 @@ CREATE TABLE `conferences` (
 --
 
 INSERT INTO `conferences` (`title`, `name`, `start`, `end`, `entity`) VALUES
-('Computer Science Symposium', 'Alice Smith', '2023-03-25', '2023-03-27', 'CSED'),
-('eco symposium', 'iintekhwab arham', '2024-01-11', '2024-01-23', 'CSED'),
-('Electronics and Communication Summit', 'Bob Johnson', '2023-04-30', '2023-05-02', 'ECED'),
-('George Harris', 'Innovation in Civil Engineering', '2023-08-20', '2023-08-22', 'CED'),
-('Isabel Martinez', 'AI and Future of Technology', '2023-09-25', '2023-09-27', 'CSED'),
-('Jake Robinson', 'Advancements in Electronics', '2023-10-30', '2023-11-01', 'ECED'),
-('Mechanical Engineering Expo', 'David Wilson', '2023-06-10', '2023-06-12', 'MED'),
-('Renewable Energy Forum', 'Charlie Brown', '2023-05-05', '2023-05-07', 'EEED'),
-('Tech Innovators Conference', 'Jane Doe', '2023-02-20', '2023-02-22', 'CED');
+('Adult Education Summit', 'Quincy Thomas', '2025-09-25', '2025-09-27', 'edu@nitc'),
+('Architecture Summit 2024', 'John Doe', '2024-01-25', '2024-01-28', 'arch@nitc'),
+('Art and Community Symposium', 'Alice Johnson', '2024-03-25', '2024-03-27', 'arts@nitc'),
+('Arts and Culture Festival Symposium', 'Jake White', '2025-02-01', '2025-02-03', 'civil@nitc'),
+('Arts and Music Education Conference', 'Peter Adams', '2025-08-10', '2025-08-12', 'ece@nitc'),
+('Biodiversity Conservation Forum', 'Charlie Brown', '2024-06-01', '2024-06-03', 'bio@nitc'),
+('Civil Engineering Innovation Summit', 'Ivy Rodriguez', '2025-01-15', '2025-01-18', 'civil@nitc'),
+('Community Leadership Seminar', 'Wendy Hall', '2026-04-01', '2026-04-03', 'mgmt@nitc'),
+('Community Library Conference', 'Rachel Clark', '2025-10-10', '2025-10-12', 'edu@nitc'),
+('Computer Science Education Summit', 'Karen Young', '2025-03-25', '2025-03-27', 'cse@nitc'),
+('Creative Expression Forum', 'Bob Williams', '2024-04-10', '2024-04-12', 'arts@nitc'),
+('Digital Learning Conference', 'Frank Davis', '2024-08-20', '2024-08-22', 'ccd@nitc.ac.in'),
+('ECE Robotics Symposium', 'Olivia Moore', '2025-07-25', '2025-07-27', 'ece@nitc'),
+('Educational Development Summit', 'Eva Martinez', '2024-08-01', '2024-08-03', 'ccd@nitc.ac.in'),
+('Electrical Engineering Innovation Summit', 'Mia Davis', '2025-06-01', '2025-06-03', 'elect@nitc'),
+('Electrical Engineering Training Summit', 'Samuel Turner', '2025-11-25', '2025-11-27', 'elect@nitc'),
+('Environmental Conservation Conference', 'Sophia Harris', '2025-12-10', '2025-12-12', 'elect@nitc'),
+('Materials Science Innovation Summit', 'Tom King', '2026-01-15', '2026-01-18', 'material@nitc'),
+('Mathematics Enrichment Conference', 'Ursula Walker', '2026-02-01', '2026-02-03', 'math@nitc'),
+('Mechanical Engineering Outreach Summit', 'Vince Scott', '2026-03-15', '2026-03-18', 'mech@nitc'),
+('Physical Education and Fitness Conference', 'Xander Turner', '2026-05-25', '2026-05-27', 'phedu@nitc'),
+('Physics Education and Science Exploration Symposium', 'Yvonne Baker', '2026-06-10', '2026-06-12', 'physics@nitc'),
+('Science Education Conference', 'Grace Taylor', '2024-09-15', '2024-09-18', 'chem@nitc'),
+('STEM Education Symposium', 'Harry Anderson', '2024-10-01', '2024-10-03', 'chem@nitc'),
+('Technology Access Conference', 'Leo Miller', '2025-04-10', '2025-04-12', 'cse@nitc'),
+('Technology Fair and Expo', 'Noah Wilson', '2025-06-15', '2025-06-17', 'elect@nitc'),
+('Urban Planning Conference', 'Jane Smith', '2024-02-10', '2024-02-12', 'arch@nitc'),
+('Wellness and Health Conference', 'David Lee', '2024-06-15', '2024-06-17', 'bio@nitc');
 
 -- --------------------------------------------------------
 
@@ -88,22 +127,30 @@ CREATE TABLE `consultancy` (
   `organization` varchar(80) NOT NULL,
   `revenue` int(10) NOT NULL,
   `status` varchar(80) NOT NULL,
-  `entity` varchar(120) NOT NULL
+  `entity` varchar(120) NOT NULL,
+  `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `consultancy`
 --
 
-INSERT INTO `consultancy` (`nature`, `organization`, `revenue`, `status`, `entity`) VALUES
-('Nathan Wilson', 'Advanced Robotics Consultancy', 18000, 'In Progress', 'ECED'),
-('Larry White', 'Blockchain Technology Consultancy', 25000, 'In Progress', 'CED'),
-('Software Development Consultancy', 'CodeCrafters Ltd.', 25000, 'Completed', 'CSED'),
-('Mia Adams', 'Data Science Solutions Consultancy', 22000, 'Completed', 'CSED'),
-('Electronics Prototyping Services', 'ElectroTech Innovations', 18000, 'In Progress', 'ECED'),
-('Power System Analysis Consultancy', 'PowerGrid Solutions', 22000, 'Completed', 'EEED'),
-('Mechanical Design and Testing', 'Precision Engineering Solutions', 30000, 'In Progress', 'MED'),
-('IT Advisory Services', 'Tech Innovate Consulting', 20000, 'In Progress', 'CED');
+INSERT INTO `consultancy` (`nature`, `organization`, `revenue`, `status`, `entity`, `date`) VALUES
+('Arts and Culture', 'Cultural Harmony Society', 70000, 'Active', 'material@nitc', '2024-10-14'),
+('Science Education', 'Curious Minds Foundation', 70000, 'Active', 'physics@nitc', '2025-05-28'),
+('Engineering Excellence', 'Engineering Marvels Institute', 80000, 'Active', 'mech@nitc', '2025-02-02'),
+('Physical Fitness', 'FitLife Foundation', 75000, 'Active', 'phedu@nitc', '2025-04-13'),
+('Environmental Conservation', 'Green Initiatives Organization', 50000, 'Active', 'arch@nitc', '2024-01-17'),
+('Health and Wellness', 'Healthy Living Foundation', 55000, 'Active', 'chem@nitc', '2024-05-20'),
+('Social Impact', 'Impactful Change Foundation', 75000, 'Active', 'edu@nitc', '2024-08-25'),
+('Technology and Innovation', 'InnoTech Hub', 55000, 'Active', 'math@nitc', '2025-01-08'),
+('STEM Education', 'Innovate for Tomorrow', 70000, 'Active', 'cse@nitc', '2024-06-15'),
+('Leadership Development', 'Leadership Institute', 60000, 'Active', 'mgmt@nitc', '2025-03-18'),
+('Community Development', 'Local Empowerment Network', 75000, 'Active', 'arts@nitc', '2024-02-01'),
+('Community Services', 'ServeLocal NGO', 65000, 'Active', 'elect@nitc', '2024-09-09'),
+('Digital Inclusion', 'TechConnect Foundation', 80000, 'Active', 'ccd@nitc.ac.in', '2024-04-05'),
+('Education and Training', 'TechSkills Academy', 60000, 'Active', 'bio@nitc', '2024-03-10'),
+('Youth Empowerment', 'YouthLeaders Organization', 60000, 'Active', 'ece@nitc', '2024-07-30');
 
 -- --------------------------------------------------------
 
@@ -123,13 +170,24 @@ CREATE TABLE `entity` (
 
 INSERT INTO `entity` (`id`, `name`, `role`) VALUES
 ('alok@', 'alok pandey', 'admin'),
+('arch@nitc', 'Department of Architecture', 'department'),
 ('arham_m210695ca@nitc.ac.in', 'Arham', 'admin'),
+('arts@nitc', 'Humanities', 'department'),
+('bio@nitc', 'Department of Biotechnology', 'department'),
 ('ccd@nitc.ac.in', 'centre of ccd', 'centre'),
-('CED', 'Department of Civil Engineering', 'department'),
-('CSED', 'Department of Computer Science', 'department'),
-('ECED', 'Department of Electronics and Communication', 'department'),
-('EEED', 'Department of Electrical Engineering', 'department'),
-('MED', 'Department of Mechanical Engineering', 'department');
+('chem@nitc', 'Department of Chemical Engineering', 'department'),
+('chemistry@nitc', 'Chemistry', 'department'),
+('civil@nitc', 'Department of Civil Engineering', 'department'),
+('cse@nitc', 'Department of Computer Science and Engineering', 'department'),
+('ece@nitc', 'Department of Electronics and Communication Engineering', 'department'),
+('edu@nitc', 'Education', 'department'),
+('elect@nitc', 'Department of Electrical Engineering', 'department'),
+('material@nitc', 'Department of Materials Science and Engineering', 'department'),
+('math@nitc', 'Mathematics', 'department'),
+('mech@nitc', 'Department of Mechanical Engineering', 'department'),
+('mgmt@nitc', 'Management Studies', 'department'),
+('phedu@nitc', 'Physical Education', 'department'),
+('physics@nitc', 'Department of Physics', 'department');
 
 -- --------------------------------------------------------
 
@@ -151,14 +209,16 @@ CREATE TABLE `expert_lectures` (
 --
 
 INSERT INTO `expert_lectures` (`staff`, `title`, `start`, `end`, `organization`, `entity`) VALUES
-('Rachel Wilson', 'Cutting-edge Developments in Electronics', '2023-11-30', '2023-12-01', 'Electronics Innovation Forum', 'ECED'),
-('Bob Johnson', 'Emerging Technologies in Electronics', '2023-05-05', '2023-05-06', 'ElectroTech Innovations', 'ECED'),
-('Quincy Adams', 'Frontiers in Computer Science', '2023-10-30', '2023-10-31', 'Computer Science Association', 'CSED'),
-('Jane Doe', 'Innovations in IT', '2023-02-28', '2023-03-01', 'Tech Innovate Consulting', 'CED'),
-('David Wilson', 'Innovations in Mechanical Engineering', '2023-07-15', '2023-07-16', 'Mechanical Engineering Society', 'MED'),
-('Alice Smith', 'Recent Trends in Machine Learning', '2023-03-30', '2023-03-31', 'AI Research Institute', 'CSED'),
-('Philip Harris', 'Smart Cities and Urban Planning', '2023-09-25', '2023-09-26', 'Urban Development Council', 'CED'),
-('Charlie Brown', 'Sustainable Energy Solutions', '2023-06-10', '2023-06-11', 'Renewable Energy Association', 'EEED');
+('David Wilson', 'Advancements in Biology Research', '2024-06-05', '2024-06-10', 'BioTech Innovations', 'bio@nitc'),
+('Ethan Davis', 'Art and Culture Preservation', '2024-04-20', '2024-04-25', 'Creative Connections', 'arts@nitc'),
+('Diana Turner', 'Biodiversity Conservation Initiatives', '2024-06-20', '2024-06-25', 'Nature Preservation Society', 'bio@nitc'),
+('Emily Johnson', 'Community Development Best Practices', '2024-03-15', '2024-03-20', 'Local Empowerment Network', 'arts@nitc'),
+('Sara Brown', 'Digital Literacy for Social Inclusion', '2024-08-01', '2024-08-05', 'TechConnect Foundation', 'ccd@nitc.ac.in'),
+('John Smith', 'Environmental Conservation Strategies', '2024-01-20', '2024-01-25', 'Green Initiatives Organization', 'arch@nitc'),
+('Alice Miller', 'Innovations in STEM Education', '2024-09-20', '2024-09-25', 'Future Innovators Society', 'cse@nitc'),
+('Samuel Taylor', 'Online Learning Platforms for Education', '2024-08-20', '2024-08-25', 'EduTech Solutions', 'ccd@nitc.ac.in'),
+('Alex Turner', 'Promoting Health and Wellness in Communities', '2024-09-05', '2024-09-10', 'Healthy Living Foundation', 'chem@nitc'),
+('Jane Williams', 'Sustainable Architecture Innovations', '2024-02-05', '2024-02-10', 'EcoBuilders Association', 'arch@nitc');
 
 -- --------------------------------------------------------
 
@@ -712,21 +772,43 @@ CREATE TABLE `faculty_qualification` (
   `name` varchar(80) NOT NULL,
   `qualification` varchar(200) NOT NULL,
   `institute` varchar(80) NOT NULL,
-  `entity` varchar(120) NOT NULL
+  `entity` varchar(120) NOT NULL,
+  `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `faculty_qualification`
 --
 
-INSERT INTO `faculty_qualification` (`name`, `qualification`, `institute`, `entity`) VALUES
-('Alice Smith', 'Ph.D. in Electrical Engineering', 'ElectroTech Institute', 'CSED'),
-('Bob Johnson', 'Ph.D. in Electronics and Communication', 'Institute of Electronics', 'ECED'),
-('Charlie Brown', 'Ph.D. in Electrical Engineering', 'Renewable Energy University', 'EEED'),
-('David Wilson', 'Ph.D. in Mechanical Engineering', 'Mechanical Excellence Institute', 'MED'),
-('Frank Miller', 'Masters in Civil Engineering', 'Civil Engineers Academy', 'CED'),
-('Henry Clark', 'Masters in Electronics Engineering', 'Electronics Innovators School', 'ECED'),
-('Jane Doe', 'Ph.D. in Computer Science', 'Tech Innovate University', 'CED');
+INSERT INTO `faculty_qualification` (`name`, `qualification`, `institute`, `entity`, `date`) VALUES
+('Dr. Alice Johnson', 'Ph.D. in Fine Arts', 'Creative Arts Academy', 'arts@nitc', '2024-03-10'),
+('Dr. Charlie Brown', 'Ph.D. in Environmental Science', 'Green Earth University', 'bio@nitc', '2024-05-20'),
+('Dr. Frank Davis', 'Masters in Digital Learning Technologies', 'TechEd University', 'ccd@nitc.ac.in', '2024-08-25'),
+('Dr. Grace Taylor', 'Ph.D. in Chemistry', 'Chemical Sciences Institute', 'chem@nitc', '2024-09-09'),
+('Dr. Jake White', 'Masters in Arts and Culture Studies', 'Cultural Heritage University', 'civil@nitc', '2025-02-02'),
+('Dr. Jane Smith', 'Masters in Architectural Design', 'Urban Institute of Technology', 'arch@nitc', '2024-02-01'),
+('Dr. Karen Young', 'Ph.D. in Computer Science', 'TechGenius Institute', 'cse@nitc', '2025-03-18'),
+('Dr. Mia Davis', 'Ph.D. in Electrical Engineering', 'Electric Innovations University', 'elect@nitc', '2025-05-28'),
+('Dr. Peter Adams', 'Masters in Arts Education', 'Creative Minds Academy', 'ece@nitc', '2025-08-03'),
+('Dr. Quincy Thomas', 'Ph.D. in Education', 'Education Excellence Institute', 'edu@nitc', '2025-09-18'),
+('Dr. Sophia Harris', 'Masters in Environmental Science', 'Environmental Research Center', 'elect@nitc', '2025-12-23'),
+('Dr. Ursula Walker', 'Masters in Mathematics Education', 'Mathematics Excellence School', 'math@nitc', '2026-02-01'),
+('Dr. Vince Scott', 'Ph.D. in Mechanical Engineering', 'Mechanical Innovations College', 'mech@nitc', '2026-03-17'),
+('Dr. Yvonne Baker', 'Masters in Physics Education', 'Physics Education Center', 'physics@nitc', '2026-06-22'),
+('Prof. Bob Williams', 'Masters in Performing Arts', 'National Theater School', 'arts@nitc', '2024-04-05'),
+('Prof. David Lee', 'Masters in Public Health', 'Wellness Institute', 'bio@nitc', '2024-06-15'),
+('Prof. Eva Martinez', 'Ph.D. in Education', 'Educational Excellence Center', 'ccd@nitc.ac.in', '2024-07-30'),
+('Prof. Harry Anderson', 'Masters in STEM Education', 'STEM Innovators College', 'chem@nitc', '2024-10-14'),
+('Prof. Ivy Rodriguez', 'Ph.D. in Civil Engineering', 'Engineering Excellence Institute', 'civil@nitc', '2025-01-08'),
+('Prof. John Doe', 'Ph.D. in Architecture', 'Green University', 'arch@nitc', '2024-01-17'),
+('Prof. Leo Miller', 'Masters in Technology Management', 'TechLeaders School', 'cse@nitc', '2025-04-13'),
+('Prof. Noah Wilson', 'Masters in Technology and Society', 'TechInnovate College', 'elect@nitc', '2025-06-23'),
+('Prof. Olivia Moore', 'Ph.D. in Electronics and Communication', 'Communication Technologies Institute', 'ece@nitc', '2025-07-08'),
+('Prof. Rachel Clark', 'Masters in Library Science', 'Community Learning Center', 'edu@nitc', '2025-10-13'),
+('Prof. Samuel Turner', 'Ph.D. in Electrical Engineering', 'TechMasters Institute', 'elect@nitc', '2025-11-28'),
+('Prof. Tom King', 'Ph.D. in Materials Science', 'Materials Innovations Institute', 'material@nitc', '2026-01-07'),
+('Prof. Wendy Hall', 'Masters in Management Studies', 'Management Excellence Institute', 'mgmt@nitc', '2026-04-12'),
+('Prof. Xander Turner', 'Ph.D. in Physical Education', 'Fitness and Wellness University', 'phedu@nitc', '2026-05-27');
 
 -- --------------------------------------------------------
 
@@ -737,22 +819,43 @@ INSERT INTO `faculty_qualification` (`name`, `qualification`, `institute`, `enti
 CREATE TABLE `other_services` (
   `staff` varchar(80) NOT NULL,
   `title` varchar(2000) NOT NULL,
-  `entity` varchar(120) NOT NULL
+  `entity` varchar(120) NOT NULL,
+  `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `other_services`
 --
 
-INSERT INTO `other_services` (`staff`, `title`, `entity`) VALUES
-('Jane Doe', 'Coordinated Cultural Fest - \"Expressions\"', 'CED'),
-('Alice Smith', 'Initiated Coding Bootcamp for students', 'CSED'),
-('Bob Johnson', 'Hosted Hackathon - \"Code Challenge 2023\"', 'ECED'),
-('Charlie Brown', 'Conducted Energy Conservation Workshop', 'EEED'),
-('David Wilson', 'Facilitated Mechanical Design Seminar', 'MED'),
-('Larry White', 'Organized Civil Engineering Expo', 'CED'),
-('Mia Adams', 'Supported Computer Science Symposium', 'CSED'),
-('Nathan Wilson', 'Promoted Electronics and Communication Summit', 'ECED');
+INSERT INTO `other_services` (`staff`, `title`, `entity`, `date`) VALUES
+('John Doe', 'Architectural Consultation for Community Projects', 'arch@nitc', '2024-01-17'),
+('Jane Smith', 'Urban Planning Workshop for Sustainable Living', 'arch@nitc', '2024-02-01'),
+('Alice Johnson', 'Community Art Installation and Beautification', 'arts@nitc', '2024-03-10'),
+('Bob Williams', 'Public Space Renovation and Creative Expression', 'arts@nitc', '2024-04-05'),
+('Charlie Brown', 'Ecological Survey and Biodiversity Conservation', 'bio@nitc', '2024-05-20'),
+('David Lee', 'Health and Wellness Program Implementation', 'bio@nitc', '2024-06-15'),
+('Eva Martinez', 'Professional Development Workshops for Students', 'ccd@nitc.ac.in', '2024-07-30'),
+('Frank Davis', 'Online Learning Platform Development', 'ccd@nitc.ac.in', '2024-08-25'),
+('Grace Taylor', 'Science Education Outreach in Local Schools', 'chem@nitc', '2024-09-09'),
+('Harry Anderson', 'STEM Mentorship Program for Students', 'chem@nitc', '2024-10-14'),
+('Ivy Rodriguez', 'Civil Engineering Infrastructure Assessment', 'civil@nitc', '2025-01-08'),
+('Jake White', 'Community Arts and Culture Festival Coordination', 'civil@nitc', '2025-02-02'),
+('Karen Young', 'Computer Science Coding Bootcamp for Kids', 'cse@nitc', '2025-03-18'),
+('Leo Miller', 'Community Technology Access Center Establishment', 'cse@nitc', '2025-04-13'),
+('Mia Davis', 'Electrical Engineering Innovation Challenge', 'elect@nitc', '2025-05-28'),
+('Noah Wilson', 'Community Technology Fair Organization', 'elect@nitc', '2025-06-23'),
+('Olivia Moore', 'ECE Robotics Workshop for Local Schools', 'ece@nitc', '2025-07-08'),
+('Peter Adams', 'Community Arts and Music Education Program', 'ece@nitc', '2025-08-03'),
+('Quincy Thomas', 'Adult Education Program for Skill Enhancement', 'edu@nitc', '2025-09-18'),
+('Rachel Clark', 'Community Library Setup and Book Donation Drive', 'edu@nitc', '2025-10-13'),
+('Samuel Turner', 'Electrical Engineering Practical Training Sessions', 'elect@nitc', '2025-11-28'),
+('Sophia Harris', 'Environmental Conservation and Cleanup Campaign', 'elect@nitc', '2025-12-23'),
+('Tom King', 'Materials Science Innovation Showcase', 'material@nitc', '2026-01-07'),
+('Ursula Walker', 'Mathematics Enrichment Program for Students', 'math@nitc', '2026-02-01'),
+('Vince Scott', 'Mechanical Engineering Outreach for School Students', 'mech@nitc', '2026-03-17'),
+('Wendy Hall', 'Management Studies Community Leadership Seminar', 'mgmt@nitc', '2026-04-12'),
+('Xander Turner', 'Physical Education and Fitness Workshop', 'phedu@nitc', '2026-05-27'),
+('Yvonne Baker', 'Physics Education and Science Exploration Camp', 'physics@nitc', '2026-06-22');
 
 -- --------------------------------------------------------
 
@@ -763,7 +866,7 @@ INSERT INTO `other_services` (`staff`, `title`, `entity`) VALUES
 CREATE TABLE `patents` (
   `staff` varchar(80) NOT NULL,
   `title` varchar(800) NOT NULL,
-  `year` varchar(80) NOT NULL,
+  `date` date DEFAULT NULL,
   `entity` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -771,16 +874,35 @@ CREATE TABLE `patents` (
 -- Dumping data for table `patents`
 --
 
-INSERT INTO `patents` (`staff`, `title`, `year`, `entity`) VALUES
-('Jane Doe', 'Automated Code Review System', '2023', 'CED'),
-('Alice Smith', 'Wireless Energy Transmission Technology', '2023', 'CSED'),
-('Bob Johnson', 'Flexible OLED Display Technology', '2023', 'ECED'),
-('Charlie Brown', 'Hybrid Renewable Energy System', '2023', 'EEED'),
-('David Wilson', 'Advanced Gearless Transmission System', '2023', 'MED'),
-('Larry White', 'Blockchain-based Urban Planning System', '2023', 'CED'),
-('Mia Adams', 'Intelligent Traffic Control System', '2023', 'CSED'),
-('Nathan Wilson', 'Autonomous Drone Delivery Mechanism', '2023', 'ECED'),
-('bnbnbn', 'Δ', '2222 ', 'CSED');
+INSERT INTO `patents` (`staff`, `title`, `date`, `entity`) VALUES
+('Prof. John Doe', 'Innovative Architectural Design', '2024-01-20', 'arch@nitc'),
+('Dr. Jane Smith', 'Sustainable Urban Planning Method', '2024-02-05', 'arch@nitc'),
+('Dr. Alice Johnson', 'Interactive Art Installation System', '2024-03-15', 'arts@nitc'),
+('Prof. Bob Williams', 'Community Theater Engagement Platform', '2024-04-20', 'arts@nitc'),
+('Dr. Charlie Brown', 'Biodiversity Conservation Algorithm', '2024-06-05', 'bio@nitc'),
+('Prof. David Lee', 'Public Health Wellness Monitoring System', '2024-06-20', 'bio@nitc'),
+('Prof. Eva Martinez', 'Education Enhancement Platform', '2024-08-01', 'ccd@nitc.ac.in'),
+('Dr. Frank Davis', 'Digital Literacy Learning App', '2024-08-20', 'ccd@nitc.ac.in'),
+('Dr. Grace Taylor', 'Chemical Analysis Method for Environmental Monitoring', '2024-09-05', 'chem@nitc'),
+('Prof. Harry Anderson', 'STEM Education Interactive Toolkit', '2024-09-20', 'cse@nitc'),
+('Prof. Ivy Rodriguez', 'Advanced Civil Engineering Materials', '2025-01-15', 'civil@nitc'),
+('Dr. Jake White', 'Cultural Heritage Preservation System', '2025-02-01', 'civil@nitc'),
+('Dr. Karen Young', 'Innovative Computer Science Algorithm', '2025-03-25', 'cse@nitc'),
+('Prof. Leo Miller', 'Technology Access Center Development', '2025-04-10', 'cse@nitc'),
+('Dr. Mia Davis', 'Electrical Energy Harvesting System', '2025-06-01', 'elect@nitc'),
+('Prof. Noah Wilson', 'Community Technology Fair Platform', '2025-06-15', 'elect@nitc'),
+('Prof. Olivia Moore', 'ECE Robotics Learning Kit', '2025-07-25', 'ece@nitc'),
+('Dr. Peter Adams', 'Arts and Music Education Technology', '2025-08-10', 'ece@nitc'),
+('Dr. Quincy Thomas', 'Innovative Education Methodology', '2025-09-25', 'edu@nitc'),
+('Prof. Rachel Clark', 'Community Library Information System', '2025-10-10', 'edu@nitc'),
+('Prof. Samuel Turner', 'Electrical Engineering Practical Training Simulator', '2025-11-25', 'elect@nitc'),
+('Dr. Sophia Harris', 'Environmental Conservation Monitoring System', '2025-12-10', 'elect@nitc'),
+('Prof. Tom King', 'Materials Science Innovation Showcase', '2026-01-15', 'material@nitc'),
+('Dr. Ursula Walker', 'Mathematics Enrichment Learning App', '2026-02-01', 'math@nitc'),
+('Dr. Vince Scott', 'Mechanical Engineering Innovative Device', '2026-03-15', 'mech@nitc'),
+('Prof. Wendy Hall', 'Management Studies Leadership Development Platform', '2026-04-01', 'mgmt@nitc'),
+('Prof. Xander Turner', 'Physical Education and Fitness App', '2026-05-25', 'phedu@nitc'),
+('Dr. Yvonne Baker', 'Physics Education and Science Exploration Kit', '2026-06-10', 'physics@nitc');
 
 -- --------------------------------------------------------
 
@@ -791,22 +913,41 @@ INSERT INTO `patents` (`staff`, `title`, `year`, `entity`) VALUES
 CREATE TABLE `student_achievements` (
   `name` varchar(80) NOT NULL,
   `achievement` varchar(800) NOT NULL,
-  `entity` varchar(120) NOT NULL
+  `entity` varchar(120) NOT NULL,
+  `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student_achievements`
 --
 
-INSERT INTO `student_achievements` (`name`, `achievement`, `entity`) VALUES
-('Jane Doe', 'Winner of Inter-College Coding Competition', 'CED'),
-('Alice Smith', 'Published Research Paper in Top Computer Science Journal', 'CSED'),
-('Bob Johnson', 'First Prize in Electronics Project Expo', 'ECED'),
-('Charlie Brown', 'Champion of Energy Conservation Challenge', 'EEED'),
-('David Wilson', 'Excellence in Mechanical Engineering Design Competition', 'MED'),
-('Oscar Harris', 'Entrepreneurship Challenge Winner', 'CED'),
-('Pamela Robinson', 'Data Science Hackathon Champion', 'CSED'),
-('Quentin Adams', 'Outstanding Achievement in Robotics Competition', 'ECED');
+INSERT INTO `student_achievements` (`name`, `achievement`, `entity`, `date`) VALUES
+('Alice Johnson', 'First Place in Art Exhibition', 'arts@nitc', '2024-01-20'),
+('Bob Williams', 'Best Actor in Theater Competition', 'arts@nitc', '2024-02-05'),
+('Charlie Brown', 'Top Performer in Science Fair', 'bio@nitc', '2024-03-15'),
+('David Lee', 'Health and Wellness Ambassador Award', 'bio@nitc', '2024-04-20'),
+('Eva Martinez', 'Outstanding Academic Performance', 'ccd@nitc.ac.in', '2024-06-05'),
+('Frank Davis', 'Digital Learning Innovation Award', 'ccd@nitc.ac.in', '2024-06-20'),
+('Grace Taylor', 'First Prize in Chemistry Olympiad', 'chem@nitc', '2024-08-01'),
+('Harry Anderson', 'STEM Education Excellence Award', 'chem@nitc', '2024-08-20'),
+('Ivy Rodriguez', 'Best Civil Engineering Project', 'civil@nitc', '2024-09-05'),
+('Jake White', 'Cultural Heritage Preservation Award', 'civil@nitc', '2024-09-20'),
+('Karen Young', 'Top Performer in Coding Competition', 'cse@nitc', '2025-01-15'),
+('Leo Miller', 'Innovative Technology Project Award', 'cse@nitc', '2025-02-01'),
+('Mia Davis', 'Outstanding Electrical Engineering Project', 'elect@nitc', '2025-03-25'),
+('Noah Wilson', 'Community Technology Fair Winner', 'elect@nitc', '2025-04-10'),
+('Olivia Moore', 'First Place in ECE Robotics Challenge', 'ece@nitc', '2025-06-01'),
+('Peter Adams', 'Excellence in Arts and Music Education', 'ece@nitc', '2025-06-15'),
+('Quincy Thomas', 'Best Education Project', 'edu@nitc', '2025-07-25'),
+('Rachel Clark', 'Community Library Outreach Award', 'edu@nitc', '2025-08-10'),
+('Samuel Turner', 'Top Electrical Engineering Project', 'elect@nitc', '2025-09-25'),
+('Sophia Harris', 'Environmental Conservation Leadership Award', 'elect@nitc', '2025-10-10'),
+('Tom King', 'Innovation in Materials Science Project', 'material@nitc', '2025-11-25'),
+('Ursula Walker', 'Mathematics Enrichment Achievement', 'math@nitc', '2025-12-10'),
+('Vince Scott', 'Outstanding Mechanical Engineering Project', 'mech@nitc', '2026-01-15'),
+('Wendy Hall', 'Management Studies Leadership Award', 'mgmt@nitc', '2026-02-01'),
+('Xander Turner', 'Physical Education and Fitness Excellence Award', 'phedu@nitc', '2026-03-15'),
+('Yvonne Baker', 'Physics Education and Science Exploration Award', 'physics@nitc', '2026-04-01');
 
 --
 -- Indexes for dumped tables
