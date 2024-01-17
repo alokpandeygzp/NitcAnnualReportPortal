@@ -128,7 +128,7 @@ if($userRole!='department' && $userRole!='centre')
                     <div class="content_identifier">
                         Generate Report
                     </div>
-                    <form action=<?php echo $pdf_link; ?> method="post">                    
+                    <form action=<?php echo $pdf_link; ?> method="post" onsubmit="return validateForm()">                    
                     <div class="report_generator">
                         <div class="section_container">
                             <p>Choose Period:</p>
@@ -210,6 +210,37 @@ if($userRole!='department' && $userRole!='centre')
             checkboxes.forEach(function (checkbox) {
                 checkbox.checked = allCheckbox.checked;
             });
+        }
+    </script>
+
+    <script>
+        function validateForm() {
+            // Get current date
+            // var currentDate = new Date();
+            
+            // Get start and end date values
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+
+            // Parse dates to compare
+            var startDateTime = new Date(startDate).getTime();
+            var endDateTime = new Date(endDate).getTime();
+            // var currentDateTime = currentDate.getTime();
+
+            // Check if start date is before end date
+            if (startDateTime >= endDateTime) {
+                alert("Start date must be before end date");
+                return false; 
+            }// Prevent form submission
+            // } else if (endDateTime > currentDateTime) {
+            //     alert("End date cannot be greater than current date");
+            //     return false; // Prevent form submission
+            // } 
+            else {
+                // Clear error messages
+                document.getElementById("dateError").innerHTML = "";
+                return true; // Allow form submission
+            }
         }
     </script>
 

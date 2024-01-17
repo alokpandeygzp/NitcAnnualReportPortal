@@ -71,11 +71,14 @@ if ($res->num_rows > 0 )
             $table->addRow();
             $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
             $table->addCell(6300)->addText('Community Services', array('bold' => true, 'size' => 14));
+            $table->addCell(6300)->addText('Date', array('bold' => true, 'size' => 14));
+ 
 
             while ($row = $result->fetch_assoc()) {
                 $table->addRow();
                 $table->addCell(3000)->addText($row['staff'], array('size' => 11));
                 $table->addCell(6300)->addText($row['title'], array('size' => 10));
+                $table->addCell(6000)->addText($row['date'], array('size' => 10));
             }
             $section->addTextBreak(1);
             // $section->addPageBreak();
@@ -102,11 +105,14 @@ if ($res->num_rows > 0 )
             $table->addRow();
             $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
             $table->addCell(6300)->addText('Other Services', array('bold' => true, 'size' => 14));
+            $table->addCell(6300)->addText('Date', array('bold' => true, 'size' => 14));
+ 
 
             while ($row = $result->fetch_assoc()) {
                 $table->addRow();
                 $table->addCell(3000)->addText($row['staff'], array('size' => 11));
                 $table->addCell(6300)->addText($row['title'], array('size' => 10));
+                $table->addCell(6000)->addText($row['date'], array('size' => 10));
             }
             $section->addTextBreak(1);
         } 
@@ -134,6 +140,7 @@ if ($res->num_rows > 0 )
             $table->addCell(6000)->addText('Co-ordinators', array('bold' => true, 'size' => 14));
             $table->addCell(3000)->addText('Start Date', array('bold' => true, 'size' => 14));
             $table->addCell(3000)->addText('End Date', array('bold' => true, 'size' => 14));
+ 
             
             while ($row = $result->fetch_assoc()) {
                 $table->addRow();
@@ -204,6 +211,8 @@ if ($res->num_rows > 0 )
             $table->addCell(3000)->addText('Name of Faculty', array('bold' => true, 'size' => 14));
             $table->addCell(6000)->addText('Qualification Acquired', array('bold' => true, 'size' => 14));
             $table->addCell(3000)->addText('Institute', array('bold' => true, 'size' => 14));
+            $table->addCell(6300)->addText('Date', array('bold' => true, 'size' => 14));
+ 
             
             while ($row = $result->fetch_assoc()) 
             {
@@ -211,6 +220,7 @@ if ($res->num_rows > 0 )
                 $table->addCell(6000)->addText($row['name'], array('size' => 10));
                 $table->addCell(6000)->addText($row['qualification'], array('size' => 10));
                 $table->addCell(6000)->addText($row['institute'], array('size' => 10));
+                $table->addCell(6000)->addText($row['date'], array('size' => 10));
             }
             $section->addTextBreak(1);   
         } 
@@ -238,6 +248,8 @@ if ($res->num_rows > 0 )
             $table->addCell(6000)->addText('Organization', array('bold' => true, 'size' => 14));
             $table->addCell(3000)->addText('Revenue Earned', array('bold' => true, 'size' => 14));
             $table->addCell(3000)->addText('Status', array('bold' => true, 'size' => 14));
+            $table->addCell(6300)->addText('Date', array('bold' => true, 'size' => 14));
+ 
             
             while ($row = $result->fetch_assoc()) 
             {
@@ -246,6 +258,7 @@ if ($res->num_rows > 0 )
                 $table->addCell(6000)->addText($row['organization'], array('size' => 10));
                 $table->addCell(6000)->addText($row['revenue'], array('size' => 10));
                 $table->addCell(6000)->addText($row['status'], array('size' => 10));
+                $table->addCell(6000)->addText($row['date'], array('size' => 10));
             }
             $section->addTextBreak(1);   
             
@@ -299,19 +312,22 @@ if ($res->num_rows > 0 )
                 $flag=1;
             }
 
-            $section->addText('Details of Faculty, who acquired Higher Qualification',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
+            $section->addText('Student\'s achievements',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 14));
             $section->addTextBreak(1);
             $table = $section->addTable(array('borderSize' => 1, 'afterSpacing' =>100, 'Spacing'=> 100, 'cellMargin'=>100  ));
             // Add table headers with some basic styling
             $table->addRow();
             $table->addCell(3000)->addText('Name', array('bold' => true, 'size' => 14));
             $table->addCell(6000)->addText('Achievement', array('bold' => true, 'size' => 14));
+            $table->addCell(6300)->addText('Date', array('bold' => true, 'size' => 14));
+ 
             
             while ($row = $result->fetch_assoc()) 
             {
                 $table->addRow();
                 $table->addCell(6000)->addText($row['name'], array('size' => 10));
                 $table->addCell(6000)->addText($row['achievement'], array('size' => 10));
+                $table->addCell(6000)->addText($row['date'], array('size' => 10));
             }
             $section->addTextBreak(1);   
         }
