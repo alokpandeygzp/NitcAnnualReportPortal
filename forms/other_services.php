@@ -21,17 +21,18 @@ if (empty($_SESSION['access_token'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $staffName = $_POST["name"];
     $progTitle = $_POST["title"];
+    $date  = $_POST["date"];
     $entity = $mail;
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    $query1 = "INSERT INTO other_services (staff, title, entity) VALUES (?, ?, ?)";
+    $query1 = "INSERT INTO other_services (staff, title, date,  entity) VALUES (?, ?, ?, ?)";
     
     // Use prepared statement to prevent SQL injection
     $stmt = mysqli_prepare($con, $query1);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, 'sss', $staffName, $progTitle, $entity);
+    mysqli_stmt_bind_param($stmt, 'ssss', $staffName, $progTitle, $date, $entity);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -83,8 +84,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             function validateForm() {
                 var staffName = document.forms["myForm"]["name"].value;
                 var progTitle = document.forms["myForm"]["title"].value;
+                var date = document.forms["myForm"]["date"].value;
 
-                if (staffName.trim() == "" || progTitle.trim() == "") {
+                if (staffName.trim() == "" || progTitle.trim() == "" || date.trim()=="") {
                     alert("Please fill in all fields.");
                     return false;
                 }
@@ -125,6 +127,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
                             <input type="text" name="name" placeholder="Name of staff" class="input-fields"><br><br>
                             <textarea name="title" placeholder="Other services"  class="input-fields textarea" rows=4></textarea><br><br>
+                            <div>
+                                <label for="date">Date: </label>
+                                <input type="date" name="date" id="date" class="input-fields">
+                            </div><br><br>
                             <input type="submit" class="submit-button" value="Add Entry">
                         </form>
                     </div>

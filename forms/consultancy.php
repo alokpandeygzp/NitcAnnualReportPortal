@@ -6,7 +6,7 @@ if (empty($_SESSION['access_token'])) {
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
     $mail = $_GET["user"];
-    
+
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
     // header('Location: index.php');
@@ -15,7 +15,7 @@ if (empty($_SESSION['access_token'])) {
     $fname = $_SESSION["first_name"];
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
-    $mail=$_SESSION['email_address'];
+    $mail = $_SESSION['email_address'];
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,16 +23,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conOrg = $_POST["org"];
     $conRevenue = $_POST["revenue"];
     $conStatus = $_POST["status"];
+    $date = $_POST["date"];
     $entity = $mail;
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
     // Use prepared statement to prevent SQL injection
-    $query1 = "INSERT INTO consultancy (nature, organization, revenue, status, entity) VALUES (?, ?, ?, ?, ?)";
+    $query1 = "INSERT INTO consultancy (nature, organization, revenue, status, date, entity) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($con, $query1);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, 'sssss', $conNature, $conOrg, $conRevenue, $conStatus, $entity);
+    mysqli_stmt_bind_param($stmt, 'ssssss', $conNature, $conOrg, $conRevenue, $conStatus, $date, $entity);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -57,8 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#myForm").submit(function(event) {
+        $(document).ready(function () {
+            $("#myForm").submit(function (event) {
                 event.preventDefault();
 
                 // Validate the form
@@ -70,12 +71,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     type: "POST",
                     url: "",
                     data: $(this).serialize(),
-                    success: function() {
+                    success: function () {
                         alert("Entry added.");
                         // Reload the page after a successful form submission
                         location.reload();
                     },
-                    error: function() {
+                    error: function () {
                         alert("Entry addition failed.");
                     }
                 });
@@ -86,8 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 var conOrg = document.forms["myForm"]["org"].value;
                 var conRevenue = document.forms["myForm"]["revenue"].value;
                 var conStatus = document.forms["myForm"]["status"].value;
+                var date = document.forms["myForm"]["date"].value;
 
-                if (conNature.trim() == "" || conOrg.trim() == "" || conRevenue.trim() == "" || conStatus.trim() == "") {
+
+                if (conNature.trim() == "" || conOrg.trim() == "" || conRevenue.trim() == "" || conStatus.trim() == "" || date.trim()=="") {
                     alert("Please fill in all fields.");
                     return false;
                 }
@@ -128,13 +131,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="text" name="nature" placeholder="Nature of service"
                                 class="input-fields"><br><br>
                             <input type="text" name="org" placeholder="Organization" class="input-fields"><br><br>
-                            <input  type="text" type="number" onkeypress="return isNumberKey(event)" name="revenue" placeholder="Revenue earned" class="input-fields"><br><br>
-                            
+                            <input type="text" type="number" onkeypress="return isNumberKey(event)" name="revenue"
+                                placeholder="Revenue earned" class="input-fields"><br><br>
+
                             <select name="status" class="input-fields">
                                 <option disabled selected>Status</option>
                                 <option value="In Progress">In Progress</option>
                                 <option value="Completed">Completed</option>
                             </select><br><br>
+                            <div>
+                                <label for="date">Date: </label>
+                                <input type="date" name="date" id="date" class="input-fields">
+                            </div><br><br>
                             <input type="submit" class="submit-button" value="Add Entry">
                         </form>
                     </div>
@@ -197,18 +205,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 
 <script>
-function isNumberKey(evt) {
-    var charCode = (evt.which) ? evt.which : evt.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-        return false;
-    return true;
-}
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
 
-function handleDeleteClick(event) {
-    var id = event.target.getAttribute("data-id");
+    function handleDeleteClick(event) {
+        var id = event.target.getAttribute("data-id");
 
-    // window.alert("status button clicked with ID: " + id);
-    fetch('../api/api.php', {
+        // window.alert("status button clicked with ID: " + id);
+        fetch('../api/api.php', {
             method: 'POST',
             body: JSON.stringify({
                 id: id,
@@ -217,28 +225,27 @@ function handleDeleteClick(event) {
                 column: 'organization'
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            window.alert(data.message);
+            .then(response => response.json())
+            .then(data => {
+                window.alert(data.message);
 
-            // Reload the page after successful deletion
-            location.reload();
-        })
-        .catch(error => {
-            window.alert('Error:', error);
-            // console.error('Error:', error);
-            // window.alert('check console');
+                // Reload the page after successful deletion
+                location.reload();
+            })
+            .catch(error => {
+                window.alert('Error:', error);
+                // console.error('Error:', error);
+                // window.alert('check console');
+            });
+        // location.reload();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var statusButtons = document.querySelectorAll(".delete_btn");
+
+        statusButtons.forEach(function (button) {
+            button.addEventListener("click", handleDeleteClick);
         });
-    // location.reload();
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-    var statusButtons = document.querySelectorAll(".delete_btn");
-
-    statusButtons.forEach(function(button) {
-        button.addEventListener("click", handleDeleteClick);
     });
-
-});
 </script>
-

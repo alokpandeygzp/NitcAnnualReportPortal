@@ -6,7 +6,7 @@ if (empty($_SESSION['access_token'])) {
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
     $mail = $_GET["user"];
-    
+
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
     // header('Location: index.php');
@@ -15,23 +15,23 @@ if (empty($_SESSION['access_token'])) {
     $fname = $_SESSION["first_name"];
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
-    $mail=$_SESSION['email_address'];
+    $mail = $_SESSION['email_address'];
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $patentStaff = $_POST["staff"];
     $patentTitle = $_POST["title"];
-    $patentYear = $_POST["year"];
+    $date = $_POST["date"];
     $entity = $mail;
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
     // Use prepared statement to prevent SQL injection
-    $query1 = "INSERT INTO patents (staff, title, year, entity) VALUES (?, ?, ?, ?)";
+    $query1 = "INSERT INTO patents (staff, title, entity, date) VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($con, $query1);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, 'ssss', $patentStaff, $patentTitle, $patentYear, $entity);
+    mysqli_stmt_bind_param($stmt, 'ssss', $patentStaff, $patentTitle, $entity, $date);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -56,8 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#myForm").submit(function(event) {
+        $(document).ready(function () {
+            $("#myForm").submit(function (event) {
                 event.preventDefault();
 
                 // Validate the form
@@ -69,30 +69,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     type: "POST",
                     url: "",
                     data: $(this).serialize(),
-                    success: function() {
+                    success: function () {
                         alert("Entry added.");
                         // Reload the page after a successful form submission
                         location.reload();
                     },
-                    error: function() {
+                    error: function () {
                         alert("Entry addition failed.");
                     }
                 });
             });
 
-        function validateForm() {
-            var patentStaff = document.forms["myForm"]["staff"].value;
-            var patentTitle = document.forms["myForm"]["title"].value;
-            var patentYear = document.forms["myForm"]["year"].value;
+            function validateForm() {
+                var patentStaff = document.forms["myForm"]["staff"].value;
+                var patentTitle = document.forms["myForm"]["title"].value;
+                var date = document.forms["myForm"]["date"].value;
+                
 
-            if (patentStaff.trim() == "" || patentTitle.trim() == "" || patentYear.trim() == "") {
-                alert("Please fill in all fields.");
-                return false;
+                if (patentStaff.trim() == "" || patentTitle.trim() == "" || date.trim() == "") {
+                    alert("Please fill in all fields.");
+                    return false;
+                }
+
+                return true;
             }
-
-            return true;
-        }
-    });
+        });
     </script>
 
 </head>
@@ -124,7 +125,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
                             <input type="text" name="staff" placeholder="Name of staff" class="input-fields"><br><br>
                             <input type="text" name="title" placeholder="Title" class="input-fields"><br><br>
-                            <input type="text" name="year" placeholder="Year" class="input-fields"><br><br>
+                            <div>
+                                <label for="date">Date: </label>
+                                <input type="date" name="date" id="date" class="input-fields">
+                            </div><br><br>
                             <input type="submit" class="submit-button" value="Add Entry">
                         </form>
                     </div>
@@ -149,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <th class="box">S. no.</th> 
                     <th class="box">Name of staff</th> 
                     <th class="box">Title</th> 
-                    <th class="box">Year</th> 
+                    <th class="box">Date</th> 
                     <th class="box">Entity</th> 
                     <th class="box">Action</th>
                 </tr>';
@@ -158,14 +162,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     while ($row = mysqli_fetch_assoc($rs)) {
                         $staff = $row['staff'];
                         $title = $row['title'];
-                        $year = $row['year'];
+                        $date = $row['date'];
                         $dep = $row['entity'];
 
                         echo '<tr>
                     <td class="box sn">' . $count . '</td>
                     <td class="box name">' . $staff . '</td>
                     <td class="box title">' . $title . '</td>
-                    <td class="box year">' . $year . '</td>
+                    <td class="box">' . $date . '</td>
                     <td class="box entity">' . $dep . '</td>
     
                     <td class="box button_box btn"><button class="delete_btn" data-id="' . $title . '">Delete</button></td></tr>';
@@ -188,11 +192,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 
 <script>
-function handleDeleteClick(event) {
-    var id = event.target.getAttribute("data-id");
+    function handleDeleteClick(event) {
+        var id = event.target.getAttribute("data-id");
 
-    // window.alert("status button clicked with ID: " + id);
-    fetch('../api/api.php', {
+        // window.alert("status button clicked with ID: " + id);
+        fetch('../api/api.php', {
             method: 'POST',
             body: JSON.stringify({
                 id: id,
@@ -201,27 +205,27 @@ function handleDeleteClick(event) {
                 column: 'title'
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            window.alert(data.message);
+            .then(response => response.json())
+            .then(data => {
+                window.alert(data.message);
 
-            // Reload the page after successful deletion
-            location.reload();
-        })
-        .catch(error => {
-            window.alert('Error:', error);
-            // console.error('Error:', error);
-            // window.alert('check console');
+                // Reload the page after successful deletion
+                location.reload();
+            })
+            .catch(error => {
+                window.alert('Error:', error);
+                // console.error('Error:', error);
+                // window.alert('check console');
+            });
+        // location.reload();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var statusButtons = document.querySelectorAll(".delete_btn");
+
+        statusButtons.forEach(function (button) {
+            button.addEventListener("click", handleDeleteClick);
         });
-    // location.reload();
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-    var statusButtons = document.querySelectorAll(".delete_btn");
-
-    statusButtons.forEach(function(button) {
-        button.addEventListener("click", handleDeleteClick);
     });
-
-});
 </script>
