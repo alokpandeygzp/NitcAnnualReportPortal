@@ -20,6 +20,17 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 }
 $dep_id=$_GET['user'];
+$sdate=$_POST['startDate'];
+$edate=$_POST['endDate'];
+
+if(is_null($sdate))
+    $sdate ="1925-09-25";
+if(is_null($edate))
+    $edate="2125-09-25";
+if($sdate=="")
+    $sdate ="1925-09-25";
+if($edate=="")
+    $edate="2125-09-25";
 $section->addText('Annual Report',array('bold' => true,'underline'=>'single','name'=>'TIMOTHYfont','size' => 16),$center);
 $section->addTextBreak(1);
 $sql = "SELECT * FROM entity where id='$dep_id'";
@@ -34,7 +45,7 @@ if ($res->num_rows > 0)
         $section->addTextBreak(1);
 
         // Fetch data from MySQL
-        $sql1 = "SELECT * FROM community_services where entity='$dep_id'";
+        $sql1 = "SELECT * FROM community_services where entity='$dep_id' and date between '$sdate' and '$edate' order by date";
         $result = $conn->query($sql1);
  
          // Output data as a table in PDF
@@ -59,7 +70,7 @@ if ($res->num_rows > 0)
          } 
  
          // Fetch data from MySQL
-         $sql1 = "SELECT * FROM other_services where entity='$dep_id'";
+         $sql1 = "SELECT * FROM other_services where entity='$dep_id' and date between '$sdate' and '$edate' order by date";
          $result = $conn->query($sql1);
  
          // Output data as a table in PDF
@@ -71,7 +82,7 @@ if ($res->num_rows > 0)
              // Add table headers with some basic styling
              $table->addRow();
              $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
-             $table->addCell(6300)->addText('Other Sefvices', array('bold' => true, 'size' => 14));
+             $table->addCell(6300)->addText('Other Services', array('bold' => true, 'size' => 14));
  
              while ($row = $result->fetch_assoc()) {
                  $table->addRow();
@@ -82,7 +93,7 @@ if ($res->num_rows > 0)
          } 
  
          // Fetch data from MySQL
-         $sql1 = "SELECT * FROM conferences where entity='$dep_id'";
+         $sql1 = "SELECT * FROM conferences where entity='$dep_id' and start between '$sdate' and '$edate' and  end  between '$sdate' and '$edate' order by start";
          $result = $conn->query($sql1);
  
          // Output data as a table in PDF
@@ -110,7 +121,7 @@ if ($res->num_rows > 0)
          } 
  
          // Fetch data from MySQL
-         $sql1 = "SELECT * FROM expert_lectures where entity='$dep_id'";
+         $sql1 = "SELECT * FROM expert_lectures where entity='$dep_id' and start between '$sdate' and '$edate' and  end  between '$sdate' and '$edate' order by start";
          $result = $conn->query($sql1);
  
          // Output data as a table in PDF
@@ -139,7 +150,7 @@ if ($res->num_rows > 0)
          } 
  
          // Fetch data from MySQL
-         $sql1 = "SELECT * FROM faculty_qualification where entity='$dep_id'";
+         $sql1 = "SELECT * FROM faculty_qualification where entity='$dep_id' and date between '$sdate' and '$edate' order by date";
          $result = $conn->query($sql1);
  
          // Output data as a table in PDF
@@ -165,7 +176,7 @@ if ($res->num_rows > 0)
          } 
  
          // Fetch data from MySQL
-         $sql1 = "SELECT * FROM consultancy where entity='$dep_id'";
+         $sql1 = "SELECT * FROM consultancy where entity='$dep_id' and date between '$sdate' and '$edate' order by date";
          $result = $conn->query($sql1);
  
          // Output data as a table in PDF
@@ -194,7 +205,7 @@ if ($res->num_rows > 0)
          } 
  
          // Fetch data from MySQL
-         $sql1 = "SELECT * FROM patents where entity='$dep_id'";
+         $sql1 = "SELECT * FROM patents where entity='$dep_id' and date between '$sdate' and '$edate' order by date";
          $result = $conn->query($sql1);
  
          // Output data as a table in PDF
@@ -207,21 +218,21 @@ if ($res->num_rows > 0)
              $table->addRow();
              $table->addCell(3000)->addText('Name of Staff', array('bold' => true, 'size' => 14));
              $table->addCell(6000)->addText('Title', array('bold' => true, 'size' => 14));
-             $table->addCell(3000)->addText('Year', array('bold' => true, 'size' => 14));
+             $table->addCell(3000)->addText('Date', array('bold' => true, 'size' => 14));
              
              while ($row = $result->fetch_assoc()) 
              {
                  $table->addRow();
                  $table->addCell(6000)->addText($row['staff'], array('size' => 10));
                  $table->addCell(6000)->addText($row['title'], array('size' => 10));
-                 $table->addCell(6000)->addText($row['year'], array('size' => 10));
+                 $table->addCell(6000)->addText($row['date'], array('size' => 10));
              }
              $section->addTextBreak(1);   
  
          } 
  
          // Fetch data from MySQL
-         $sql1 = "SELECT * FROM student_achievements where entity='$dep_id'";
+         $sql1 = "SELECT * FROM student_achievements where entity='$dep_id' and date between '$sdate' and '$edate' order by date";
          $result = $conn->query($sql1);
  
          // Output data as a table in PDF
