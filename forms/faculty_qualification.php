@@ -1,11 +1,28 @@
 <?php
 session_start();
 
+if (empty($_SESSION['access_token'])) {
+    $fname = "Welcome! ";
+    $lname = $_GET["user"];
+    $pic = "../asset/nitc_logo_icon.svg";
+    $mail = $_GET["user"];
+    
+    //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
+
+    // header('Location: index.php');
+    // exit();
+} else {
+    $fname = $_SESSION["first_name"];
+    $lname = $_SESSION['last_name'];
+    $pic = $_SESSION['profile_picture'];
+    $mail=$_SESSION['email_address'];
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $staffName = $_POST["name"];
     $staffQualification = $_POST["qualification"];
     $staffInstitute = $_POST["institute"];
-    $entity = $_GET["user"];
+    $entity = $mail;
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
@@ -28,20 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($con);
 }
 
-if (empty($_SESSION['access_token'])) {
-    $fname = "Welcome! ";
-    $lname = $_GET["user"];
-    $pic = "../asset/nitc_logo_icon.svg";
-
-    // below two lines are commented out for testing purpose. uncomment it to properly run system with login.
-
-    // header('Location: index.php');
-    // exit();
-} else {
-    $fname = $_SESSION["first_name"];
-    $lname = $_SESSION['last_name'];
-    $pic = $_SESSION['profile_picture'];
-}
 ?>
 
 
@@ -135,7 +138,7 @@ if (empty($_SESSION['access_token'])) {
                             $entity = isset($_GET["user"]) ? $_GET["user"] : '';
 
                             // Select the faculty names from the database based on the entity
-                            $sql = "SELECT Name FROM facultydepartmentname WHERE Email='$entity'";
+                            $sql = "SELECT Name FROM faculty WHERE Email='$entity'";
                             $result = mysqli_query($con, $sql);
 
                             // Check if the query was successful
