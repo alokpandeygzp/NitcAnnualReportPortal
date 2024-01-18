@@ -19,7 +19,7 @@ if (empty($_SESSION['access_token'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $patentStaff = $_POST["staff"];
+    $patentStaff = $_POST["faculty_name"];
     $patentTitle = $_POST["title"];
     $date = $_POST["date"];
     $entity = $mail;
@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             });
 
             function validateForm() {
-                var patentStaff = document.forms["myForm"]["staff"].value;
+                var patentStaff = document.forms["myForm"]["faculty_name"].value;
                 var patentTitle = document.forms["myForm"]["title"].value;
                 var date = document.forms["myForm"]["date"].value;
                 
@@ -123,7 +123,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="form_container">
                         <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
-                            <input type="text" name="staff" placeholder="Name of staff" class="input-fields"><br><br>
+                            <!-- <input type="text" name="staff" placeholder="Name of staff" class="input-fields"><br><br> -->
+                            <select name="faculty_name" class="input-fields">
+                                <option disabled selected>Name of Staff</option>
+                                <?php
+                                    // Establish a connection to the database
+                                    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+                                    // Check the connection
+                                    if (!$con) {
+                                        die('Could not connect: ' . mysqli_error($con));
+                                    }
+
+                                    // Set $entity based on your logic
+                                    $entity = isset($_GET["user"]) ? $_GET["user"] : '';
+
+                                    // Select the faculty names from the database based on the entity
+                                    $sql = "SELECT Name FROM faculty WHERE Email='$entity'";
+                                    $result = mysqli_query($con, $sql);
+
+                                    // Check if the query was successful
+                                    if ($result) {
+                                        // Fetch and display faculty names as options
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            echo '<option value="' . $row['Name'] . '">' . $row['Name'] . '</option>';
+                                        }
+                                    } else {
+                                        echo 'Query failed: ' . mysqli_error($con);
+                                    }
+
+                                    // Close the database connection
+                                    mysqli_close($con);
+                                ?>
+                            </select><br><br>
                             <input type="text" name="title" placeholder="Title" class="input-fields"><br><br>
                             <div>
                                 <label for="date">Date: </label>

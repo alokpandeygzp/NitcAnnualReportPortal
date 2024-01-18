@@ -213,6 +213,18 @@ table {
     transition-duration: 150ms;
     background-color: #BF3131;
 }
+.edit_btn {
+    font-size: 12px;
+    padding: 8px 10px;
+    border: none;
+    /* border-color: #BF3131; */
+    border-radius: 0.2rem;
+    color: aliceblue;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #BF3131;
+}
 .delete_btn:hover {
     color: aliceblue;
     /* border-color: #BF3131; */

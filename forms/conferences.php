@@ -19,7 +19,7 @@ if (empty($_SESSION['access_token'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $staffName = $_POST["name"];
+    $staffName = $_POST["faculty_name"];
     $progTitle = $_POST["title"];
     $progStart = $_POST["start"];
     $progEnd = $_POST["end"];
@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 });
             });
             function validateForm() {
-                var staffName = document.forms["myForm"]["name"].value;
+                var staffName = document.forms["myForm"]["faculty_name"].value;
                 var progTitle = document.forms["myForm"]["title"].value;
                 var progStart = document.forms["myForm"]["start"].value;
                 var progEnd = document.forms["myForm"]["end"].value;
@@ -126,7 +126,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form_container">
                         <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
                             <input type="text" name="title" placeholder="Title" class="input-fields"><br><br>
-                            <input type="text" name="name" placeholder="Co-ordinators" class="input-fields"><br><br>
+                            <!-- <input type="text" name="name" placeholder="Co-ordinators" class="input-fields"><br><br> -->
+                            <select name="faculty_name" class="input-fields">
+                                <option disabled selected>Name of Staff</option>
+                                <?php
+                                    // Establish a connection to the database
+                                    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+                                    // Check the connection
+                                    if (!$con) {
+                                        die('Could not connect: ' . mysqli_error($con));
+                                    }
+
+                                    // Set $entity based on your logic
+                                    $entity = isset($_GET["user"]) ? $_GET["user"] : '';
+
+                                    // Select the faculty names from the database based on the entity
+                                    $sql = "SELECT Name FROM faculty WHERE Email='$entity'";
+                                    $result = mysqli_query($con, $sql);
+
+                                    // Check if the query was successful
+                                    if ($result) {
+                                        // Fetch and display faculty names as options
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            echo '<option value="' . $row['Name'] . '">' . $row['Name'] . '</option>';
+                                        }
+                                    } else {
+                                        echo 'Query failed: ' . mysqli_error($con);
+                                    }
+
+                                    // Close the database connection
+                                    mysqli_close($con);
+                                ?>
+                            </select><br><br>
                             <input type="date" name="start" placeholder="Start" class="input-fields"><br><br>
                             <input type="date" name="end" placeholder="End" class="input-fields"><br><br>
                             <input type="submit" class="submit-button" value="Add Entry">
@@ -166,15 +198,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $dep = $row['entity'];
 
                         echo '<tr>
-                        <td class="box sn">' . $count . '</td>                    
-                        <td class="box title">' . $title . '</td>
-                        <td class="box coords">' . $staff . '</td>
-                        <td class="box s_date">' . $start . '</td>
-                        <td class="box e_date">' . $end . '</td>
-                        <td class="box entity">' . $dep . '</td>
-                    
-                        <td class="box button_box btn"><button class="delete_btn" data-id="' . $title . '">Delete</button></td></tr>';
-
+                                <td class="box sn">' . $count . '</td>                    
+                                <td class="box title">' . $title . '</td>
+                                <td class="box coords">' . $staff . '</td>
+                                <td class="box s_date">' . $start . '</td>
+                                <td class="box e_date">' . $end . '</td>
+                                <td class="box entity">' . $dep . '</td>
+                            
+                                <td class="box button_box btn">
+                                    <button class="edit_btn" data-id="' . $title . '">Edit</button>
+                                    <button class="delete_btn" data-id="' . $title . '">Delete</button>
+                                </td>
+                            </tr>';
                         $count++;
                     }
                     echo '</table>
@@ -194,6 +229,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <script>
+function handleEditClick(event) {
+    var id = event.target.getAttribute("data-id");
+
+    // Redirect to the edit page with the conference title as a parameter
+    var user = "<?php echo $lname; ?>";
+    window.location.href = 'edit_conferences.php?title=' + encodeURIComponent(id) + '&user=' + encodeURIComponent(user);
+}
+
 function handleDeleteClick(event) {
     var id = event.target.getAttribute("data-id");
 
@@ -223,12 +266,16 @@ function handleDeleteClick(event) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    var statusButtons = document.querySelectorAll(".delete_btn");
+    var editButtons = document.querySelectorAll(".edit_btn");
+    var deleteButtons = document.querySelectorAll(".delete_btn");
 
-    statusButtons.forEach(function(button) {
-        button.addEventListener("click", handleDeleteClick);
+    editButtons.forEach(function(button) {
+        button.addEventListener("click", handleEditClick);
     });
 
+    deleteButtons.forEach(function(button) {
+        button.addEventListener("click", handleDeleteClick);
+    });
 });
 </script>
 
