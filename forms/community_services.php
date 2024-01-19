@@ -54,43 +54,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Community services</title>
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-<YOUR-INTEGRITY-CODE>" crossorigin="anonymous" />
+
     <script>
-        $(document).ready(function() {
-            $("#myForm").submit(function(event) {
-                event.preventDefault();
+    $(document).ready(function() {
+        $("#myForm").submit(function(event) {
+            event.preventDefault();
 
-                // Validate the form
-                if (!validateForm()) {
-                    return;
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: "",
-                    data: $(this).serialize(),
-                    success: function() {
-                        alert("Entry added.");
-                        // Reload the page after a successful form submission
-                        location.reload();
-                    },
-                    error: function() {
-                        alert("Entry addition failed.");
-                    }
-                });
-            });
-            function validateForm() {
-                var staffName = document.forms["myForm"]["faculty_name"].value;
-                var progTitle = document.forms["myForm"]["title"].value;
-                var date = document.forms["myForm"]["date"].value;
-
-                if (staffName.trim() == "" || progTitle.trim() == "" || date.trim() == "") {
-                    alert("Please fill in all fields.");
-                    return false;
-                }
-
-                return true;
+            // Validate the form
+            if (!validateForm()) {
+                return;
             }
+
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: $(this).serialize(),
+                success: function() {
+                    alert("Entry added.");
+                    // Reload the page after a successful form submission
+                    location.reload();
+                },
+                error: function() {
+                    alert("Entry addition failed.");
+                }
+            });
         });
+
+        function validateForm() {
+            var staffName = document.forms["myForm"]["faculty_name"].value;
+            var progTitle = document.forms["myForm"]["title"].value;
+            var date = document.forms["myForm"]["date"].value;
+
+            if (staffName.trim() == "" || progTitle.trim() == "" || date.trim() == "") {
+                alert("Please fill in all fields.");
+                return false;
+            }
+
+            return true;
+        }
+    });
     </script>
 
 </head>
@@ -158,7 +162,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     mysqli_close($con);
                                 ?>
                             </select><br><br>
-                            <textarea name="title" placeholder="Community services" class="input-fields textarea" rows=4></textarea><br><br>
+                            <textarea name="title" placeholder="Community services" class="input-fields textarea"
+                                rows=4></textarea><br><br>
                             <div>
                                 <label for="date">Date: </label>
                                 <input type="date" name="date" id="date" class="input-fields">
@@ -203,7 +208,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <td class="box services">' . $title . '</td>
                             <td class="box services">' . $date . '</td>
                             <td class="box entity">' . $dep . '</td>
-                            <td class="box button_box btn"><button class="delete_btn" data-id="' . $title . '">Delete</button></td>
+                            <td class="box button_box btn">
+                                <button class="edit_btn" data-id="' . $title . '"><i class="fas fa-edit"></i></button>
+                                <button class="delete_btn" data-id="' . $title . '"><i class="fas fa-trash-alt"></i></button>
+                            </td>
                         </tr>';
 
                         $count++;
@@ -213,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
                 </div>
             </div>
-            
+
         </div>
 
     </div>
@@ -226,6 +234,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <script>
+function handleEditClick(event) {
+    var id = event.currentTarget.getAttribute("data-id");
+
+    // Check if id is not null or undefined before redirecting
+    if (id !== null && id !== undefined) {
+        // Redirect to the edit page with the community service title as a parameter
+        var user = "<?php echo $lname; ?>";
+        window.location.href = 'editables/edit_community_services.php?title=' + encodeURIComponent(id) + '&user=' +
+            encodeURIComponent(user);
+    } else {
+        // Handle the case where id is null or undefined
+        console.error("Invalid id for editing");
+        // You may want to display an alert or handle the error in a way that suits your application
+    }
+}
+
+
+
 function handleDeleteClick(event) {
     var id = event.target.getAttribute("data-id");
 
@@ -255,12 +281,16 @@ function handleDeleteClick(event) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    var editButtons = document.querySelectorAll(".edit_btn");
     var statusButtons = document.querySelectorAll(".delete_btn");
+
+    editButtons.forEach(function (button) {
+        button.addEventListener("click", handleEditClick);
+    });
 
     statusButtons.forEach(function(button) {
         button.addEventListener("click", handleDeleteClick);
     });
 
 });
-
 </script>
