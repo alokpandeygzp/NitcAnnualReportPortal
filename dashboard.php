@@ -4,21 +4,20 @@ session_start();
 // Check if the user is not logged in, redirect to login page
 
 if (empty($_SESSION['access_token'])) {
-    $fname="Welcome! ";
-    $lname=$_GET["user"];
-    $pic="./asset/nitc_logo_icon.svg";
-    $mail=$_GET["user"];
+    $fname = "Welcome! ";
+    $lname = $_GET["user"];
+    $pic = "./asset/nitc_logo_icon.svg";
+    $mail = $_GET["user"];
 
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
     // header('Location: index.php');
     // exit();
-}
-else {
-    $fname=$_SESSION["first_name"];
-    $lname=$_SESSION['last_name'];
-    $pic=$_SESSION['profile_picture'];
-    $mail=$_SESSION['email_address'];
+} else {
+    $fname = $_SESSION["first_name"];
+    $lname = $_SESSION['last_name'];
+    $pic = $_SESSION['profile_picture'];
+    $mail = $_SESSION['email_address'];
 }
 
 $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
@@ -27,21 +26,22 @@ $rs = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($rs);
 $userRole = $row['role'];
 
-$pdf_link="./doc/pdf.php?user=".$mail;
-if($userRole!='department' && $userRole!='centre')
-    $pdf_link="./doc/pdf_all.php";
+$pdf_link = "./doc/pdf.php?user=" . $mail;
+if ($userRole != 'department' && $userRole != 'centre')
+    $pdf_link = "./doc/pdf_all.php";
 
 // Add your dashboard content here
 ?>
 
-<html>
+<html lang="en">
 
 <head>
     <title>Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./styles/dashboard.css" type="text/css" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -60,12 +60,12 @@ if($userRole!='department' && $userRole!='centre')
                     <h3>' . $fname . ' ' . $lname . '</h3>
                 </div>
                 <div class="logout_btn_holder">';
-                    if ($userRole == 'admin') {
-                        echo '<a href="users.php?user='.$lname.'" class="">
+        if ($userRole == 'admin') {
+            echo '<a href="users.php?user=' . $lname . '" class="">
                                     <button class="logout_btn" style="margin-right: 20px;">Manage users</button>
                                 </a>';
-                    }
-                    echo '
+        }
+        echo '
                     <a href="logout.php" class="">
                         <button class="logout_btn">Logout</button>
                     </a>                    
@@ -124,22 +124,22 @@ if($userRole!='department' && $userRole!='centre')
             </div>
 
 
-                <div class="content_sub_container">
-                    <div class="content_identifier">
-                        Generate Report
-                    </div>
-                    <form action=<?php echo $pdf_link; ?> method="post" onsubmit="return validateForm()">                    
+            <div class="content_sub_container">
+                <div class="content_identifier">
+                    Generate Report
+                </div>
+                <form action=<?php echo $pdf_link; ?> method="post" onsubmit="return validateForm()">
                     <div class="report_generator">
                         <div class="section_container">
                             <p>Choose Period:</p>
                             <div class="time_period_selector">
                                 <div class="start_date">
                                     <label for="startDate">Start: </label>
-                                    <input type="date" id="startDate" name="startDate" class="input_field" />
+                                    <input type="date" id="startDate" name="startDate" class="input-fields" />
                                 </div>
                                 <div class="end_date">
                                     <label for="endDate">End: </label>
-                                    <input type="date" id="endDate" name="endDate" class="input_field" />
+                                    <input type="date" id="endDate" name="endDate" class="input-fields" />
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,8 @@ if($userRole!='department' && $userRole!='centre')
                             <p>Choose Sections:</p>
                             <div class="section_selector">
                                 <div>
-                                    <input type="checkbox" id="all" name="all" value="all" onchange="selectAllOptions()" />
+                                    <input type="checkbox" id="all" name="all" value="all"
+                                        onchange="selectAllOptions()" />
                                     <label for="all">All</label>
                                 </div>
                                 <div>
@@ -156,7 +157,8 @@ if($userRole!='department' && $userRole!='centre')
                                     <label for="communityServices">Community Services</label>
                                 </div>
                                 <div>
-                                    <input type="checkbox" id="otherServices" name="otherServices" value="otherServices" />
+                                    <input type="checkbox" id="otherServices" name="otherServices"
+                                        value="otherServices" />
                                     <label for="otherServices">Other Services</label>
                                 </div>
                                 <div>
@@ -170,8 +172,8 @@ if($userRole!='department' && $userRole!='centre')
                                     <label for="expertLectures">Expert Lectures</label>
                                 </div>
                                 <div>
-                                    <input type="checkbox" id="facultyHigherQualification" name="facultyHigherQualification"
-                                        value="facultyHigherQualification" />
+                                    <input type="checkbox" id="facultyHigherQualification"
+                                        name="facultyHigherQualification" value="facultyHigherQualification" />
                                     <label for="facultyHigherQualification">Faculty Higher Qualification</label>
                                 </div>
                                 <div>
@@ -194,8 +196,8 @@ if($userRole!='department' && $userRole!='centre')
                         </div>
                         <input type="submit" value="Generate Report" class="generate_btn">
                     </div>
-                    </form>
-                </div>
+                </form>
+            </div>
         </div>
     </div>
     <script>
@@ -217,7 +219,7 @@ if($userRole!='department' && $userRole!='centre')
         function validateForm() {
             // Get current date
             // var currentDate = new Date();
-            
+
             // Get start and end date values
             var startDate = document.getElementById("startDate").value;
             var endDate = document.getElementById("endDate").value;
@@ -230,7 +232,7 @@ if($userRole!='department' && $userRole!='centre')
             // Check if start date is before end date
             if (startDateTime >= endDateTime) {
                 alert("Start date must be before end date");
-                return false; 
+                return false;
             }// Prevent form submission
             // } else if (endDateTime > currentDateTime) {
             //     alert("End date cannot be greater than current date");

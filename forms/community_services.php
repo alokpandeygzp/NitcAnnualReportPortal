@@ -209,8 +209,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <td class="box services">' . $date . '</td>
                             <td class="box entity">' . $dep . '</td>
                             <td class="box button_box btn">
-                                <button class="edit_btn" data-id="' . $title . '"><i class="fas fa-edit"></i></button>
-                                <button class="delete_btn" data-id="' . $title . '"><i class="fas fa-trash-alt"></i></button>
+                                <div class="btn_inner_box">
+                                    <button class="edit_btn" data-id="' . $title . '"><i class="fas fa-edit"></i></button>
+                                    <button class="delete_btn" data-id="' . $title . '"><i class="fas fa-trash-alt"></i></button>
+                                </div>
                             </td>
                         </tr>';
 
