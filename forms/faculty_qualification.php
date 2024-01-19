@@ -216,9 +216,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td class="box entity">' . $dep . '</td>
     
                     <td class="box button_box btn">
+                    <div class="btn_inner_box">
                                 <button class="edit_btn" data-id="' . $name . '"><i class="fas fa-edit"></i></button>
                                 <button class="delete_btn" data-id="' . $name . '"><i class="fas fa-trash-alt"></i></button>
-                            </td>
+                      </div>      </td>
                         </tr>';
 
                         $count++;
