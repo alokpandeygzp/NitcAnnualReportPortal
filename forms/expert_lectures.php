@@ -57,46 +57,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Expert Lectures</title>
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-<YOUR-INTEGRITY-CODE>" crossorigin="anonymous" />
     <script>
-        $(document).ready(function() {
-            $("#myForm").submit(function(event) {
-                event.preventDefault();
+    $(document).ready(function() {
+        $("#myForm").submit(function(event) {
+            event.preventDefault();
 
-                // Validate the form
-                if (!validateForm()) {
-                    return;
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: "",
-                    data: $(this).serialize(),
-                    success: function() {
-                        alert("Entry added.");
-                        // Reload the page after a successful form submission
-                        location.reload();
-                    },
-                    error: function() {
-                        alert("Entry addition failed.");
-                    }
-                });
-            });
-            
-            function validateForm() {
-                var staffName = document.forms["myForm"]["faculty_name"].value;
-                var progTitle = document.forms["myForm"]["title"].value;
-                var progStart = document.forms["myForm"]["start"].value;
-                var progEnd = document.forms["myForm"]["end"].value;
-                var progOrganization = document.forms["myForm"]["org"].value;
-
-                if (staffName.trim() == "" || progTitle.trim() == "" || progStart.trim() == "" || progEnd.trim() == "" || progOrganization.trim() == "") {
-                    alert("Please fill in all fields.");
-                    return false;
-                }
-
-                return true;
+            // Validate the form
+            if (!validateForm()) {
+                return;
             }
+
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: $(this).serialize(),
+                success: function() {
+                    alert("Entry added.");
+                    // Reload the page after a successful form submission
+                    location.reload();
+                },
+                error: function() {
+                    alert("Entry addition failed.");
+                }
+            });
         });
+
+        function validateForm() {
+            var staffName = document.forms["myForm"]["faculty_name"].value;
+            var progTitle = document.forms["myForm"]["title"].value;
+            var progStart = document.forms["myForm"]["start"].value;
+            var progEnd = document.forms["myForm"]["end"].value;
+            var progOrganization = document.forms["myForm"]["org"].value;
+
+            if (staffName.trim() == "" || progTitle.trim() == "" || progStart.trim() == "" || progEnd.trim() ==
+                "" || progOrganization.trim() == "") {
+                alert("Please fill in all fields.");
+                return false;
+            }
+
+            return true;
+        }
+    });
     </script>
 
 </head>
@@ -213,8 +216,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td class="box org">' . $organization . '</td>
                     <td class="box enitity">' . $dep . '</td>
     
-                    <td class="box button_box btn"><button class="delete_btn" data-id="' . $title . '">Delete</button></td></tr>';
-
+                    <td class="box button_box btn">
+                                    <button class="edit_btn" data-id="' . $title . '"><i class="fas fa-edit"></i></button>
+                                    <button class="delete_btn" data-id="' . $title . '"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                    </tr>';
                         $count++;
                     }
                     echo '</table>
@@ -233,6 +239,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 
 <script>
+function handleEditClick(event) {
+    var id = event.currentTarget.getAttribute("data-id");
+
+    // Check if id is not null or undefined before redirecting
+    if (id !== null && id !== undefined) {
+        // Redirect to the edit page with the community service title as a parameter
+        var user = "<?php echo $lname; ?>";
+        window.location.href = 'editables/edit_expert_lectures.php?title=' + encodeURIComponent(id) + '&user=' +
+            encodeURIComponent(user);
+    } else {
+        // Handle the case where id is null or undefined
+        console.error("Invalid id for editing");
+        // You may want to display an alert or handle the error in a way that suits your application
+    }
+}
+
 function handleDeleteClick(event) {
     var id = event.target.getAttribute("data-id");
 
@@ -262,11 +284,15 @@ function handleDeleteClick(event) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    var statusButtons = document.querySelectorAll(".delete_btn");
+    var editButtons = document.querySelectorAll(".edit_btn");
+    var deleteButtons = document.querySelectorAll(".delete_btn");
 
-    statusButtons.forEach(function(button) {
-        button.addEventListener("click", handleDeleteClick);
+    editButtons.forEach(function(button) {
+        button.addEventListener("click", handleEditClick);
     });
 
+    deleteButtons.forEach(function(button) {
+        button.addEventListener("click", handleDeleteClick);
+    });
 });
 </script>

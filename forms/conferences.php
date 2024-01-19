@@ -6,7 +6,7 @@ if (empty($_SESSION['access_token'])) {
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
     $mail = $_GET["user"];
-    
+
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
     // header('Location: index.php');
@@ -15,7 +15,7 @@ if (empty($_SESSION['access_token'])) {
     $fname = $_SESSION["first_name"];
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
-    $mail=$_SESSION['email_address'];
+    $mail = $_SESSION['email_address'];
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -56,9 +56,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Conferences</title>
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-<YOUR-INTEGRITY-CODE>" crossorigin="anonymous" />
+
     <script>
-        $(document).ready(function() {
-            $("#myForm").submit(function(event) {
+        $(document).ready(function () {
+            $("#myForm").submit(function (event) {
                 event.preventDefault();
 
                 // Validate the form
@@ -70,12 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     type: "POST",
                     url: "",
                     data: $(this).serialize(),
-                    success: function() {
+                    success: function () {
                         alert("Entry added.");
                         // Reload the page after a successful form submission
                         location.reload();
                     },
-                    error: function() {
+                    error: function () {
                         alert("Entry addition failed.");
                     }
                 });
@@ -130,33 +132,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <select name="faculty_name" class="input-fields">
                                 <option disabled selected>Name of Staff</option>
                                 <?php
-                                    // Establish a connection to the database
-                                    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+                                // Establish a connection to the database
+                                $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-                                    // Check the connection
-                                    if (!$con) {
-                                        die('Could not connect: ' . mysqli_error($con));
+                                // Check the connection
+                                if (!$con) {
+                                    die('Could not connect: ' . mysqli_error($con));
+                                }
+
+                                // Set $entity based on your logic
+                                $entity = isset($_GET["user"]) ? $_GET["user"] : '';
+
+                                // Select the faculty names from the database based on the entity
+                                $sql = "SELECT Name FROM faculty WHERE Email='$entity'";
+                                $result = mysqli_query($con, $sql);
+
+                                // Check if the query was successful
+                                if ($result) {
+                                    // Fetch and display faculty names as options
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo '<option value="' . $row['Name'] . '">' . $row['Name'] . '</option>';
                                     }
+                                } else {
+                                    echo 'Query failed: ' . mysqli_error($con);
+                                }
 
-                                    // Set $entity based on your logic
-                                    $entity = isset($_GET["user"]) ? $_GET["user"] : '';
-
-                                    // Select the faculty names from the database based on the entity
-                                    $sql = "SELECT Name FROM faculty WHERE Email='$entity'";
-                                    $result = mysqli_query($con, $sql);
-
-                                    // Check if the query was successful
-                                    if ($result) {
-                                        // Fetch and display faculty names as options
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            echo '<option value="' . $row['Name'] . '">' . $row['Name'] . '</option>';
-                                        }
-                                    } else {
-                                        echo 'Query failed: ' . mysqli_error($con);
-                                    }
-
-                                    // Close the database connection
-                                    mysqli_close($con);
+                                // Close the database connection
+                                mysqli_close($con);
                                 ?>
                             </select><br><br>
                             <input type="date" name="start" placeholder="Start" class="input-fields"><br><br>
@@ -206,8 +208,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td class="box entity">' . $dep . '</td>
                             
                                 <td class="box button_box btn">
-                                    <button class="edit_btn" data-id="' . $title . '">Edit</button>
-                                    <button class="delete_btn" data-id="' . $title . '">Delete</button>
+                                    <button class="edit_btn" data-id="' . $title . '"><i class="fas fa-edit"></i></button>
+                                    <button class="delete_btn" data-id="' . $title . '"><i class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>';
                         $count++;
@@ -229,19 +231,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <script>
-function handleEditClick(event) {
-    var id = event.target.getAttribute("data-id");
+    function handleEditClick(event) {
+    var id = event.currentTarget.getAttribute("data-id");
 
-    // Redirect to the edit page with the conference title as a parameter
-    var user = "<?php echo $lname; ?>";
-    window.location.href = 'edit_conferences.php?title=' + encodeURIComponent(id) + '&user=' + encodeURIComponent(user);
+    // Check if id is not null or undefined before redirecting
+    if (id !== null && id !== undefined) {
+        // Redirect to the edit page with the community service title as a parameter
+        var user = "<?php echo $lname; ?>";
+        window.location.href = 'editables/edit_conferences.php?title=' + encodeURIComponent(id) + '&user=' +
+            encodeURIComponent(user);
+    } else {
+        // Handle the case where id is null or undefined
+        console.error("Invalid id for editing");
+        // You may want to display an alert or handle the error in a way that suits your application
+    }
 }
 
-function handleDeleteClick(event) {
-    var id = event.target.getAttribute("data-id");
 
-    // window.alert("status button clicked with ID: " + id);
-    fetch('../api/api.php', {
+    function handleDeleteClick(event) {
+        var id = event.target.getAttribute("data-id");
+
+        // window.alert("status button clicked with ID: " + id);
+        fetch('../api/api.php', {
             method: 'POST',
             body: JSON.stringify({
                 id: id,
@@ -250,33 +261,31 @@ function handleDeleteClick(event) {
                 column: 'title'
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            window.alert(data.message);
+            .then(response => response.json())
+            .then(data => {
+                window.alert(data.message);
 
-            // Reload the page after successful deletion
-            location.reload();
-        })
-        .catch(error => {
-            window.alert('Error:', error);
-            // console.error('Error:', error);
-            // window.alert('check console');
+                // Reload the page after successful deletion
+                location.reload();
+            })
+            .catch(error => {
+                window.alert('Error:', error);
+                // console.error('Error:', error);
+                // window.alert('check console');
+            });
+        // location.reload();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var editButtons = document.querySelectorAll(".edit_btn");
+        var deleteButtons = document.querySelectorAll(".delete_btn");
+
+        editButtons.forEach(function (button) {
+            button.addEventListener("click", handleEditClick);
         });
-    // location.reload();
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-    var editButtons = document.querySelectorAll(".edit_btn");
-    var deleteButtons = document.querySelectorAll(".delete_btn");
-
-    editButtons.forEach(function(button) {
-        button.addEventListener("click", handleEditClick);
+        deleteButtons.forEach(function (button) {
+            button.addEventListener("click", handleDeleteClick);
+        });
     });
-
-    deleteButtons.forEach(function(button) {
-        button.addEventListener("click", handleDeleteClick);
-    });
-});
 </script>
-
-
