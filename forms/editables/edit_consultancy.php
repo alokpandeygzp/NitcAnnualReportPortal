@@ -1,6 +1,9 @@
 <?php
 session_start(); // Ensure session is started
-
+if(empty($_SESSION['login']))
+{
+    header('Location: ../../index.php');
+}
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
@@ -19,9 +22,9 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-$org = isset($_GET['org']) ? $_GET['org'] : '';
+$id = isset($_GET['Id']) ? $_GET['Id'] : '';
 
-$sql = "SELECT * FROM consultancy WHERE organization = '$org'";
+$sql = "SELECT * FROM consultancy WHERE Id = '$id'";
 $result = mysqli_query($con, $sql);
 
 if ($result) {
@@ -49,10 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    $query = "UPDATE consultancy SET nature=?, organization=?, revenue=?, status=?, date=? WHERE organization=? AND entity=?";
+    $query = "UPDATE consultancy SET nature=?, organization=?, revenue=?, status=?, date=? WHERE Id=? AND entity=?";
     $stmt = mysqli_prepare($con, $query);
 
-    mysqli_stmt_bind_param($stmt, 'sssssss', $conNature, $conOrg, $conRevenue, $conStatus, $conDate, $originalOrg, $entity);
+    mysqli_stmt_bind_param($stmt, 'sssssis', $conNature, $conOrg, $conRevenue, $conStatus, $conDate, $id, $entity);
 
     if (mysqli_stmt_execute($stmt)) {
         echo json_encode(['success' => true, 'message' => 'Entry updated successfully.']);
@@ -84,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
                 $.ajax({
                     type: "POST",
-                    url: "edit_consultancy.php?user=<?php echo urlencode($lname); ?>&org=<?php echo urlencode($org); ?>",
+                    url: "edit_consultancy.php?user=<?php echo urlencode($lname); ?>&Id=<?php echo urlencode($id); ?>",
                     data: $(this).serialize() + "&update_entry=1",
                     dataType: 'json', // Expect JSON response
                     success: function (response) {

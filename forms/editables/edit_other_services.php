@@ -1,7 +1,10 @@
 <?php
 // edit_other_services.php
 session_start(); // Ensure session is started
-
+if(empty($_SESSION['login']))
+{
+    header('Location: ../../index.php');
+}
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
@@ -20,9 +23,9 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-$title = isset($_GET['title']) ? $_GET['title'] : '';
+$id = isset($_GET['Id']) ? $_GET['Id'] : '';
 
-$sql = "SELECT * FROM other_services WHERE title = '$title'";
+$sql = "SELECT * FROM other_services WHERE Id = '$id'";
 $result = mysqli_query($con, $sql);
 
 if ($result) {
@@ -38,7 +41,6 @@ if ($result) {
 mysqli_close($con);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
-    $originalTitle = $_POST["original_title"];
     $staffName = $_POST["faculty_name"];
     $progTitle = $_POST["title"];
     $progDate = $_POST["date"];
@@ -46,10 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    $query = "UPDATE other_services SET staff=?, title=?, date=? WHERE title=? AND entity=?";
+    $query = "UPDATE other_services SET staff=?, title=?, date=? WHERE Id=? AND entity=?";
     $stmt = mysqli_prepare($con, $query);
 
-    mysqli_stmt_bind_param($stmt, 'sssss', $staffName, $progTitle, $progDate, $originalTitle, $entity);
+    mysqli_stmt_bind_param($stmt, 'sssis', $staffName, $progTitle, $progDate, $id, $entity);
 
     if (mysqli_stmt_execute($stmt)) {
         echo json_encode(['success' => true, 'message' => 'Entry updated successfully.']);
@@ -81,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
                 $.ajax({
                     type: "POST",
-                    url: "edit_other_services.php?user=<?php echo urlencode($lname); ?>&title=<?php echo urlencode($title); ?>",
+                    url: "edit_other_services.php?user=<?php echo urlencode($lname); ?>&Id=<?php echo urlencode($id); ?>",
                     data: $(this).serialize() + "&update_entry=1",
                     dataType: 'json', // Expect JSON response
                     success: function (response) {

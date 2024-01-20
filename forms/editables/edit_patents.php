@@ -20,9 +20,8 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-$title = isset($_GET['title']) ? $_GET['title'] : '';
-
-$sql = "SELECT * FROM patents WHERE title = '$title'";
+$id = isset($_GET['Id']) ? $_GET['Id'] : '';
+$sql = "SELECT * FROM patents WHERE Id = '$id'";
 $result = mysqli_query($con, $sql);
 
 if ($result) {
@@ -46,10 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    $query = "UPDATE patents SET staff=?, title=?, date=? WHERE title=? AND entity=?";
+    $query = "UPDATE patents SET staff=?, title=?, date=? WHERE Id=? AND entity=?";
     $stmt = mysqli_prepare($con, $query);
 
-    mysqli_stmt_bind_param($stmt, 'sssss', $staffName, $progTitle, $progDate, $originalTitle, $entity);
+    mysqli_stmt_bind_param($stmt, 'sssis', $staffName, $progTitle, $progDate, $id, $entity);
 
     if (mysqli_stmt_execute($stmt)) {
         echo json_encode(['success' => true, 'message' => 'Entry updated successfully.']);
@@ -81,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
                 $.ajax({
                     type: "POST",
-                    url: "edit_patents.php?user=<?php echo urlencode($lname); ?>&title=<?php echo urlencode($title); ?>",
+                    url: "edit_patents.php?user=<?php echo urlencode($lname); ?>&Id=<?php echo urlencode($id); ?>",
                     data: $(this).serialize() + "&update_entry=1",
                     dataType: 'json', // Expect JSON response
                     success: function (response) {

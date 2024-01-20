@@ -1,7 +1,10 @@
 <?php
 // edit_conferences.php
 session_start(); // Ensure session is started
-
+if(empty($_SESSION['login']))
+{
+    header('Location: ../../index.php');
+}
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
@@ -20,9 +23,9 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-$title = isset($_GET['title']) ? $_GET['title'] : '';
+$id = isset($_GET['Id']) ? $_GET['Id'] : '';
 
-$sql = "SELECT * FROM conferences WHERE title = '$title'";
+$sql = "SELECT * FROM conferences WHERE Id = '$id'";
 $result = mysqli_query($con, $sql);
 
 if ($result) {
@@ -31,6 +34,7 @@ if ($result) {
     $start = $row['start'];
     $end = $row['end'];
     $dep = $row['entity'];
+    $title = $row['title'];
 } else {
     echo 'Query failed: ' . mysqli_error($con);
 }
@@ -47,10 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    $query = "UPDATE conferences SET name=?, start=?, end=? WHERE title=? AND entity=?";
+    $query = "UPDATE conferences SET name=?, start=?, end=? WHERE Id=? AND entity=?";
     $stmt = mysqli_prepare($con, $query);
 
-    mysqli_stmt_bind_param($stmt, 'sssss', $staffName, $progStart, $progEnd, $originalTitle, $entity);
+    mysqli_stmt_bind_param($stmt, 'sssis', $staffName, $progStart, $progEnd, $id, $entity);
 
     if (mysqli_stmt_execute($stmt)) {
         echo json_encode(['success' => true, 'message' => 'Entry updated successfully.']);
@@ -82,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
                 $.ajax({
                     type: "POST",
-                    url: "edit_conferences.php?user=<?php echo urlencode($lname); ?>&title=<?php echo urlencode($title); ?>",
+                    url: "edit_conferences.php?user=<?php echo urlencode($lname); ?>&Id=<?php echo urlencode($id); ?>",
                     data: $(this).serialize() + "&update_entry=1",
                     dataType: 'json', // Expect JSON response
                     success: function (response) {
