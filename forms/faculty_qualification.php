@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if(empty($_SESSION['login']))
+{
+    header('Location: ../index.php');
+}
+
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
@@ -206,7 +211,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $institute = $row['institute'];
                         $date = $row['date'];
                         $dep = $row['entity'];
-
+                        $id = $row['Id'];
                         echo '<tr>
                     <td class="box sn">' . $count . '</td>
                     <td class="box name">' . $name . '</td>
@@ -217,9 +222,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
                     <td class="box button_box btn">
                     <div class="btn_inner_box">
-                                <button class="edit_btn" data-id="' . $name . '"><i class="fas fa-edit"></i></button>
-                                <button class="delete_btn" data-id="' . $name . '"><i class="fas fa-trash-alt"></i></button>
-                      </div>      </td>
+                        <button class="edit_btn" data-id="' . $id . '"><i class="fas fa-edit"></i></button>
+                        <button class="delete_btn"  onclick=handleDeleteClick('.$id.') "><i class="fas fa-trash-alt"></i></button>        
+                    </div>      </td>
                         </tr>';
 
                         $count++;
@@ -228,72 +233,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                      </div>';
                     ?>
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </body>
-
 </html>
 <script>
-function handleEditClick(event) {
-    var id = event.currentTarget.getAttribute("data-id");
+    function handleEditClick(event) {
+        var id = event.currentTarget.getAttribute("data-id");
 
-    // Check if id is not null or undefined before redirecting
-    if (id !== null && id !== undefined) {
-        // Redirect to the edit page with the community service title as a parameter
-        var user = "<?php echo $lname; ?>";
-        window.location.href = 'editables/edit_faculty_qualification.php?name=' + encodeURIComponent(id) + '&user=' +
-            encodeURIComponent(user);
-    } else {
-        // Handle the case where id is null or undefined
-        console.error("Invalid id for editing");
-        // You may want to display an alert or handle the error in a way that suits your application
+        // Check if id is not null or undefined before redirecting
+        if (id !== null && id !== undefined) {
+            // Redirect to the edit page with the community service title as a parameter
+            var user = "<?php echo $lname; ?>";
+            window.location.href = 'editables/edit_faculty_qualification.php?Id=' + encodeURIComponent(id) + '&user=' +
+                encodeURIComponent(user);
+        } else {
+            // Handle the case where id is null or undefined
+            console.error("Invalid id for editing");
+            // You may want to display an alert or handle the error in a way that suits your application
+        }
     }
-}
 
-function handleDeleteClick(event) {
-    var id = event.target.getAttribute("data-id");
-
-    // window.alert("status button clicked with ID: " + id);
-    fetch('../api/api.php', {
-            method: 'POST',
-            body: JSON.stringify({
-                id: id,
-                action: 'delete',
-                table: 'faculty_qualification',
-                column: 'name'
+    function handleDeleteClick(id) {
+        // window.alert("status button clicked with ID: " + id);
+        fetch('../api/api.php', {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: id,
+                    action: 'delete',
+                    table: 'faculty_qualification',
+                    column: 'Id'
+                })
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            window.alert(data.message);
+            .then(response => response.json())
+            .then(data => {
+                window.alert(data.message);
 
-            // Reload the page after successful deletion
-            location.reload();
-        })
-        .catch(error => {
-            window.alert('Error:', error);
-            // console.error('Error:', error);
-            // window.alert('check console');
+                // Reload the page after successful deletion
+                location.reload();
+            })
+            .catch(error => {
+                window.alert('Error:', error);
+                // console.error('Error:', error);
+                // window.alert('check console');
+            });
+        // location.reload();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var editButtons = document.querySelectorAll(".edit_btn");
+        var statusButtons = document.querySelectorAll(".delete_btn");
+
+        editButtons.forEach(function (button) {
+            button.addEventListener("click", handleEditClick);
         });
-    // location.reload();
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    var editButtons = document.querySelectorAll(".edit_btn");
-    var statusButtons = document.querySelectorAll(".delete_btn");
-
-    editButtons.forEach(function (button) {
-        button.addEventListener("click", handleEditClick);
     });
-
-    statusButtons.forEach(function(button) {
-        button.addEventListener("click", handleDeleteClick);
-    });
-
-});
 </script>

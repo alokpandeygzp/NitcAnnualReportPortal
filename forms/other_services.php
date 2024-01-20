@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if(empty($_SESSION['login']))
+{
+    header('Location: ../index.php');
+}
+
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
@@ -198,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $title = $row['title'];
                         $date = $row['date'];
                         $dep = $row['entity'];
-
+                        $id = $row['Id'];
                         echo '<tr>
                     <td class="box sn">' . $count . '</td>
                     <td class="box name">' . $staff . '</td>
@@ -208,9 +213,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     <td class="box button_box btn">
                     <div class="btn_inner_box">
-                                <button class="edit_btn" data-id="' . $title . '"><i class="fas fa-edit"></i></button>
-                                <button class="delete_btn" data-id="' . $title . '"><i class="fas fa-trash-alt"></i></button>
-                     </div>       </td>
+                        <button class="edit_btn" data-id="' . $id . '"><i class="fas fa-edit"></i></button>
+                        <button class="delete_btn"  onclick=handleDeleteClick('.$id.') "><i class="fas fa-trash-alt"></i></button>        
+                    </div>       </td>
                         </tr>';
 
                         $count++;
@@ -237,7 +242,7 @@ function handleEditClick(event) {
     if (id !== null && id !== undefined) {
         // Redirect to the edit page with the community service title as a parameter
         var user = "<?php echo $lname; ?>";
-        window.location.href = 'editables/edit_other_services.php?title=' + encodeURIComponent(id) + '&user=' +
+        window.location.href = 'editables/edit_other_services.php?Id=' + encodeURIComponent(id) + '&user=' +
             encodeURIComponent(user);
     } else {
         // Handle the case where id is null or undefined
@@ -246,17 +251,14 @@ function handleEditClick(event) {
     }
 }
 
-function handleDeleteClick(event) {
-    var id = event.target.getAttribute("data-id");
-
-    // window.alert("status button clicked with ID: " + id);
+function handleDeleteClick(id) {
     fetch('../api/api.php', {
             method: 'POST',
             body: JSON.stringify({
                 id: id,
                 action: 'delete',
                 table: 'other_services',
-                column: 'title'
+                column: 'Id'
             })
         })
         .then(response => response.json())
@@ -281,10 +283,5 @@ document.addEventListener('DOMContentLoaded', function() {
     editButtons.forEach(function (button) {
         button.addEventListener("click", handleEditClick);
     });
-
-    statusButtons.forEach(function(button) {
-        button.addEventListener("click", handleDeleteClick);
-    });
-
 });
 </script>

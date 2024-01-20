@@ -8,7 +8,7 @@ $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user=$_POST["user"];    
-
+    $_SESSION["login"]="true";
     $sql = "SELECT * FROM entity where id='$user'";
     $rs = mysqli_query($con, $sql);
     $row = mysqli_fetch_assoc($rs);
@@ -39,10 +39,11 @@ $google_client->addScope('profile');
 if (isset($_GET["code"])) {
     $token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
 
-    if (isset($token['access_token']) && !isset($token["error"])) {
+    if (isset($token['access_token']) && !isset($token["error"])) 
+    {
         $google_client->setAccessToken($token['access_token']);
         $_SESSION['access_token'] = $token['access_token'];
-
+        $_SESSION["login"]="true";
         $google_service = new Google_Service_Oauth2($google_client);
         $data = $google_service->userinfo->get();
         $_SESSION['first_name'] = $data['given_name'];
@@ -57,7 +58,8 @@ if (isset($_GET["code"])) {
         $row = mysqli_fetch_assoc($rs);
 
         // Check if the email ends with "@nitc.ac.in and if user is authorised and exist in database."
-        if (!$row || strpos($_SESSION['email_address'], "@nitc.ac.in") === false) {
+        if (!$row || strpos($_SESSION['email_address'], "@nitc.ac.in") === false) 
+        {
             // If not, log the user out and display an alert
             session_destroy();
             echo '<script>alert("Access restricted. You don\'t have the permission to view this page.");';
@@ -103,6 +105,7 @@ if (!isset($_SESSION['access_token']) || empty($_SESSION['access_token'])) {
                     </a>';
 }
 else {
+    $_SESSION["login"]="true";
     header('Location: dashboard.php');
 }
 ?>

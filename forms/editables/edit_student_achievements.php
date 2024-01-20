@@ -1,7 +1,10 @@
 <?php
 // edit_student_achievements.php
 session_start(); // Ensure session is started
-
+if(empty($_SESSION['login']))
+{
+    header('Location: ../../index.php');
+}
 if (empty($_SESSION['access_token'])) {
     $fname = "Welcome! ";
     $lname = $_GET["user"];
@@ -20,9 +23,8 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-$achievementId = isset($_GET['achievement']) ? $_GET['achievement'] : '';
-
-$sql = "SELECT * FROM student_achievements WHERE achievement = '$achievementId'";
+$id = isset($_GET['Id']) ? $_GET['Id'] : '';
+$sql = "SELECT * FROM student_achievements WHERE Id = '$id'";
 $result = mysqli_query($con, $sql);
 
 if ($result) {
@@ -46,10 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    $query = "UPDATE student_achievements SET name=?, achievement=?, date=? WHERE achievement=? AND entity=?";
+    $query = "UPDATE student_achievements SET name=?, achievement=?, date=? WHERE Id=? AND entity=?";
     $stmt = mysqli_prepare($con, $query);
 
-    mysqli_stmt_bind_param($stmt, 'sssss', $studentName, $achievement, $date, $originalAchievement, $entity);
+    mysqli_stmt_bind_param($stmt, 'sssis', $studentName, $achievement, $date, $id, $entity);
 
     if (mysqli_stmt_execute($stmt)) {
         echo json_encode(['success' => true, 'message' => 'Entry updated successfully.']);
@@ -81,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
                 $.ajax({
                     type: "POST",
-                    url: "edit_student_achievements.php?user=<?php echo urlencode($lname); ?>&achievement=<?php echo urlencode($achievementId); ?>",
+                    url: "edit_student_achievements.php?user=<?php echo urlencode($lname); ?>&Id=<?php echo urlencode($id); ?>",
                     data: $(this).serialize() + "&update_entry=1",
                     dataType: 'json', // Expect JSON response
                     success: function (response) {
