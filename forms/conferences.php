@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-if(empty($_SESSION['login']))
-{
+if (empty($_SESSION['login'])) {
     header('Location: ../index.php');
 }
 
@@ -61,7 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Conferences</title>
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-<YOUR-INTEGRITY-CODE>" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-<YOUR-INTEGRITY-CODE>" crossorigin="anonymous" />
 
     <script>
         $(document).ready(function () {
@@ -166,8 +166,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 mysqli_close($con);
                                 ?>
                             </select><br><br>
-                            <input type="date" name="start" placeholder="Start" class="input-fields"><br><br>
-                            <input type="date" name="end" placeholder="End" class="input-fields"><br><br>
+                            <div class="date_holder">
+                                <span>Start:</span>&nbsp;
+                                <input type="date" name="start" placeholder="Start" class="input-fields"><br><br>
+                            </div>
+                            <div class="date_holder">
+                                <span>Ends: </span>&nbsp;
+                                <input type="date" name="end" placeholder="End" class="input-fields"><br><br>
+                            </div>
+
+
                             <input type="submit" class="submit-button" value="Add Entry">
                         </form>
                     </div>
@@ -215,7 +223,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td class="box button_box btn">
                                 <div class="btn_inner_box">
                                     <button class="edit_btn" data-id="' . $id . '"><i class="fas fa-edit"></i></button>
-                                    <button class="delete_btn"  onclick=handleDeleteClick('.$id.') "><i class="fas fa-trash-alt"></i></button>        
+                                    <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>        
                                     </div>
                                     </td>
                             </tr>';
@@ -229,24 +237,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </body>
+
 </html>
 
 <script>
     function handleEditClick(event) {
-    var id = event.currentTarget.getAttribute("data-id");
+        var id = event.currentTarget.getAttribute("data-id");
 
-    // Check if id is not null or undefined before redirecting
-    if (id !== null && id !== undefined) {
-        // Redirect to the edit page with the community service title as a parameter
-        var user = "<?php echo $lname; ?>";
-        window.location.href = 'editables/edit_conferences.php?Id=' + encodeURIComponent(id) + '&user=' +
-            encodeURIComponent(user);
-    } else {
-        // Handle the case where id is null or undefined
-        console.error("Invalid id for editing");
-        // You may want to display an alert or handle the error in a way that suits your application
+        // Check if id is not null or undefined before redirecting
+        if (id !== null && id !== undefined) {
+            // Redirect to the edit page with the community service title as a parameter
+            var user = "<?php echo $lname; ?>";
+            window.location.href = 'editables/edit_conferences.php?Id=' + encodeURIComponent(id) + '&user=' +
+                encodeURIComponent(user);
+        } else {
+            // Handle the case where id is null or undefined
+            console.error("Invalid id for editing");
+            // You may want to display an alert or handle the error in a way that suits your application
+        }
     }
-}
 
 
     function handleDeleteClick(id) {

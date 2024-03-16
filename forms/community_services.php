@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-if(empty($_SESSION['login']))
-{
+if (empty($_SESSION['login'])) {
     header('Location: ../index.php');
 }
 
@@ -11,7 +10,7 @@ if (empty($_SESSION['access_token'])) {
     $lname = $_GET["user"];
     $pic = "../asset/nitc_logo_icon.svg";
     $mail = $_GET["user"];
-    
+
     //below two lines are commented out for testing purpose. uncomment it to properly run system with login.
 
     // header('Location: index.php');
@@ -20,13 +19,13 @@ if (empty($_SESSION['access_token'])) {
     $fname = $_SESSION["first_name"];
     $lname = $_SESSION['last_name'];
     $pic = $_SESSION['profile_picture'];
-    $mail=$_SESSION['email_address'];
+    $mail = $_SESSION['email_address'];
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $staffName = $_POST["faculty_name"];
     $progTitle = $_POST["title"];
-    $date  = $_POST["date"];
+    $date = $_POST["date"];
     $entity = $mail;
 
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
@@ -49,136 +48,138 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_close($stmt);
     mysqli_close($con);
 }
-  
+
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <title>Community services</title>
     <link href="../styles/forms.css" type="text/css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-<YOUR-INTEGRITY-CODE>" crossorigin="anonymous" />
-
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/c0795f1bee.js" crossorigin="anonymous"></script>
     <script>
-    $(document).ready(function() {
-        $("#myForm").submit(function(event) {
-            event.preventDefault();
+        $(document).ready(function () {
+            $("#myForm").submit(function (event) {
+                event.preventDefault();
 
-            // Validate the form
-            if (!validateForm()) {
-                return;
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "",
-                data: $(this).serialize(),
-                success: function() {
-                    alert("Entry added.");
-                    // Reload the page after a successful form submission
-                    location.reload();
-                },
-                error: function() {
-                    alert("Entry addition failed.");
+                // Validate the form
+                if (!validateForm()) {
+                    return;
                 }
+
+                $.ajax({
+                    type: "POST",
+                    url: "",
+                    data: $(this).serialize(),
+                    success: function () {
+                        alert("Entry added.");
+                        // Reload the page after a successful form submission
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("Entry addition failed.");
+                    }
+                });
             });
-        });
 
-        function validateForm() {
-            var staffName = document.forms["myForm"]["faculty_name"].value;
-            var progTitle = document.forms["myForm"]["title"].value;
-            var date = document.forms["myForm"]["date"].value;
+            function validateForm() {
+                var staffName = document.forms["myForm"]["faculty_name"].value;
+                var progTitle = document.forms["myForm"]["title"].value;
+                var date = document.forms["myForm"]["date"].value;
 
-            if (staffName.trim() == "" || progTitle.trim() == "" || date.trim() == "") {
-                alert("Please fill in all fields.");
-                return false;
+                if (staffName.trim() == "" || progTitle.trim() == "" || date.trim() == "") {
+                    alert("Please fill in all fields.");
+                    return false;
+                }
+
+                return true;
             }
-
-            return true;
-        }
-    });
+        });
     </script>
 
 </head>
 
 <body>
-
     <div class="container">
-        <!-- header -->
-        <?php
-        echo '<div class="user_strip">
-                <a href="../dashboard.php?user=' . $lname . '" class="user_to_dash">
-                    <div class="user">
-                        <img src="' . $pic . '" class="user_image" />
-                        <h3>' . $fname . ' ' . $lname . '</h3>
-                    </div>
-                </a>
-                <div class="logout_btn_holder">
-                    <a href="../logout.php" class="">
-                        <button class="logout_btn">Logout</button>
-                    </a>
-                </div  > 
-            </div>';
-
-        ?>
 
 
         <div class="subcontainer">
-
-            <h2>Community Services</h2>
-
-            <div class="content_container">
-                <div class="left_container">
-                    <div class="form_container">
-                        <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
-                            <!-- <input type="text" name="name" placeholder="Name of staff" class="input-fields"><br><br> -->
-                            <select name="faculty_name" class="input-fields">
-                                <option disabled selected>Name of Staff</option>
-                                <?php
-                                    // Establish a connection to the database
-                                    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-
-                                    // Check the connection
-                                    if (!$con) {
-                                        die('Could not connect: ' . mysqli_error($con));
-                                    }
-
-                                    // Set $entity based on your logic
-                                    $entity = isset($_GET["user"]) ? $_GET["user"] : '';
-
-                                    // Select the faculty names from the database based on the entity
-                                    $sql = "SELECT Name FROM faculty WHERE Email='$entity'";
-                                    $result = mysqli_query($con, $sql);
-
-                                    // Check if the query was successful
-                                    if ($result) {
-                                        // Fetch and display faculty names as options
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            echo '<option value="' . $row['Name'] . '">' . $row['Name'] . '</option>';
-                                        }
-                                    } else {
-                                        echo 'Query failed: ' . mysqli_error($con);
-                                    }
-
-                                    // Close the database connection
-                                    mysqli_close($con);
-                                ?>
-                            </select><br><br>
-                            <textarea name="title" placeholder="Community services" class="input-fields textarea"
-                                rows=4></textarea><br><br>
-                            <div>
-                                <label for="date">Date: </label>
-                                <input type="date" name="date" id="date" class="input-fields">
-                            </div><br><br>
-                            <input type="submit" class="submit-button" value="Add Entry">
-                        </form>
-                    </div>
+            <div class="sidebar">
+                <a href="../dashboard.php" class="user_to_dash">
+                    <span>
+                        <i class="fa-solid fa-angle-left"></i>
+                        BACK
+                    </span>
+                </a>
+                <div class="user_container">
+                    <?php
+                    echo '<img src="' . $pic . '" class="user_image" />
+                        <p class="user_name">' . $fname . ' ' . $lname . '</p>';
+                    ?>
                 </div>
+                <div class="partition"> </div>
+                <ul class="navlinks">
+                    <li class="active"><i class="fa-solid fa-plus"></i> ADD DATA</li>
+                    <li><i class="fa-regular fa-eye"></i> VIEW DATA</li>
+                </ul>
+                <div class="partition"> </div>
+                <a href="../logout.php" class="logout_btn">
+                    <span><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</span>
+                </a>
+            </div>
+            <div class="content_container">
+                <h2>Community Services</h2>
+                <div class="left_container" id="addDataFormContainer">
+                    <form id="myForm" action="" method="post" onsubmit="return validateForm();" class="form_field">
+                        <!-- <input type="text" name="name" placeholder="Name of staff" class="input-fields"><br><br> -->
+                        
+                        <select name="faculty_name" class="input-fields">
+                            <option disabled selected>Name of Staff</option>
+                            <?php
+                            // Establish a connection to the database
+                            $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-                <div class="table_container">
+                            // Check the connection
+                            if (!$con) {
+                                die('Could not connect: ' . mysqli_error($con));
+                            }
+
+                            // Set $entity based on your logic
+                            $entity = isset($_GET["user"]) ? $_GET["user"] : '';
+
+                            // Select the faculty names from the database based on the entity
+                            $sql = "SELECT Name FROM faculty WHERE Email='$entity'";
+                            $result = mysqli_query($con, $sql);
+
+                            // Check if the query was successful
+                            if ($result) {
+                                // Fetch and display faculty names as options
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . $row['Name'] . '">' . $row['Name'] . '</option>';
+                                }
+                            } else {
+                                echo 'Query failed: ' . mysqli_error($con);
+                            }
+
+                            // Close the database connection
+                            mysqli_close($con);
+                            ?>
+                        </select>
+                        <textarea name="title" placeholder="Community services" class="input-fields textarea"
+                            rows=4></textarea>
+
+                        <input type="date" name="date" id="date" placeholder="Date daalo" class="input-fields">
+
+                        <input type="submit" class="submit-button" value="Add Entry">
+                    </form>
+
+                </div>
+                <div class="table_container" id="viewDataTableContainer">
                     <?php
                     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
                     $entity = $_GET["user"];
@@ -217,7 +218,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <td class="box button_box btn">
                                 <div class="btn_inner_box">
                                 <button class="edit_btn" data-id="' . $id . '"><i class="fas fa-edit"></i></button>
-                                <button class="delete_btn"  onclick=handleDeleteClick('.$id.') "><i class="fas fa-trash-alt"></i></button>
+                                <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>
                                 </div>
                             </td>
                         </tr>';
@@ -229,15 +230,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
                 </div>
             </div>
+
+
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            // Initial setup: Show add data form, hide view data table
+            $("#viewDataTableContainer").hide();
+
+            // Highlight the current list item and toggle form/table visibility
+            $(".sidebar ul li").click(function () {
+                // Remove the 'active' class from all list items
+                $(".sidebar ul li").removeClass("active");
+
+                // Add the 'active' class to the clicked list item
+                $(this).addClass("active");
+
+                // Determine which link was clicked
+                var linkText = $(this).text().trim();
+
+                // Toggle form and table visibility based on the clicked link
+                if (linkText === "ADD DATA") {
+                    $("#addDataFormContainer").show();
+                    $("#viewDataTableContainer").hide();
+                } else if (linkText === "VIEW DATA") {
+                    $("#addDataFormContainer").hide();
+                    $("#viewDataTableContainer").show();
+                }
+            });
+
+            // Initially highlight the "Add Data" list item
+            $(".sidebar ul li:contains('ADD DATA')").addClass("active");
+
+            // Rest of your code...
+        });
+
+
+    </script>
 </body>
+
 </html>
 
 <script>
 
-    function handleEditClick(event) 
-    {
+    function handleEditClick(event) {
         var id = event.currentTarget.getAttribute("data-id");
 
         // Check if id is not null or undefined before redirecting
@@ -254,17 +291,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     function handleDeleteClick(id) {
-        
+
         // window.alert("status button clicked with ID: " + id);
         fetch('../api/api.php', {
-                method: 'POST',
-                body: JSON.stringify({
-                    id: id,
-                    action: 'delete',
-                    table: 'community_services',
-                    column: 'Id'
-                })
+            method: 'POST',
+            body: JSON.stringify({
+                id: id,
+                action: 'delete',
+                table: 'community_services',
+                column: 'Id'
             })
+        })
             .then(response => response.json())
             .then(data => {
                 window.alert(data.message);
@@ -279,12 +316,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             });
         // location.reload();
     }
-    
-    document.addEventListener('DOMContentLoaded', function() {
+
+    document.addEventListener('DOMContentLoaded', function () {
         var editButtons = document.querySelectorAll(".edit_btn");
         var deleteButtons = document.querySelectorAll(".delete_btn");
 
-        editButtons.forEach(function(button) {
+        editButtons.forEach(function (button) {
             button.addEventListener("click", handleEditClick);
         });
     });

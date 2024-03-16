@@ -1,0 +1,221 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.user_to_dash {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+/* header */
+.user_strip {
+    background-color: #091235;
+    color: aliceblue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    margin-left: 4em;
+    gap: 16px;
+}
+
+.user_image {
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    background-color: aliceblue;
+}
+
+.logout_btn_holder {
+    width: fit-content;
+    margin-right: 4em;
+}
+
+.logout_btn {
+    font-size: 16px;
+    padding: 12px 16px;
+    border: none;
+    /* border-color: #BF3131; */
+    border-radius: 0.2rem;
+    color: aliceblue;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #BF3131;
+}
+
+.logout_btn:hover {
+    color: aliceblue;
+    /* border-color: #BF3131; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.8rem;
+    background-color: #B80000;
+}
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    background-color: #E9EDFB;
+    overflow: auto;
+}
+
+.subcontainer {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 2rem 2.5rem;
+}
+.content_container {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+.table_container {
+    width: 1240px;
+    display: flex;
+    flex-direction: column;
+    /* width: 60%; */
+    height: auto;
+    justify-content: start;
+    background-color: #F1EFEF;
+    border-radius: 0.5em;
+    padding: 8px 12px;
+    overflow: scroll;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+/* .table_height_1{
+    height: 460px;
+}
+.table_height_2 {
+    height: 520px;
+} */
+.top_container {
+    display: flex;
+    flex-direction: row;
+    width: 1200px;
+    align-items: center;
+    justify-content: space-between;
+}
+@media(max-width: 1300px) {
+    .top_container {
+        width: 1000px;
+    }
+    .table_container {
+        width: 1100px;
+    }
+}
+@media(max-width: 1150px) {
+    .top_container {
+        width: 900px;
+    }
+    .table_container {
+        width: 950px;
+    }
+    .subcontainer {
+        padding: 1.5rem 2rem;
+    }
+}
+@media(max-width: 1000px) {
+    .top_container {
+        width: 720px;
+    }
+    .table_container {
+        width: 760px;
+    }
+}
+@media(max-width: 800px) {
+    .top_container {
+        width: 100%;
+    }
+    .table_container {
+        width: 90%;
+    }
+    .subcontainer {
+        padding: 1rem;
+    }
+}
+.upload_btn {
+    font-size: 14px;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 0.2rem;
+    color: aliceblue;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #3457D5;
+}
+.upload_btn:hover {
+    color: aliceblue;
+    /* border-color: #BF3131; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.8rem;
+    background-color: #2a52be;
+}
+.delete_btn {
+    font-size: 14px;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 0.2rem;
+    color: aliceblue;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #BF3131;
+}
+.delete_btn:hover {
+    color: aliceblue;
+    /* border-color: #BF3131; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.8rem;
+    background-color: #B80000;
+}
+
+.form_field {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.8rem;
+}
+
+
+.input-fields {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 0.3rem;
+    /* border-width: 1px;
+    border-color: rgb(226 232 240); */
+    color: rgb(51 65 85);
+    transition: all;
+    transition-duration: 150ms;
+}
+
+.input-fields:hover {
+    /* transform: scale(1.01); */
+    border-color: rgb(148 163 184);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    height: 100%;
+    /* table-layout: fixed; */
+}
+.wrap_text {
+    text-wrap: wrap;
+}
+.box {
+    padding: 2px;
+}

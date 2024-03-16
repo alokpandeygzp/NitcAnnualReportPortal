@@ -3,6 +3,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
     
+    echo "yaha aaya ? ";
     // Get data from the request
     $data = json_decode(file_get_contents('php://input'), true);
     $id = $data['id'];

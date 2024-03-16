@@ -1,0 +1,305 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.user_to_dash {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+/* header */
+.user_strip {
+    background-color: #091235;
+    color: aliceblue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    margin-left: 4em;
+    gap: 16px;
+}
+
+.user_image {
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    background-color: aliceblue;
+}
+
+.logout_btn_holder {
+    width: fit-content;
+    margin-right: 4em;
+}
+
+.logout_btn {
+    font-size: 16px;
+    padding: 12px 16px;
+    border: none;
+    /* border-color: #BF3131; */
+    border-radius: 0.2rem;
+    color: aliceblue;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #BF3131;
+}
+
+.logout_btn:hover {
+    color: aliceblue;
+    /* border-color: #BF3131; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.8rem;
+    background-color: #B80000;
+}
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    background-color: #E9EDFB;
+    overflow: auto;
+}
+
+.subcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 2rem 2.5rem;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: auto;
+    /* display: flex; */
+    /* flex-direction: column; */
+    justify-content: space-evenly;
+    background-color: #F1EFEF;
+    border-radius: 0.5em;
+    padding: 18px 20px;
+    height: auto;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+th {
+    padding: 4px;
+}
+
+table, td {
+    padding: 2px;
+}
+td > p {
+    margin-left: 6px;
+}
+.dep {
+    padding-left: 12px;
+}
+
+.input-fields {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 0.3rem;
+    /* border-width: 1px;
+    border-color: rgb(226 232 240); */
+    color: rgb(51 65 85);
+    transition: all;
+    transition-duration: 150ms;
+}
+
+.input-fields:hover {
+    /* transform: scale(1.01); */
+    border-color: rgb(148 163 184);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+}
+
+.enter-button {
+    font-size: 14px;
+    width: 100%;
+    padding: 6px;
+    margin-left: 6px;
+    border: none;
+    /* border-color: #BF3131; */
+    border-radius: 0.2rem;
+    color: aliceblue;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #009E60;
+}
+
+.enter-button:hover {
+    color: aliceblue;
+    /* border-color: #BF3131; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.8rem;
+    background-color: #2E8B57;
+}
+
+.box {
+    padding: 5px;
+    word-wrap: break-word;
+}
+.button_box {
+    text-align: center;
+}
+
+.add_btn {
+    font-size: 14px;
+    border: none;
+    margin: 2px;
+    padding: 3px 7px;
+    /* border-color: #BF3131; */
+    border-radius: 0.2rem;
+    color: white;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #009E60;
+}
+.add_btn:hover {
+    color: white;
+    /* border-color: #BF3131; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.8rem;
+    background-color: #2E8B57;
+}
+.cseClearBtn,
+.eceClearBtn,
+.mechanicalClearBtn,
+.electricalClearBtn,
+.architectureClearBtn,
+.humanitiesClearBtn,
+.civilClearBtn,
+.educationClearBtn,
+.chemicalEngClearBtn,
+.biotechClearBtn,
+.chemistryClearBtn,
+.materialScienceClearBtn,
+.mathematicsClearBtn,
+.managementStudiesClearBtn,
+.physicalEducationClearBtn,
+.physicsClearBtn {
+    font-size: 14px;
+    border: none;
+    margin: 2px;
+    padding: 4px 8px;
+    /* border-color: #BF3131; */
+    border-radius: 0.2rem;
+    color: white;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #D04848;
+}
+.cseClearBtn:hover,
+.eceClearBtn:hover,
+.mechanicalClearBtn:hover,
+.electricalClearBtn:hover,
+.architectureClearBtn:hover,
+.humanitiesClearBtn:hover,
+.civilClearBtn:hover,
+.educationClearBtn:hover,
+.chemicalEngClearBtn:hover,
+.biotechClearBtn:hover,
+.chemistryClearBtn:hover,
+.materialScienceClearBtn:hover,
+.mathematicsClearBtn:hover,
+.managementStudiesClearBtn:hover,
+.physicalEducationClearBtn:hover,
+.physicsClearBtn:hover {
+    color: white;
+    /* border-color: #BF3131; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.8rem;
+    background-color: #BF3131;
+}
+
+.btn_container_end {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: end;
+    margin-right: 10px;
+}
+
+
+.submit-button {
+    font-size: 14px;
+    width: max-content;
+    padding: 8px 10px;
+   
+    border: none;
+    /* border-color: #BF3131; */
+    border-radius: 0.2rem;
+    color: aliceblue;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #009E60;
+}
+
+.submit-button:hover {
+    color: aliceblue;
+    /* border-color: #BF3131; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.8rem;
+    background-color: #2E8B57;
+}
+
+.clear-button {
+    font-size: 14px;
+    width: max-content;
+    padding: 8px 10px;
+   
+    border: none;
+    /* border-color: #BF3131; */
+    border-radius: 0.2rem;
+    color: aliceblue;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 150ms;
+    background-color: #D04848;
+}
+
+.clear-button:hover {
+    color: aliceblue;
+    /* border-color: #BF3131; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.8rem;
+    background-color: #BF3131;
+}
+
+
+
+
+
+.btn_inner_box {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+@media (max-width: 780px) {
+    .btn_inner_box {
+        flex-direction: column;
+    }
+    
+}

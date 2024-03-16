@@ -1,21 +1,4 @@
 <?php
-// edit_community_services.php
-session_start(); // Ensure session is started
-if(empty($_SESSION['login']))
-{
-    header('Location: ../../index.php');
-}
-if (empty($_SESSION['access_token'])) {
-    $fname = "Welcome! ";
-    $lname = $_GET["user"];
-    $pic = "../../asset/nitc_logo_icon.svg";
-    $mail = $_GET["user"];
-} else {
-    $fname = $_SESSION["first_name"];
-    $lname = $_SESSION['last_name'];
-    $pic = $_SESSION['profile_picture'];
-    $mail = $_SESSION['email_address'];
-}
 
 $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
@@ -28,8 +11,7 @@ $id = isset($_GET['Id']) ? $_GET['Id'] : '';
 $sql = "SELECT * FROM community_services WHERE Id = '$id'";
 $result = mysqli_query($con, $sql);
 
-if ($result) 
-{
+if ($result) {
     $row = mysqli_fetch_assoc($result);
     $staff = $row['staff'];
     $progTitle = $row['title'];
@@ -48,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
     $progDate = $_POST["date"];
     $entity = $dep;
 
-    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
     $query = "UPDATE community_services SET staff=?, title=?, date=? WHERE Id=? AND entity=?";
     $stmt = mysqli_prepare($con, $query);
@@ -71,9 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 <html>
 
 <head>
-    <title>Edit Community Services Entry</title>
-    <link href="../../styles/edit_forms.css" type="text/css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="../../styles/dashboard.css">
     <script>
         $(document).ready(function () {
             $("#myForm").submit(function (event) {
@@ -94,7 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
                         if (response.success) {
                             // Redirect to the community services page after a successful update
-                            window.location.href = '../community_services.php?user=<?php echo urlencode($lname); ?>';
+                            // window.location.href = '../community_services.php?user=<?php echo urlencode($lname); ?>';
+                            console.log("successful");
                         }
                     },
                     error: function () {
@@ -121,85 +101,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
 
 <body>
 
-    <div class="container">
-        <?php
-        echo '<div class="user_strip">
-                <a href="../../dashboard.php?user=' . $lname . '" class="user_to_dash">
-                    <div class="user">
-                        <img src="' . $pic . '" class="user_image" />
-                        <h3>' . $fname . ' ' . $lname . '</h3>
+    <div class="d-flex flex-column align-items-center w-100">
+        <p class="form-name">Edit Community Services</p>
+        <div class="form-container">
+            <form id="myForm" action="" method="post">
+                <input type="hidden" name="original_title" value="<?php echo $progTitle; ?>" class="">
+                <div class="row mb-3">
+                    <label for="faculty_name" class="col-sm-2 col-form-label label-class">Faculty Name: </label>
+                    <div class="col-sm-10">
+                        <!-- <input type="email" class="form-control" id="inputEmail3"> -->
+                        <select name="faculty_name" class="form-control" id="faculty_name">
+                            <option disabled selected>Name of Staff</option>
+                            <?php
+                            // Establish a connection to the database
+                            $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
+
+                            // Check the connection
+                            if (!$con) {
+                                die('Could not connect: ' . mysqli_error($con));
+                            }
+
+                            // Set $entity based on your logic
+                            $entity = isset($_GET["user"]) ? $_GET["user"] : '';
+
+                            // Select the faculty names from the database based on the entity
+                            $sql = "SELECT Name FROM faculty WHERE Email='$entity'";
+                            $result = mysqli_query($con, $sql);
+
+                            // Check if the query was successful
+                            if ($result) {
+                                // Fetch and display faculty names as options
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<option value="' . $row['Name'] . '">' . $row['Name'] . '</option>';
+                                }
+                            } else {
+                                echo 'Query failed: ' . mysqli_error($con);
+                            }
+
+                            // Close the database connection
+                            mysqli_close($con);
+                            ?>
+                        </select>
+                        
                     </div>
-                </a>
-                <div class="logout_btn_holder">
-                    <a href="../../logout.php" class="">
-                        <button class="logout_btn">Logout</button>
-                    </a>
                 </div>
-            </div>';
-        ?>
-        <div class="subcontainer">
-            <div class="content_container">
-                <h2>Edit Community Services</h2><br>
-
-                <div class="form_container">
-
-                    <form id="myForm" action="" method="post" class="form_field">
-                        <input type="hidden" name="original_title" value="<?php echo $progTitle; ?>" class="input-fields">
-
-                        <table>
-
-                            <tr>
-                                <td class="label_field"><label for="faculty_name" class="label-fields">Staff: </label></td>
-                                <td><select name="faculty_name" class="input-fields">
-                                        <option disabled>Name of Staff</option>
-                                        <?php
-                                        $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
-                                        if (!$con) {
-                                            die('Could not connect: ' . mysqli_error($con));
-                                        }
-                                        $entity = isset($_GET["user"]) ? $_GET["user"] : '';
-                                        $sql = "SELECT Name FROM faculty WHERE Email='$entity'";
-                                        $result = mysqli_query($con, $sql);
-                                        if ($result) {
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                $selected = ($row['Name'] === $staff) ? 'selected' : '';
-                                                echo '<option value="' . $row['Name'] . '" ' . $selected . '>' . $row['Name'] . '</option>';
-                                            }
-                                        } else {
-                                            echo 'Query failed: ' . mysqli_error($con);
-                                        }
-                                        mysqli_close($con);
-                                        ?>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label_field">
-                                    <label for="title" class="label-fields">Title: </label>
-                                </td>
-                                <td><input type="text" name="title" value="<?php echo $progTitle; ?>" class="input-fields"
-                                        readonly></td>
-                            </tr>
-
-                            <tr>
-                                <td class="label_field"> <label for="date" class="label-fields">Date: </label></td>
-                                <td><input type="date" name="date" value="<?php echo $date; ?>" class="input-fields"
-                                        required></td>
-                            </tr>
-
-                            <tr>
-                                <td class="label_field"><label for="entity" class="label-fields">Entity: </label></td>
-                                <td><input type="text" name="entity" value="<?php echo $dep; ?>" class="input-fields"
-                                        readonly></td>
-                            </tr>
-                        </table>
-
-                        <input type="submit" class="submit-button" value="Update Entry">
-                    </form>
+                <div class="row mb-3">
+                    <label for="community_services" class="col-sm-2 col-form-label label-class">Community Service:
+                    </label>
+                    <div class="col-sm-10">
+                        <textarea id="community_services" class="form-control" name="title"
+                            placeholder="Community services" rows=4></textarea>
+                    </div>
                 </div>
-            </div>
+                <div class="row mb-3">
+                    <label for="date" class="col-sm-2 col-form-label label-class">Date: </label>
+                    <div class="col-sm-10">
+                        <input type="date" name="date" id="date" placeholder="Date here" class="form-control">
+                    </div>
+                </div>
 
+                <button type="submit" class="submit_btn mt-2"><span>Add Entry</span></button>
+
+            </form>
         </div>
+
     </div>
+
 </body>
+
 </html>
