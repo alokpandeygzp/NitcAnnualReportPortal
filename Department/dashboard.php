@@ -529,22 +529,22 @@ if ($userRole != 'department' && $userRole != 'centre')
                     </div>
                     <div id="table-12" style="display: none;">
                         <?php
-                        echo "table 12 hai bhai";
+                            require "./forms/viewData/workshop.php";
                         ?>
                     </div>
                     <div id="table-13" style="display: none;">
                         <?php
-                        echo "table 13 hai bhai";
+                            require "./forms/viewData/international.php";
                         ?>
                     </div>
                     <div id="table-14" style="display: none;">
                         <?php
-                        echo "table 14 hai bhai";
+                            require "./forms/viewData/funded.php";
                         ?>
                     </div>
                     <div id="table-15" style="display: none;">
                         <?php
-                        echo "table 15 hai bhai";
+                            require "./forms/viewData/other_services.php";
                         ?>
                     </div>
 

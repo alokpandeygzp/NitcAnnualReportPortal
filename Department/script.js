@@ -562,6 +562,96 @@ $(document).ready(function () {
     })
 });
 
+$(document).ready(function () {
+    $('#workshop').DataTable({
+        //disable sorting on last column
+        "columnDefs": [
+            { "orderable": false, "targets": 5 }
+        ],
+        "pageLength": 5,
+        "lengthMenu": [[5], [5]],
+        language: {
+            //customize pagination prev and next buttons: use arrows instead of words
+            'paginate': {
+                'previous': '<span class="fa fa-chevron-left"></span>',
+                'next': '<span class="fa fa-chevron-right"></span>'
+            },
+            //customize number of elements to be displayed
+            "lengthMenu": 'Display <select class="form-control input-sm">' +
+                '<option value="5">5</option>' +
+                '</select> results'
+        }
+    })
+});
+
+$(document).ready(function () {
+    $('#internationalconference').DataTable({
+        //disable sorting on last column
+        "columnDefs": [
+            { "orderable": false, "targets": 5 }
+        ],
+        "pageLength": 5,
+        "lengthMenu": [[5], [5]],
+        language: {
+            //customize pagination prev and next buttons: use arrows instead of words
+            'paginate': {
+                'previous': '<span class="fa fa-chevron-left"></span>',
+                'next': '<span class="fa fa-chevron-right"></span>'
+            },
+            //customize number of elements to be displayed
+            "lengthMenu": 'Display <select class="form-control input-sm">' +
+                '<option value="5">5</option>' +
+                '</select> results'
+        }
+    })
+});
+
+
+$(document).ready(function () {
+    $('#funded').DataTable({
+        //disable sorting on last column
+        "columnDefs": [
+            { "orderable": false, "targets": 7 }
+        ],
+        "pageLength": 5,
+        "lengthMenu": [[5], [5]],
+        language: {
+            //customize pagination prev and next buttons: use arrows instead of words
+            'paginate': {
+                'previous': '<span class="fa fa-chevron-left"></span>',
+                'next': '<span class="fa fa-chevron-right"></span>'
+            },
+            //customize number of elements to be displayed
+            "lengthMenu": 'Display <select class="form-control input-sm">' +
+                '<option value="5">5</option>' +
+                '</select> results'
+        }
+    })
+});
+
+$(document).ready(function () {
+    $('#other_services').DataTable({
+        //disable sorting on last column
+        "columnDefs": [
+            { "orderable": false, "targets": 4 }
+        ],
+        "pageLength": 5,
+        "lengthMenu": [[5], [5]],
+        language: {
+            //customize pagination prev and next buttons: use arrows instead of words
+            'paginate': {
+                'previous': '<span class="fa fa-chevron-left"></span>',
+                'next': '<span class="fa fa-chevron-right"></span>'
+            },
+            //customize number of elements to be displayed
+            "lengthMenu": 'Display <select class="form-control input-sm">' +
+                '<option value="5">5</option>' +
+                '</select> results'
+        }
+    })
+});
+
+
 
 function populateFormWithData(form, formName, dataId) {
     // Check if the form element exists
