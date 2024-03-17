@@ -520,16 +520,19 @@ if ($userRole != 'department' && $userRole != 'centre')
                     <div id="table-10" style="display: none;">
                         <?php
                             require "./forms/viewData/journal.php";
+                            // echo "temp 1";
                         ?>
                     </div>
                     <div id="table-11" style="display: none;">
                         <?php
                             require "./forms/viewData/national.php";
+                            // echo "temp 2";
                         ?>
                     </div>
                     <div id="table-12" style="display: none;">
                         <?php
                             require "./forms/viewData/workshop.php";
+                            // echo "temp 3";
                         ?>
                     </div>
                     <div id="table-13" style="display: none;">

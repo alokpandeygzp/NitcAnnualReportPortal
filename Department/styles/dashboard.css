@@ -458,7 +458,7 @@ thead {
 
 /* table design */
 .table_container {
-    height: 640px;
+    height: 600px;
     overflow-y: scroll;
     scrollbar-width: none;
     padding: 4px;

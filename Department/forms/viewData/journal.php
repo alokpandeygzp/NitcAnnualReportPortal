@@ -16,11 +16,9 @@
 
 
         echo '
-            <div class="" id="">
-
                 <div class="table_container">
             
-                    <table id="journal" class="table table-striped" style="width: 100%; height: auto;">
+                    <table id="journal1" class="table table-striped" style="width: 100%; height: auto;">
                         <thead> 
                             <tr> 
                             <th class="box">S. no.</th> 
@@ -70,7 +68,6 @@
                             </tr>
                             </tfoot>';
         echo '</table>
-            </div>
         </div>';
         ?>
     </div>

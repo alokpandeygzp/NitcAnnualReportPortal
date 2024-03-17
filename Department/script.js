@@ -520,7 +520,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('#journal').DataTable({
+    $('#journal1').DataTable({
         //disable sorting on last column
         "columnDefs": [
             { "orderable": false, "targets": 5 }
@@ -540,8 +540,10 @@ $(document).ready(function () {
         }
     })
 });
+
+
 $(document).ready(function () {
-    $('#nationalconference').DataTable({
+    $('#nationalconference1').DataTable({
         //disable sorting on last column
         "columnDefs": [
             { "orderable": false, "targets": 5 }
@@ -563,7 +565,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('#workshop').DataTable({
+    $('#workshop1').DataTable({
         //disable sorting on last column
         "columnDefs": [
             { "orderable": false, "targets": 5 }

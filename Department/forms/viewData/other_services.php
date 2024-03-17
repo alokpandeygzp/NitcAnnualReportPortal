@@ -9,14 +9,10 @@
     <div class="d-flex flex-column align-items-center w-100">
         <?php
         if ($userRole == 'admin')
-            $sql = "SELECT * FROM other_services order by date";
+            $sql = "SELECT * FROM other_services";
         else
-            $sql = "SELECT * FROM other_services where entity='$userRole' order by date";
+            $sql = "SELECT * FROM other_services where entity='$userRole'";
         $rs = mysqli_query($con, $sql);
-
-
-        echo '
-    <div class="" id="">';
 
         echo '<div class="table_container">';
         echo '
@@ -46,10 +42,10 @@
                 <td class="box">' . $title . '</td>
                 <td class="box">' . $date . '</td>
                     <td class="">
-                        <div class="">
+                        
                             <button class="edit_btn" data-id="community_services:form-1:' . $id . '"><i class="fas fa-edit"></i></button>
                             <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>
-                        </div>
+                    
                     </td>
                 </tr>';
 
@@ -66,7 +62,6 @@
 </tr>
 </tfoot>';
         echo '</table>
-</div>
 </div>';
         ?>
     </div>

@@ -15,9 +15,6 @@
         $rs = mysqli_query($con, $sql);
 
 
-        echo '
-    <div class="" id="">';
-
         echo '<div class="table_container">';
         echo '
             <table id="internationalconference" class="table table-striped" style="width: 100%; height: auto;">
@@ -49,10 +46,10 @@
                 <td class="box">' . $conf_name . '</td>
                 <td class="box">' . $vol . '</td>
                     <td class="">
-                        <div class="">
+                        
                             <button class="edit_btn" data-id="community_services:form-1:' . $id . '"><i class="fas fa-edit"></i></button>
                             <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>
-                        </div>
+                        
                     </td>
                 </tr>';
 
@@ -70,7 +67,6 @@
 </tr>
 </tfoot>';
         echo '</table>
-</div>
 </div>';
         ?>
     </div>

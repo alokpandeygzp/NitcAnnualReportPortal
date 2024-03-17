@@ -16,7 +16,6 @@
 
 
         echo '
-            <div class="" id="">
 
                 <div class="table_container">
             
@@ -52,10 +51,10 @@
                                 <td class="box">' . $status . '</td>
                                 <td class="box">' . $date . '</td>
                                     <td class="">
-                                        <div class="">
+                                        
                                             <button class="edit_btn" data-id="community_services:form-1:' . $id . '"><i class="fas fa-edit"></i></button>
                                             <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>
-                                        </div>
+                                        
                                     </td>
                                 </tr>';
 
@@ -74,7 +73,6 @@
                             </tr>
                             </tfoot>';
         echo '</table>
-            </div>
         </div>';
         ?>
     </div>
