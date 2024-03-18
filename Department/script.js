@@ -326,8 +326,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 7 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -337,6 +335,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -348,8 +350,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 5 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -359,6 +359,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -370,8 +374,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 4 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -381,6 +383,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -392,8 +398,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 5 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -403,6 +407,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -414,8 +422,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 5 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -425,6 +431,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -437,8 +447,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 6 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -448,6 +456,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -459,8 +471,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 5 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -470,6 +480,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -481,8 +495,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 6 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -492,6 +504,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -503,8 +519,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 4 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -514,6 +528,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -525,8 +543,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 5 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -536,6 +552,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -548,8 +568,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 5 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -559,6 +577,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -570,8 +592,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 5 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -581,6 +601,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -592,8 +616,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 5 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -603,6 +625,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -615,8 +641,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 7 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -626,6 +650,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -637,8 +665,6 @@ $(document).ready(function () {
         "columnDefs": [
             { "orderable": false, "targets": 4 }
         ],
-        "pageLength": 5,
-        "lengthMenu": [[5], [5]],
         language: {
             //customize pagination prev and next buttons: use arrows instead of words
             'paginate': {
@@ -648,6 +674,10 @@ $(document).ready(function () {
             //customize number of elements to be displayed
             "lengthMenu": 'Display <select class="form-control input-sm">' +
                 '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="30">30</option>' +
+                '<option value="-1">All</option>' +
                 '</select> results'
         }
     })
@@ -666,7 +696,7 @@ function populateFormWithData(form, formName, dataId) {
                 return response.json();
             })
             .then(data => {
-                console.log("data ye aaya aage se-->>",data)
+                console.log("data ye aaya aage se-->>", data)
                 // Loop through each field in the data and populate the corresponding form field
                 Object.keys(data).forEach(fieldName => {
                     const fieldValue = data[fieldName];

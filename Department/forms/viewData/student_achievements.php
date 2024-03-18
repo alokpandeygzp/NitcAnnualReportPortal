@@ -6,14 +6,15 @@
 </head>
 
 <body>
-    <div class="d-flex flex-column align-items-center w-100">
-        <?php
+    <div class="d-flex flex-column align-items-center gap-2 w-100 h-100">
+        <div class="table-heading">Student Achievements during year 2023-24</div>
+    <?php
         if ($userRole == 'admin')
             $sql = "SELECT * FROM student_achievements order by date";
         else
             $sql = "SELECT * FROM student_achievements where entity='$userRole' order by date";
         $rs = mysqli_query($con, $sql);
-
+    
 
         echo '
            
@@ -54,11 +55,9 @@
                                     <td class="box">' . $rollno . '</td>
                                     <td class="box truncate-text">' . $achievement . '</td>
                                     <td class="box">' . $date . '</td>
-                                    <td class="">
-                                        
-                                            <button class="edit_btn" data-id="community_services:form-1:' . $id . '"><i class="fas fa-edit"></i></button>
-                                            <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>
-                                        
+                                    <td class="">    
+                                            <button class="edit_btn" data-id="student_achievements:form-1:' . $id . '"><i class="fas fa-edit"></i></button>
+                                            <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>    
                                     </td>
                                 </tr>';
 

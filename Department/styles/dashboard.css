@@ -458,12 +458,35 @@ thead {
 
 /* table design */
 .table_container {
-    height: 600px;
+    height: auto;
     overflow-y: scroll;
     scrollbar-width: none;
+    padding: 6px;
+    margin-bottom: 12px;
+    
+}
+
+
+.table-heading {
+    width: 100%;
+    text-align: start;
+    font-size: large;
+    font-weight: 600;
+}
+
+.edit_btn, .delete_btn {
+    background: none;
+    border: none;
+    transition: all 200ms ease;
     padding: 4px;
 }
 
-.sn-box {
-    width: 10px;
+.edit_btn:hover {
+    transform: scale(1.1);
+    color: #40A2E3;
+}
+
+.delete_btn:hover {
+    transform: scale(1.1);
+    color: #D04848;
 }

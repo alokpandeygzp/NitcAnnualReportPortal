@@ -6,7 +6,8 @@
 </head>
 
 <body>
-    <div class="d-flex flex-column align-items-center w-100">
+    <div class="d-flex flex-column align-items-center gap-2 w-100 h-100">
+        <div class="table-heading">Expert lectures delivered in Conferences/Seminar/workshops during year 2023-24</div>
         <?php
         if ($userRole == 'admin')
             $sql = "SELECT * FROM expert_lectures";
@@ -52,7 +53,7 @@
                                 <td class="box">' . $organization . '</td>
                                     <td class="">
                                         
-                                            <button class="edit_btn" data-id="community_services:form-1:' . $id . '"><i class="fas fa-edit"></i></button>
+                                            <button class="edit_btn" data-id="expert_lectures:form-6:' . $id . '"><i class="fas fa-edit"></i></button>
                                             <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>
                                         
                                     </td>
