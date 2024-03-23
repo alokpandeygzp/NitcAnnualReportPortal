@@ -318,7 +318,7 @@ thead {
 
 
 .form-name {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 600;
     color: #1d3258d8;
 }
@@ -422,7 +422,7 @@ thead {
         font-size: 36px;
     }
     .form-name {
-        font-size: 28px;
+        font-size: 24px;
         font-weight: 500;
     }
 }
@@ -448,7 +448,7 @@ thead {
         font-size: 30px;
     }
     .form-name {
-        font-size: 28px;
+        font-size: 20px;
         font-weight: 500;
     }
 }

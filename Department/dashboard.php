@@ -398,7 +398,7 @@ if ($userRole != 'department' && $userRole != 'centre')
                     </div>
                     <div id="form-2" style="display: none;">
                         <?php
-                        echo "form 2 hai bhai";
+                            require "./forms/addData/faculty_qualification.php";
                         ?>
                     </div>
                     <div id="form-3" style="display: none;">
