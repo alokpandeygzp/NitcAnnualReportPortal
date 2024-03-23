@@ -393,7 +393,7 @@ if ($userRole != 'department' && $userRole != 'centre')
                 <div class="w-100">
                     <div id="form-1" style="display: none;">
                         <?php
-                        echo "form 1 hai bhai"
+                        require "./forms/addData/student_achievements.php";
                             ?>
                     </div>
                     <div id="form-2" style="display: none;">
