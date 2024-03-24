@@ -743,19 +743,24 @@ function handleEditClick(event) {
     }
 }
 
-function handleDeleteClick(id) {
+function handleDeleteClick(id, table) {
 
     // window.alert("status button clicked with ID: " + id);
-    fetch('./api/api.php', {
+    fetch('../api/api.php', {
         method: 'POST',
         body: JSON.stringify({
             id: id,
             action: 'delete',
-            table: 'community_services',
+            table: table,
             column: 'Id'
         })
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             window.alert(data.message);
 
@@ -763,12 +768,13 @@ function handleDeleteClick(id) {
             location.reload();
         })
         .catch(error => {
-            window.alert('Error:', error);
+            window.alert('Error: ' + error.message);
             // console.error('Error:', error);
             // window.alert('check console');
         });
     // location.reload();
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
     var editButtons = document.querySelectorAll(".edit_btn");

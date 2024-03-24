@@ -57,7 +57,8 @@
                                     <td class="box">' . $date . '</td>
                                     <td class="">    
                                             <button class="edit_btn" data-id="student_achievements:form-1:' . $id . '"><i class="fas fa-edit"></i></button>
-                                            <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>    
+                                            <button class="delete_btn" onclick="handleDeleteClick(' . $id . ', \'student_achievements\')"><i class="fas fa-trash-alt"></i></button>
+
                                     </td>
                                 </tr>';
 

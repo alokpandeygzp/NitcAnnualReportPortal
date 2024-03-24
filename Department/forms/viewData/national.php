@@ -52,7 +52,7 @@
                                     <td class="">
                                         
                                             <button class="edit_btn" data-id="nationalconference:form-11:' . $id . '"><i class="fas fa-edit"></i></button>
-                                            <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>
+                                            <button class="delete_btn" onclick="handleDeleteClick(' . $id . ', \'nationalconference\')"><i class="fas fa-trash-alt"></i></button>
                                        
                                     </td>
                                 </tr>';

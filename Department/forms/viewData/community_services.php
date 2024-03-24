@@ -47,7 +47,7 @@
                     <td class="">
                         
                             <button class="edit_btn" data-id="community_services:form-3:' . $id . '"><i class="fas fa-edit"></i></button>
-                            <button class="delete_btn"  onclick=handleDeleteClick(' . $id . ') "><i class="fas fa-trash-alt"></i></button>
+                            <button class="delete_btn" onclick="handleDeleteClick(' . $id . ', \'community_services\')"><i class="fas fa-trash-alt"></i></button>
                        
                     </td>
                 </tr>';
