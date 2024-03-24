@@ -13,21 +13,6 @@ function selectAllOptions() {
     });
 }
 
-function validateForm() {
-    var startDate = document.getElementById("startDate").value;
-    var endDate = document.getElementById("endDate").value;
-
-    var startDateTime = new Date(startDate).getTime();
-    var endDateTime = new Date(endDate).getTime();
-    if (startDateTime >= endDateTime) {
-        alert("Start date must be before end date");
-        return false;
-    } // Prevent form submission
-    else {
-        document.getElementById("dateError").innerHTML = "";
-        return true; // Allow form submission
-    }
-}
 
 function validateFormForReport() {
     // Get current date

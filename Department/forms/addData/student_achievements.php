@@ -1,7 +1,7 @@
 <?php
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset ($_POST['form_type']) && $_POST['form_type'] === 'student_achievements') {
     $studentName = $_POST["name"];
     $studentName = filter_var($studentName, FILTER_SANITIZE_STRING);
     $studentAchievement = $_POST["achievement"];
@@ -10,20 +10,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $studentCourse = $_POST["course"];
     $studentSemester = $_POST["semester"];
     $studentRollno = $_POST["rollno"];
-    $entity = $mail;
+    $entity = $userRole;
+    $id = $_POST['Id'];
 
-    $query1 = "INSERT INTO student_achievements (name, course, semester, rollno, achievement, entity, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = mysqli_prepare($con, $query1);
-    mysqli_stmt_bind_param($stmt, 'sssssss', $studentName, $studentCourse, $studentSemester, $studentRollno, $studentAchievement, $userRole, $date);
+    $con = mysqli_connect('localhost', 'root', '', 'imsdemo');
 
-    if (mysqli_stmt_execute($stmt)) {
-        echo '<script>alert("Entry added.");</script>';
-    } else {
-        echo '<script>alert("Entry addition failed.");</script>';
+    if (!$con) {
+        die ('Could not connect: ' . mysqli_error($con));
     }
 
-    mysqli_stmt_close($stmt);
+    // Prepare the query for either insert or update
+    if (isset ($id) && !empty ($id)) {
+        $query = "UPDATE student_achievements SET name=?, course=?, semester=?, rollno=?, achievement=?, date=? WHERE Id=? AND entity=?";
+    } else {
+        $query = "INSERT INTO student_achievements (name, course, semester, rollno, achievement, entity, date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    }
+
+    // Prepare and bind parameters
+    $stmt = mysqli_prepare($con, $query);
+    if (!$stmt) {
+        echo '<script>alert("Failed to prepare statement.");</script>';
+    } else {
+        if (isset ($id) && !empty ($id)) {
+            mysqli_stmt_bind_param($stmt, 'ssssssis', $studentName, $studentCourse, $studentSemester, $studentRollno, $studentAchievement, $date, $id, $entity);
+        } else {
+            mysqli_stmt_bind_param($stmt, 'sssssss', $studentName, $studentCourse, $studentSemester, $studentRollno, $studentAchievement, $entity, $date);
+        }
+
+        // Execute the statement
+        if (mysqli_stmt_execute($stmt)) {
+            echo '<script>alert("Entry added/updated.");</script>';
+        } else {
+            echo '<script>alert("Entry addition/updation failed.");</script>';
+        }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
+        mysqli_close($con);
+    }
 }
+
 
 ?>
 
@@ -33,28 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <link rel="stylesheet" href="../../styles/dashboard.css">
     <script>
-    $(document).ready(function() {
-        $("#studentAchievement").submit(function(event) {
-            event.preventDefault();
-            if (!validateForm()) {
-                return;
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "",
-                data: $(this).serialize(),
-                success: function() {
-                    alert("Entry added.");
-                    location.reload();
-                },
-                error: function() {
-                    alert("Entry addition failed.");
-                }
-            });
-        });
-
-        function validateForm() {
+        function validateFormstudentAchievement() {
             var studentName = document.forms["studentAchievement"]["name"].value;
             var studentCourse = document.forms["studentAchievement"]["course"].value;
             var studentSemester = document.forms["studentAchievement"]["semester"].value;
@@ -70,16 +75,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             return true;
         }
-    });
+
+        $(document).ready(function () {
+            $("#studentAchievement").submit(function (event) {
+                event.preventDefault();
+                if (!validateFormstudentAchievement()) {
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "dashboard.php",
+                    data: $(this).serialize(),
+                    success: function () {
+                        alert("Entry added.");
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("Entry addition failed.");
+                    }
+                });
+            });
+        });
     </script>
 </head>
+
 
 <body>
     <div class="d-flex flex-column align-items-center w-100">
         <p class="form-name">Student Achievements during year 2023-24</p>
         <div class="form-container">
-            <form style="" id="studentAchievement" action="" method="post" onsubmit="return validateForm();">
+            <form style="" id="studentAchievement" action="" method="post"
+                onsubmit="return validateFormstudentAchievement();">
                 <input type="hidden" name="Id" value="<?php echo isset ($_GET['dataId']) ? $_GET['dataId'] : null; ?>">
+                <input type="hidden" name="form_type" value="student_achievements">
+
 
                 <div class="row mb-3">
                     <label for="studentName" class="col-sm-2 col-form-label label-class">Name: </label>
@@ -114,7 +144,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="achievement" class="col-sm-2 col-form-label label-class">Enter Student Achievement: </label>
+                    <label for="achievement" class="col-sm-2 col-form-label label-class">Enter Student Achievement:
+                    </label>
                     <div class="col-sm-10">
                         <textarea class="form-control" name="achievement" id="achievement"
                             placeholder="Enter Student Achievement" rows=4></textarea>

@@ -1,7 +1,7 @@
 <?php
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['form_type']) && $_POST['form_type'] === 'faculty_qualification') {
     $staffName = $_POST["name"];
     $staffQualification = $_POST["qualification"];
     $staffQualification = filter_var($staffQualification, FILTER_SANITIZE_STRING);
@@ -10,8 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = $_POST["date"];
     $entity = $mail;
 
-    $query1 = "INSERT INTO faculty_qualification (name, qualification, institute, entity, date) VALUES (?, ?, ?, ?, ?)";
-    $stmt = mysqli_prepare($con, $query1);
+    $query = "INSERT INTO faculty_qualification (name, qualification, institute, entity, date) VALUES (?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($con, $query);
     mysqli_stmt_bind_param($stmt, 'sssss', $staffName, $staffQualification, $staffInstitute, $userRole, $date);
 
     if (mysqli_stmt_execute($stmt)) {
@@ -76,6 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="form-container">
             <form style="" id="facultyQualification" action="" method="post" onsubmit="return validateForm();">
                 <input type="hidden" name="Id" value="<?php echo isset ($_GET['dataId']) ? $_GET['dataId'] : null; ?>">
+                <input type="hidden" name="form_type" value="faculty_qualification">
+
 
                 <div class="row mb-3">
                     <label for="name" class="col-sm-2 col-form-label label-class">Name: </label>
