@@ -427,7 +427,7 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-    $('#expert_lectures').DataTable({
+    $('#expert_lectures1').DataTable({
         //disable sorting on last column
         "columnDefs": [
             { "orderable": false, "targets": 6 }
@@ -451,7 +451,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('#expert_lecturesinvited').DataTable({
+    $('#expert_lecturesinvited1').DataTable({
         //disable sorting on last column
         "columnDefs": [
             { "orderable": false, "targets": 5 }

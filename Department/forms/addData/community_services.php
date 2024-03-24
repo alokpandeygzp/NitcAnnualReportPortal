@@ -1,12 +1,8 @@
 <?php
-
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['form_type']) && $_POST['form_type'] === 'faculty_qualification') {
-    $staffName = $_POST["name"];
-    $staffQualification = $_POST["qualification"];
-    $staffQualification = filter_var($staffQualification, FILTER_SANITIZE_STRING);
-    $staffInstitute = $_POST["institute"];
-    $staffInstitute = filter_var($staffInstitute, FILTER_SANITIZE_STRING);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset ($_POST['form_type']) && $_POST['form_type'] === 'community_services') {
+    $staffName = $_POST["staff"];
+    $progTitle = $_POST["title"];
+    $progTitle = filter_var($progTitle, FILTER_SANITIZE_STRING);
     $date = $_POST["date"];
     $entity = $mail;
     $id = $_POST['Id'];
@@ -19,20 +15,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['form_type']) && $_POST
 
     // Prepare the query for either insert or update
     if (isset ($id) && !empty ($id)) {
-        $query = "UPDATE faculty_qualification SET name=?, qualification=?, institute=?, date=? WHERE Id=? AND entity=?";
+        $query = "UPDATE community_services SET staff=?, title=?, date=? WHERE Id=? AND entity=?";
     } else {
-        $query = "INSERT INTO faculty_qualification (name, qualification, institute, entity, date) VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO community_services (staff, title, date, entity) VALUES (?, ?, ?, ?)";
     }
+
 
     
     $stmt = mysqli_prepare($con, $query);
+
     if (!$stmt) {
         echo '<script>alert("Failed to prepare statement.");</script>';
     } else {
         if (isset ($id) && !empty ($id)) {
-            mysqli_stmt_bind_param($stmt, 'ssssis', $staffName, $staffQualification, $staffInstitute, $date, $id, $userRole );
+            mysqli_stmt_bind_param($stmt, 'sssis', $staffName, $progTitle, $date, $id, $userRole);
         } else {
-            mysqli_stmt_bind_param($stmt, 'sssss', $staffName, $staffQualification, $staffInstitute, $userRole, $date);
+            mysqli_stmt_bind_param($stmt, 'ssss', $staffName, $progTitle, $date, $userRole);
         }
 
         // Execute the statement
@@ -47,23 +45,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['form_type']) && $_POST
     }
 
     mysqli_close($con);
-    
-
-   
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../../styles/dashboard.css">
     <script>
+        function validateFormcommunityservices() {
+            var staffName = document.forms["communityservices"]["staff"].value;
+            var progTitle = document.forms["communityservices"]["title"].value;
+            var date = document.forms["communityservices"]["date"].value;
+
+            if (staffName.trim() == "" || progTitle.trim() == "" || date.trim() == "") {
+                alert("Please fill in all fields.");
+                return false;
+            }
+            return true;
+        }
         $(document).ready(function () {
-            $("#facultyQualification").submit(function (event) {
+            $("#communityservices").submit(function (event) {
                 event.preventDefault();
-                if (!validateForm()) {
+                if (!validateFormcommunityservices()) {
                     return;
                 }
 
@@ -80,45 +84,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['form_type']) && $_POST
                     }
                 });
             });
-
-            function validateForm() {
-                var staffName = document.forms["facultyQualification"]["name"].value;
-                var staffQualification = document.forms["facultyQualification"]["qualification"].value;
-                var staffInstitute = document.forms["facultyQualification"]["institute"].value;
-                var date = document.forms["facultyQualification"]["date"].value;
-
-
-                if (staffName.trim() == "" || staffQualification.trim() == "" || staffInstitute.trim() == "" || date
-                    .trim() == "") {
-                    alert("Please fill in all fields.");
-                    return false;
-                }
-
-                return true;
-            }
         });
     </script>
 </head>
 
 <body>
     <div class="d-flex flex-column align-items-center w-100">
-        <p class="form-name">Faculty obtaining higher qualifications during year 2023-24</p>
+        <p class="form-name">Community Services rendered during year 2023-24</p>
         <div class="form-container">
-            <form style="" id="facultyQualification" action="" method="post" onsubmit="return validateForm();">
+            <form style="" id="communityservices" action="" method="post"
+                onsubmit="return validateFormcommunityservices();">
                 <input type="hidden" name="Id" value="<?php echo isset ($_GET['dataId']) ? $_GET['dataId'] : null; ?>">
-                <input type="hidden" name="form_type" value="faculty_qualification">
-
+                <input type="hidden" name="form_type" value="community_services">
 
                 <div class="row mb-3">
-                    <label for="name" class="col-sm-2 col-form-label label-class">Name: </label>
+                    <label for="staff" class="col-sm-2 col-form-label label-class">Staff Name: </label>
                     <div class="col-sm-10">
-                        <select name="name" id="name" class="form-control" class="input-fields">
-                            <option disabled selected>Name of Faculty</option>
-
+                        <select name="staff" class="form-control">
+                            <option disabled selected>Name of Staff</option>
                             <?php
                             $sql = "SELECT department from roles where name = '$userRole'";
                             $result = mysqli_query($con, $sql);
                             $row = mysqli_fetch_assoc($result);
+
                             if ($row['department'] == 'centre')
                                 $sql = "SELECT Name FROM faculty";
                             else
@@ -133,29 +121,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['form_type']) && $_POST
                                 echo 'Query failed: ' . mysqli_error($con);
                             }
                             ?>
-
                         </select>
-
                     </div>
                 </div>
 
                 <div class="row mb-3">
-                    <label for="qualification" class="col-sm-2 col-form-label label-class">Qualification: </label>
+                    <label for="title" class="col-sm-2 col-form-label label-class">Service: </label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="qualification" id="qualification"
-                            placeholder="Qualification">
-
+                        <textarea name="title" placeholder="Community services" class="form-control" rows=4></textarea>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label for="institute" class="col-sm-2 col-form-label label-class">Institute: </label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="institute" id="institute"
-                            placeholder="Institute">
 
-                    </div>
-                </div>
-                
                 <div class="row mb-3">
                     <label for="date" class="col-sm-2 col-form-label label-class">Date: </label>
                     <div class="col-sm-10">
@@ -167,11 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['form_type']) && $_POST
 
             </form>
         </div>
-
     </div>
-
-
-
 </body>
 
 </html>

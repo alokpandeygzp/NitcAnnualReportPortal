@@ -37,7 +37,7 @@
             $title = $row['title'];
             $conf_name = $row['conf_name'];
             $vol = $row['vol_pp'];
-            $id = $row['id'];
+            $id = $row['Id'];
 
             echo '
                 <tr>

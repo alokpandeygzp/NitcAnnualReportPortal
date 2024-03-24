@@ -38,7 +38,7 @@
             $title = $row['title'];
             $journal = $row['journal'];
             $vol = $row['vol_pp'];
-            $id = $row['id'];
+            $id = $row['Id'];
 
             echo '
                                 <tr>

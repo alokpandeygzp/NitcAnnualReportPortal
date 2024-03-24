@@ -20,7 +20,7 @@
 
                 <div class="table_container">
             
-                    <table id="expert_lecturesinvited" class="table table-striped" style="width: 100%; height: auto;">
+                    <table id="expert_lecturesinvited1" class="table table-striped" style="width: 100%; height: auto;">
                         <thead> 
                             <tr> 
                             <th class="box">S. no.</th> 
@@ -43,11 +43,11 @@
 
             echo '
                                 <tr>
-                                <td class="box sn">' . $count . '</td>
-                                <td class="box name">' . $staff . '</td>
-                                <td class="box program">' . $title . '</td>
-                                <td class="box s_date">' . $start . '</td>
-                                <td class="box e_date">' . $end . '</td>
+                                <td class="box">' . $count . '</td>
+                                <td class="box">' . $staff . '</td>
+                                <td class="box">' . $title . '</td>
+                                <td class="box">' . $start . '</td>
+                                <td class="box">' . $end . '</td>
                                     <td class="">
                                         
                                             <button class="edit_btn" data-id="expert_lecturesinvited:form-7:' . $id . '"><i class="fas fa-edit"></i></button>

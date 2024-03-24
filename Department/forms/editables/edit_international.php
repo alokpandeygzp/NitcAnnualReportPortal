@@ -33,10 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_entry'])) {
     $title = filter_var($title , FILTER_SANITIZE_STRING);
     $vol = filter_var($vol , FILTER_SANITIZE_STRING);
     
-    $query = "UPDATE internationalconference  SET author=?, title=?, conf_name=?, vol_pp=? WHERE id=? AND entity=?";
+    
     $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'ssssss', $author, $title, $conf_name,  $vol, $id, $userRole );
-
+    
     if (mysqli_stmt_execute($stmt)) {
         echo json_encode(['success' => true, 'message' => 'Entry updated successfully.']);
     } else {

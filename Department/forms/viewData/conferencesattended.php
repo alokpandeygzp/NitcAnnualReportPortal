@@ -39,7 +39,7 @@
             $staff = $row['name'];
             $start = $row['start'];
             $end = $row['end'];
-            $id = $row['id'];
+            $id = $row['Id'];
 
             echo '
                                 <tr>

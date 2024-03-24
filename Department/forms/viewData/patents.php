@@ -41,9 +41,9 @@
 
             echo '
                                 <tr>
-                                <td class="box sn">' . $count . '</td>
-                                <td class="box name">' . $staff . '</td>
-                                <td class="box title">' . $title . '</td>
+                                <td class="box">' . $count . '</td>
+                                <td class="box">' . $staff . '</td>
+                                <td class="box">' . $title . '</td>
                                 <td class="box">' . $date . '</td>
                                     <td class="">
                                         

@@ -41,7 +41,7 @@
             $start = $row['start'];
             $status = $row['status'];
             $prin = $row['principal'];
-            $id = $row['id'];
+            $id = $row['Id'];
 
             echo '
                 <tr>

@@ -403,67 +403,67 @@ if ($userRole != 'department' && $userRole != 'centre')
                     </div>
                     <div id="form-3" style="display: none;">
                         <?php
-                        echo "form 3 hai bhai";
+                            require "./forms/addData/community_services.php";
                         ?>
                     </div>
                     <div id="form-4" style="display: none;">
                         <?php
-                        echo "form 4 hai bhai";
+                            require "./forms/addData/conferences.php";
                         ?>
                     </div>
                     <div id="form-5" style="display: none;">
                         <?php
-                        echo "form 5 hai bhai";
+                            require "./forms/addData/conferencesattended.php";
                         ?>
                     </div>
                     <div id="form-6" style="display: none;">
                         <?php
-                        echo "form 6 hai bhai";
+                            require "./forms/addData/expert_lectures.php"; 
                         ?>
                     </div>
                     <div id="form-7" style="display: none;">
                         <?php
-                        echo "form 7 hai bhai";
+                            require "./forms/addData/expert_lecturesinvited.php"; 
                         ?>
                     </div>
                     <div id="form-8" style="display: none;">
                         <?php
-                        echo "form 8 hai bhai";
+                        require "./forms/addData/consultancy.php";
                         ?>
                     </div>
                     <div id="form-9" style="display: none;">
                         <?php
-                        echo "form 9 hai bhai";
+                            require "./forms/addData/patents.php";
                         ?>
                     </div>
                     <div id="form-10" style="display: none;">
                         <?php
-                        echo "form 10 hai bhai";
+                        require "./forms/addData/journal.php";
                         ?>
                     </div>
                     <div id="form-11" style="display: none;">
                         <?php
-                        echo "form 11 hai bhai";
+                        require "./forms/addData/national.php";
                         ?>
                     </div>
                     <div id="form-12" style="display: none;">
                         <?php
-                        echo "form 12 hai bhai";
+                            require "./forms/addData/workshop.php";
                         ?>
                     </div>
                     <div id="form-13" style="display: none;">
                         <?php
-                        echo "form 13 hai bhai";
+                        require "./forms/addData/international.php";
                         ?>
                     </div>
                     <div id="form-14" style="display: none;">
                         <?php
-                        echo "form 14 hai bhai";
+                        require "./forms/addData/funded.php";
                         ?>
                     </div>
                     <div id="form-15" style="display: none;">
                         <?php
-                        echo "form 15 hai bhai";
+                        require "./forms/addData/other_services.php";
                         ?>
                     </div>
 

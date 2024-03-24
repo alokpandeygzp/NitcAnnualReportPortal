@@ -45,9 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset ($_POST['form_type']) && $_POS
         }
 
         // Close the statement
-        mysqli_stmt_close($stmt);
-        mysqli_close($con);
+        mysqli_stmt_close($stmt);   
     }
+
+    mysqli_close($con);
 }
 
 

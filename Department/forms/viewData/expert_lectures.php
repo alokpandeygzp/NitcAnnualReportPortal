@@ -20,7 +20,7 @@
 
                 <div class="table_container">
             
-                    <table id="expert_lectures" class="table table-striped" style="width: 100%; height: auto;">
+                    <table id="expert_lectures1" class="table table-striped" style="width: 100%; height: auto;">
                         <thead> 
                             <tr> 
                             <th class="box">S. no.</th> 
