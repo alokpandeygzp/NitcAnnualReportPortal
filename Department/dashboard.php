@@ -205,7 +205,7 @@ if ($userRole != 'department' && $userRole != 'centre')
         <!-- content space -->
         <div class="w-100 h-100 d-flex align-items-start justify-content-center rounded-3 bg-white text-primary p-3">
             <!--content container  -->
-            <div class="mt-3 w-100 h-100">
+            <div class=" w-100 h-100">
                 <!-- dashboard -->
                 <div id="dashboard" style="display: block;">
                     <div class="d-flex flex-column align-items-center w-100">
@@ -275,116 +275,123 @@ if ($userRole != 'department' && $userRole != 'centre')
                 <!-- report -->
                 <form action=<?php echo $pdf_link; ?> method="post" onsubmit="return validateFormForReport()"
                     id="report" style="display: none;">
-                    <div class="report_generator">
-                        <div class="section_container">
-                            <p>Choose Period:</p>
-                            <div class="time_period_selector">
-                                <div class="start_date">
-                                    <label for="startDate">Start: </label>
-                                    <input type="date" id="startDate" name="startDate" class="input-fields" />
+                    <div
+                        class="w-100 h-100 d-flex flex-column align-items-start justify-content-between custom-class-report">
+                        <div class="d-flex flex-column mb-2 w-100 gap-3">
+                            <div class="d-flex flex-column gap-0">
+                                <p class="seaction-heading">Choose Period:</p>
+                                <div class="d-flex gap-4">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <label for="startDate">Start: </label>
+                                        <input type="date" id="startDate" name="startDate" class="form-control" />
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <label for="endDate">End: </label>
+                                        <input type="date" id="endDate" name="endDate" class="form-control" />
+                                    </div>
                                 </div>
-                                <div class="end_date">
-                                    <label for="endDate">End: </label>
-                                    <input type="date" id="endDate" name="endDate" class="input-fields" />
+                            </div>
+                            <div class="d-flex flex-column">
+                                <p class="seaction-heading">Choose Sections:</p>
+                                <div class="custom-class-report-selector">
+                                    <div>
+                                        <input type="checkbox" id="all" name="all" value="all"
+                                            onchange="selectAllOptions()" />
+                                        <label for="all">All</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="studentAchievements" name="studentAchievements"
+                                            value="studentAchievements" />
+                                        <label for="studentAchievements">Student Achievements</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="facultyHigherQualification"
+                                            name="facultyHigherQualification" value="facultyHigherQualification" />
+                                        <label for="facultyHigherQualification">Faculty Obtaining Higher
+                                            Qualifications</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="communityServices" name="communityServices"
+                                            value="communityServices" />
+                                        <label for="communityServices">Community Services</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="checkbox" id="conferencesConducted" name="conferencesConducted"
+                                            value="conferencesConducted" />
+                                        <label for="conferencesConducted">Conferences/Workshops Conducted</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="conferencesAttended" name="conferencesAttended"
+                                            value="conferencesAttended" />
+                                        <label for="conferencesAttended">Conferences/Workshops Attended</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="checkbox" id="expertLectures" name="expertLectures"
+                                            value="expertLectures" />
+                                        <label for="expertLectures">Expert Lectures Delivered</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="expertinvited" name="expertinvited"
+                                            value="expertinvited" />
+                                        <label for="expertinvited">Expert Lectures Invited</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="checkbox" id="consultancyAndTesting" name="consultancyAndTesting"
+                                            value="consultancyAndTesting" />
+                                        <label for="consultancyAndTesting">Consultancy And Testing</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="patentAquiredAndFiled" name="patentAquiredAndFiled"
+                                            value="patentAquiredAndFiled" />
+                                        <label for="patentAquiredAndFiled">Patent Aquired And Filed</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="publications" name="publications"
+                                            value="publications" />
+                                        <label for="publications">Publications/Patents</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="journal" name="journal" value="journal" />
+                                        <label for="journal">Journal Papers Published</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="nationalconference" name="nationalconference"
+                                            value="nationalconference" />
+                                        <label for="nationalconference">National Conferences/Workshops
+                                            Publications</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="workshop" name="workshop" value="workshop" />
+                                        <label for="workshop">Workshops Publications</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="checkbox" id="internatioanlconference"
+                                            name="internatioanlconference" value="internatioanlconference" />
+                                        <label for="internatioanlconference">International Conferences
+                                            Publications</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="fund" name="fund" value="fund" />
+                                        <label for="fund">Fund Research Projects</label>
+                                    </div>
+
+
+                                    <div>
+                                        <input type="checkbox" id="otherServices" name="otherServices"
+                                            value="otherServices" />
+                                        <label for="otherServices">Other Services</label>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="section_container">
-                            <p>Choose Sections:</p>
-                            <div class="section_selector">
-                                <div>
-                                    <input type="checkbox" id="all" name="all" value="all"
-                                        onchange="selectAllOptions()" />
-                                    <label for="all">All</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="studentAchievements" name="studentAchievements"
-                                        value="studentAchievements" />
-                                    <label for="studentAchievements">Student Achievements</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="facultyHigherQualification"
-                                        name="facultyHigherQualification" value="facultyHigherQualification" />
-                                    <label for="facultyHigherQualification">Faculty Obtaining Higher
-                                        Qualifications</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="communityServices" name="communityServices"
-                                        value="communityServices" />
-                                    <label for="communityServices">Community Services</label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="conferencesConducted" name="conferencesConducted"
-                                        value="conferencesConducted" />
-                                    <label for="conferencesConducted">Conferences/Workshops Conducted</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="conferencesAttended" name="conferencesAttended"
-                                        value="conferencesAttended" />
-                                    <label for="conferencesAttended">Conferences/Workshops Attended</label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="expertLectures" name="expertLectures"
-                                        value="expertLectures" />
-                                    <label for="expertLectures">Expert Lectures Delivered</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="expertinvited" name="expertinvited"
-                                        value="expertinvited" />
-                                    <label for="expertinvited">Expert Lectures Invited</label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="consultancyAndTesting" name="consultancyAndTesting"
-                                        value="consultancyAndTesting" />
-                                    <label for="consultancyAndTesting">Consultancy And Testing</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="patentAquiredAndFiled" name="patentAquiredAndFiled"
-                                        value="patentAquiredAndFiled" />
-                                    <label for="patentAquiredAndFiled">Patent Aquired And Filed</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="publications" name="publications" value="publications" />
-                                    <label for="publications">Publications/Patents</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="journal" name="journal" value="journal" />
-                                    <label for="journal">Journal Papers Published</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="nationalconference" name="nationalconference"
-                                        value="nationalconference" />
-                                    <label for="nationalconference">National Conferences/Workshops Publications</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="workshop" name="workshop" value="workshop" />
-                                    <label for="workshop">Workshops Publications</label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="internatioanlconference" name="internatioanlconference"
-                                        value="internatioanlconference" />
-                                    <label for="internatioanlconference">International Conferences Publications</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="fund" name="fund" value="fund" />
-                                    <label for="fund">Fund Research Projects</label>
-                                </div>
-
-
-                                <div>
-                                    <input type="checkbox" id="otherServices" name="otherServices"
-                                        value="otherServices" />
-                                    <label for="otherServices">Other Services</label>
-                                </div>
-
-                            </div>
-
+                        <div class="p-1 border-top w-100">
+                            <button type="submit" class="generate_btn"><span>generate report</span></button>
                         </div>
-                        <button type="submit" class="generate_btn"><span>generate report</span></button>
                     </div>
                 </form>
 
@@ -394,36 +401,36 @@ if ($userRole != 'department' && $userRole != 'centre')
                     <div id="form-1" style="display: none;">
                         <?php
                         require "./forms/addData/student_achievements.php";
-                            ?>
+                        ?>
                     </div>
                     <div id="form-2" style="display: none;">
                         <?php
-                            require "./forms/addData/faculty_qualification.php";
+                        require "./forms/addData/faculty_qualification.php";
                         ?>
                     </div>
                     <div id="form-3" style="display: none;">
                         <?php
-                            require "./forms/addData/community_services.php";
+                        require "./forms/addData/community_services.php";
                         ?>
                     </div>
                     <div id="form-4" style="display: none;">
                         <?php
-                            require "./forms/addData/conferences.php";
+                        require "./forms/addData/conferences.php";
                         ?>
                     </div>
                     <div id="form-5" style="display: none;">
                         <?php
-                            require "./forms/addData/conferencesattended.php";
+                        require "./forms/addData/conferencesattended.php";
                         ?>
                     </div>
                     <div id="form-6" style="display: none;">
                         <?php
-                            require "./forms/addData/expert_lectures.php"; 
+                        require "./forms/addData/expert_lectures.php";
                         ?>
                     </div>
                     <div id="form-7" style="display: none;">
                         <?php
-                            require "./forms/addData/expert_lecturesinvited.php"; 
+                        require "./forms/addData/expert_lecturesinvited.php";
                         ?>
                     </div>
                     <div id="form-8" style="display: none;">
@@ -433,7 +440,7 @@ if ($userRole != 'department' && $userRole != 'centre')
                     </div>
                     <div id="form-9" style="display: none;">
                         <?php
-                            require "./forms/addData/patents.php";
+                        require "./forms/addData/patents.php";
                         ?>
                     </div>
                     <div id="form-10" style="display: none;">
@@ -448,7 +455,7 @@ if ($userRole != 'department' && $userRole != 'centre')
                     </div>
                     <div id="form-12" style="display: none;">
                         <?php
-                            require "./forms/addData/workshop.php";
+                        require "./forms/addData/workshop.php";
                         ?>
                     </div>
                     <div id="form-13" style="display: none;">
@@ -484,12 +491,12 @@ if ($userRole != 'department' && $userRole != 'centre')
                     </div>
                     <div id="table-3" style="display: none;">
                         <?php
-                            require "./forms/viewData/community_services.php";
+                        require "./forms/viewData/community_services.php";
                         ?>
                     </div>
                     <div id="table-4" style="display: none;">
                         <?php
-                            require "./forms/viewData/conferences.php";
+                        require "./forms/viewData/conferences.php";
                         ?>
                     </div>
                     <div id="table-5" style="display: none;">
@@ -504,50 +511,50 @@ if ($userRole != 'department' && $userRole != 'centre')
                     </div>
                     <div id="table-7" style="display: none;">
                         <?php
-                            require "./forms/viewData/expert_lecturesinvited.php";
+                        require "./forms/viewData/expert_lecturesinvited.php";
                         ?>
                     </div>
                     <div id="table-8" style="display: none;">
                         <?php
-                            require "./forms/viewData/consultancy.php";
+                        require "./forms/viewData/consultancy.php";
                         ?>
                     </div>
                     <div id="table-9" style="display: none;">
                         <?php
-                            require "./forms/viewData/patents.php";
+                        require "./forms/viewData/patents.php";
                         ?>
                     </div>
                     <div id="table-10" style="display: none;">
                         <?php
-                            require "./forms/viewData/journal.php";
-                            // echo "temp 1";
+                        require "./forms/viewData/journal.php";
+                        // echo "temp 1";
                         ?>
                     </div>
                     <div id="table-11" style="display: none;">
                         <?php
-                            require "./forms/viewData/national.php";
-                            // echo "temp 2";
+                        require "./forms/viewData/national.php";
+                        // echo "temp 2";
                         ?>
                     </div>
                     <div id="table-12" style="display: none;">
                         <?php
-                            require "./forms/viewData/workshop.php";
-                            // echo "temp 3";
+                        require "./forms/viewData/workshop.php";
+                        // echo "temp 3";
                         ?>
                     </div>
                     <div id="table-13" style="display: none;">
                         <?php
-                            require "./forms/viewData/international.php";
+                        require "./forms/viewData/international.php";
                         ?>
                     </div>
                     <div id="table-14" style="display: none;">
                         <?php
-                            require "./forms/viewData/funded.php";
+                        require "./forms/viewData/funded.php";
                         ?>
                     </div>
                     <div id="table-15" style="display: none;">
                         <?php
-                            require "./forms/viewData/other_services.php";
+                        require "./forms/viewData/other_services.php";
                         ?>
                     </div>
 
@@ -560,7 +567,19 @@ if ($userRole != 'department' && $userRole != 'centre')
     <script src="script.js"></script>
 
     <script>
-        console.log("ye chal raha h?");
+
+        function selectAllOptions() {
+            // Get the "All" checkbox
+            var allCheckbox = document.getElementById("all");
+
+            // Get all the checkboxes excluding the "All" checkbox
+            var checkboxes = document.querySelectorAll('.custom-class-report-selector input[type="checkbox"]:not(#all)');
+
+            // Set the state of other checkboxes based on the "All" checkbox
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = allCheckbox.checked;
+            });
+        }
     </script>
 
 

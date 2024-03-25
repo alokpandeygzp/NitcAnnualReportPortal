@@ -1,19 +1,3 @@
-
-
-function selectAllOptions() {
-    // Get the "All" checkbox
-    var allCheckbox = document.getElementById("all");
-
-    // Get all the checkboxes excluding the "All" checkbox
-    var checkboxes = document.querySelectorAll('.section_selector input[type="checkbox"]:not(#all)');
-
-    // Set the state of other checkboxes based on the "All" checkbox
-    checkboxes.forEach(function (checkbox) {
-        checkbox.checked = allCheckbox.checked;
-    });
-}
-
-
 function validateFormForReport() {
     // Get current date
     // var currentDate = new Date();

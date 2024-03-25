@@ -253,7 +253,7 @@ thead {
 /* forms */
 
 /* CSS */
-.submit_btn {
+.submit_btn, .generate_btn {
     appearance: none;
     background-color: #009E60;
     border-width: 0px;
@@ -283,7 +283,7 @@ thead {
     white-space: nowrap;
 }
 
-.submit_btn:before {
+.submit_btn:before, .generate_btn:before {
     animation: opacityFallbackOut .5s step-end forwards;
     backface-visibility: hidden;
     background-color: #2E8B57;
@@ -299,18 +299,18 @@ thead {
     width: 100%;
 }
 
-.submit_btn:hover:before {
+.submit_btn:hover:before, .generate_btn:hover:before {
     animation: opacityFallbackIn 0s step-start forwards;
     clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
     color: #fff;
 }
 
-.submit_btn:after {
+.submit_btn:after, .generate_btn:after {
     background-color: #FFFFFF;
     color: #fff;
 }
 
-.submit_btn span {
+.submit_btn span, .generate_btn span {
     z-index: 1;
     position: relative;
     color: #fff;
@@ -467,7 +467,7 @@ thead {
 }
 
 
-.table-heading {
+.table-heading, .seaction-heading {
     width: 100%;
     text-align: start;
     font-size: large;
@@ -489,4 +489,17 @@ thead {
 .delete_btn:hover {
     transform: scale(1.1);
     color: #D04848;
+}
+
+/* report */
+.custom-class-report {
+    color: #141e30;
+}
+
+.custom-class-report-selector {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 450px;
+    gap: 10px;
 }
